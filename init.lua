@@ -3,9 +3,14 @@
 
 local packs = {}
 
--- 1) 称号外观包（返回 Package，交给 ModManager install）
-local ok_titles, titles = pcall(require, "packages.advancedpackages.fengsui_titles.init")
-if ok_titles and titles then packs[#packs + 1] = titles end
+-- 1) 称号外观包：客户端 fengsui 包自带 fengsui_titles 且会自行注册，
+--    这里默认跳过，避免 "Duplicate package fengsui_titles" 崩溃。
+--    如确认 fengsui 已不含称号、想启用本包内的精简版，把下面改为 false。
+local skip_titles = true
+if not skip_titles then
+  local ok_titles, titles = pcall(require, "packages.advancedpackages.fengsui_titles.init")
+  if ok_titles and titles then packs[#packs + 1] = titles end
+end
 
 -- 2) 精选原画皮肤包（SkinPack，与 lunarltk_skins 同机制）
 --    图片仍在原资源目录，本包只按武将注册皮肤。
