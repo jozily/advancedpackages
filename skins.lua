@@ -8,7 +8,7 @@ extension.extensionName = "advancedpackages"
 -- 每个原画子目录一次注册：path 直接指向该目录的 image/generals，
 -- 皮肤名即图片文件名（武将 id），界面显示名由下方翻译表给出。
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/1【OL】夏侯徽②/packages/ol/image/generals",
+  path = "/精选原画/精选/1【OL】夏侯徽②/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "xiahouhui" },
@@ -18,7 +18,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/1【手杀】曹髦②/packages/mobile/image/generals",
+  path = "/精选原画/精选/1【手杀】曹髦②/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mobile__caomao" },
@@ -28,7 +28,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/bulianshi/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/bulianshi/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__bulianshi" },
@@ -38,7 +38,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/buzhi/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/buzhi/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__buzhi" },
@@ -48,7 +48,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/caifuren/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/caifuren/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__caifuren" },
@@ -58,7 +58,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/caoang/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/caoang/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__caoang" },
@@ -68,7 +68,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/caocao/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/caocao/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__caocao" },
@@ -78,7 +78,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/caohua/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/caohua/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "btl__caohua" },
@@ -88,7 +88,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/caoren/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/caoren/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__caoren" },
@@ -98,7 +98,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/caorui/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/caorui/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__caorui" },
@@ -108,7 +108,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/chengong/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/chengong/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__chengong" },
@@ -118,7 +118,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/chenqun/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/chenqun/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__chenqun" },
@@ -128,7 +128,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/cuiyan/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/cuiyan/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__cuiyan" },
@@ -138,7 +138,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/daqiao/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/daqiao/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__daqiao" },
@@ -148,7 +148,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/dengai/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/dengai/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__dengai" },
@@ -158,7 +158,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/dianwei/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/dianwei/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__dianwei" },
@@ -168,7 +168,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/diaochan/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/diaochan/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__diaochan" },
@@ -178,7 +178,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/dingyuan/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/dingyuan/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__dingyuan" },
@@ -188,7 +188,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/fazheng/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/fazheng/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__fazheng" },
@@ -198,7 +198,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/gaoshun/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/gaoshun/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__gaoshun" },
@@ -208,7 +208,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/gongsunyuan/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/gongsunyuan/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__gongsunyuan" },
@@ -218,7 +218,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/gongsunzan/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/gongsunzan/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__gongsunyuan" },
@@ -228,7 +228,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/guanxingzhangbao/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/guanxingzhangbao/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__guanxingzhangbao" },
@@ -238,7 +238,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/guanyinping/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/guanyinping/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__guanyinping" },
@@ -248,7 +248,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/guanyu/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/guanyu/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__guanyu" },
@@ -258,7 +258,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/guojia/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/guojia/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__guojia" },
@@ -268,7 +268,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/guotupangji/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/guotupangji/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__guotupangji" },
@@ -278,7 +278,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/haozhao/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/haozhao/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__haozhao" },
@@ -288,7 +288,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/huanggai/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/huanggai/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__huanggai" },
@@ -298,7 +298,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/huangquan/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/huangquan/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__huangquan" },
@@ -308,7 +308,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/huaxiong/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/huaxiong/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__huaxiong" },
@@ -318,7 +318,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/jianggan/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/jianggan/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__jianggan" },
@@ -328,7 +328,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/jiangwei/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/jiangwei/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__jiangwei" },
@@ -338,7 +338,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/jiaxu/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/jiaxu/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__jiaxu" },
@@ -348,7 +348,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/jushou/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/jushou/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__jvshou" },
@@ -358,7 +358,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/lidian/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/lidian/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__lidian" },
@@ -368,7 +368,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/lingtong/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/lingtong/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__lingtong" },
@@ -378,7 +378,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/liushan/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/liushan/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__liushan" },
@@ -388,7 +388,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/liuxie/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/liuxie/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__liuxie" },
@@ -398,7 +398,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/lusu/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/lusu/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__lusu" },
@@ -408,7 +408,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/luxun/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/luxun/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__luxun" },
@@ -418,7 +418,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/luzhi/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/luzhi/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__luzhiw" },
@@ -428,7 +428,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/machao/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/machao/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__machao" },
@@ -438,7 +438,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/mateng/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/mateng/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__mateng" },
@@ -448,7 +448,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/mifuren/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/mifuren/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "ty__mifuren" },
@@ -458,7 +458,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/mizhu/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/mizhu/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__mizhu" },
@@ -468,7 +468,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/panfeng/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/panfeng/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__panfeng" },
@@ -478,7 +478,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/qinmi/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/qinmi/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__qinmi" },
@@ -488,7 +488,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/quyi/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/quyi/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__quyi" },
@@ -498,7 +498,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/shamoke/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/shamoke/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__shamoke" },
@@ -508,7 +508,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/simayi/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/simayi/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__simayi" },
@@ -518,7 +518,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/sp_machao/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/sp_machao/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "kbtl_sp__machao" },
@@ -528,7 +528,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/sp_pangtong/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/sp_pangtong/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "kbtl_sp__pangtong" },
@@ -538,7 +538,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/sundeng/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/sundeng/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__sundeng" },
@@ -548,7 +548,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/sunhao/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/sunhao/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__sunhao" },
@@ -558,7 +558,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/sunquan/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/sunquan/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__sunquan" },
@@ -568,7 +568,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/sunshangxiang/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/sunshangxiang/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__sunshangxiang" },
@@ -578,7 +578,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/taishici/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/taishici/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__taishici" },
@@ -588,7 +588,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/wangji/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/wangji/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__wangji" },
@@ -598,7 +598,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/wangping/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/wangping/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__wangping" },
@@ -608,7 +608,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/weiyan/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/weiyan/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__weiyan" },
@@ -618,7 +618,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/wenyang/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/wenyang/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__wenyang" },
@@ -628,7 +628,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/wolong/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/wolong/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__wolong" },
@@ -638,7 +638,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/wuyi/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/wuyi/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__wuyi" },
@@ -648,7 +648,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/xiahoushi/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/xiahoushi/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__xiahoushi" },
@@ -658,7 +658,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/xiahouyuan/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/xiahouyuan/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__xiahouyuan" },
@@ -668,7 +668,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/xuhuang/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/xuhuang/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__xuhuang" },
@@ -678,7 +678,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/xunyou/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/xunyou/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__xunyou" },
@@ -688,7 +688,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/xunyu/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/xunyu/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__xunyu" },
@@ -698,7 +698,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/xusheng/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/xusheng/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__xusheng" },
@@ -708,7 +708,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/xuyou/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/xuyou/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__xuyou" },
@@ -718,7 +718,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/yanliangwenchou/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/yanliangwenchou/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__yanliangwenchou" },
@@ -728,7 +728,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/yanrou/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/yanrou/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__yanrou" },
@@ -738,7 +738,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/yujin/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/yujin/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__yujin" },
@@ -748,7 +748,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/zhangchunhua/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/zhangchunhua/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__zhangchunhua" },
@@ -758,7 +758,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/zhangliao/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/zhangliao/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__zhangliao" },
@@ -768,7 +768,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/zhangxingcai/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/zhangxingcai/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__xingcai" },
@@ -778,7 +778,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/zhangyi/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/zhangyi/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__zhangyiy" },
@@ -788,7 +788,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/zhaoyun/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/zhaoyun/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__zhaoyun" },
@@ -798,7 +798,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/zhongyao/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/zhongyao/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__zhongyao" },
@@ -808,7 +808,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/zhoufang/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/zhoufang/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__zhoufang" },
@@ -818,7 +818,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/zhugejin/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/zhugejin/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__zhugejin" },
@@ -828,7 +828,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/zhugeke/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/zhugeke/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__zhugeke", "zhugeke" },
@@ -838,7 +838,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/zhugeliang/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/zhugeliang/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__zhugeliang" },
@@ -848,7 +848,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/zhugezhan/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/zhugezhan/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__zhugezhan" },
@@ -858,7 +858,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/zhuhuan/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/zhuhuan/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__zhuhuan" },
@@ -868,7 +868,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/zhuran/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/zhuran/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__zhuran" },
@@ -878,7 +878,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/zhurong/packages/bloodybattle/image/generals",
+  path = "/精选原画/精选/zhurong/packages/bloodybattle/image/generals",
   content = {
     {
       enabled_generals = { "king_btl__zhurong" },
@@ -888,7 +888,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】(晋司马师x夏侯徽)①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】(晋司马师x夏侯徽)①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__simashi" },
@@ -898,7 +898,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】(杨艳x杨芷)①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】(杨艳x杨芷)①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "yangyan", "yangzhi" },
@@ -908,7 +908,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】(牛辅x董翓)/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】(牛辅x董翓)/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__dongxie", "ol__niufu" },
@@ -918,7 +918,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】(界周妃x芮姬)/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】(界周妃x芮姬)/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__zhoufei", "ruiji" },
@@ -928,7 +928,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】(界赵云x马云禄)②/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】(界赵云x马云禄)②/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "mayunlu", "ol_ex__zhaoyun" },
@@ -938,7 +938,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】(郭照x曹丕)/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】(郭照x曹丕)/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__guozhao" },
@@ -948,7 +948,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】(郭照x曹丕)/packages/shzl/image/generals",
+  path = "/精选原画/精选/【OL】(郭照x曹丕)/packages/shzl/image/generals",
   content = {
     {
       enabled_generals = { "caopi" },
@@ -958,7 +958,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】SP张郃(旧音)①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】SP张郃(旧音)①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_sp__zhanghe" },
@@ -968,7 +968,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】SP曹仁①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】SP曹仁①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_sp__caoren" },
@@ -978,7 +978,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】SP曹操至臻①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】SP曹操至臻①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_sp__caocao" },
@@ -988,7 +988,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】SP贾诩①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】SP贾诩①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_sp__jiaxu" },
@@ -998,7 +998,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】SP马超⑥/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】SP马超⑥/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_sp__machao" },
@@ -1008,7 +1008,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】SP黄月英①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】SP黄月英①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_sp__huangyueying" },
@@ -1018,7 +1018,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】丁尚涴①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】丁尚涴①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__dingfuren" },
@@ -1028,7 +1028,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】何太后⑤/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】何太后⑤/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__hetaihou" },
@@ -1038,7 +1038,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】关索③/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】关索③/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__guansuo" },
@@ -1048,7 +1048,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】冯方女①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】冯方女①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__fengfangnv" },
@@ -1058,7 +1058,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】刘琦②/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】刘琦②/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "liuqi" },
@@ -1068,7 +1068,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】卑弥呼⑦/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】卑弥呼⑦/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "himiko" },
@@ -1078,7 +1078,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】卞夫人②/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】卞夫人②/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__bianfuren" },
@@ -1088,7 +1088,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】卢氏②/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】卢氏②/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "lushi" },
@@ -1098,7 +1098,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】卧龙凤雏(方言)/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】卧龙凤雏(方言)/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "wolongfengchu" },
@@ -1108,7 +1108,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】卫兹①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】卫兹①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "weizi" },
@@ -1118,7 +1118,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】卫瓘①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】卫瓘①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "weiguan" },
@@ -1128,7 +1128,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】吕伯奢①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】吕伯奢①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "lvboshe" },
@@ -1138,7 +1138,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】吕玲绮①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】吕玲绮①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__lvlingqi" },
@@ -1148,7 +1148,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】吴国太④/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】吴国太④/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__wuguotai" },
@@ -1158,7 +1158,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】夏侯玄①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】夏侯玄①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "xiahouxuan" },
@@ -1168,7 +1168,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】孔淑①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】孔淑①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "kongshu" },
@@ -1178,7 +1178,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】孙乾①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】孙乾①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "sunqian" },
@@ -1188,7 +1188,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】孙亮①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】孙亮①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__sunliang" },
@@ -1198,7 +1198,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】孙皓②/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】孙皓②/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__sunhao" },
@@ -1208,7 +1208,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】孙茹①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】孙茹①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__sunru" },
@@ -1218,7 +1218,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】孙鲁育①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】孙鲁育①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__sunluyu" },
@@ -1228,7 +1228,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】嵇康②/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】嵇康②/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__jikang" },
@@ -1238,7 +1238,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】左棻③/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】左棻③/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "zuofen" },
@@ -1248,7 +1248,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】张昌蒲④/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】张昌蒲④/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__zhangchangpu" },
@@ -1258,7 +1258,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】张星彩⑥/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】张星彩⑥/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__xingcai" },
@@ -1268,7 +1268,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】张春华①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】张春华①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__zhangchunhua" },
@@ -1278,7 +1278,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】张琪瑛③/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】张琪瑛③/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__zhangqiying" },
@@ -1288,7 +1288,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】张芝①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】张芝①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "zhangzhi" },
@@ -1298,7 +1298,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】张虎乐綝①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】张虎乐綝①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "zhanghuyuechen" },
@@ -1308,7 +1308,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】张陵①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】张陵①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "zhangling" },
@@ -1318,7 +1318,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】张鲁①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】张鲁①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "zhanglu" },
@@ -1328,7 +1328,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】戏志才③/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】戏志才③/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "xizhicai" },
@@ -1338,7 +1338,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】族(王浑x钟琰)/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】族(王浑x钟琰)/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "olz__wanghun", "olz__zhongyan" },
@@ -1348,7 +1348,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】族吴苋(方言)/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】族吴苋(方言)/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "olz__wuxian" },
@@ -1358,7 +1358,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】族杨修①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】族杨修①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "olz__yangxiu" },
@@ -1368,7 +1368,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】族王凌①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】族王凌①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "olz__wangling" },
@@ -1378,7 +1378,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】族荀淑(方言)/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】族荀淑(方言)/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "olz__xunshu" },
@@ -1388,7 +1388,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】族钟会(方言)/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】族钟会(方言)/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "olz__zhonghui" },
@@ -1398,7 +1398,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】晋(杜预x宣公主)/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】晋(杜预x宣公主)/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__duyu", "xuangongzhu" },
@@ -1408,7 +1408,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】晋周处①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】晋周处①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__zhouchu" },
@@ -1418,7 +1418,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】晋王元姬③/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】晋王元姬③/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__wangyuanji" },
@@ -1428,7 +1428,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】晋羊徽瑜③/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】晋羊徽瑜③/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__yanghuiyu" },
@@ -1438,7 +1438,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】晋羊祜①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】晋羊祜①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__yanghu" },
@@ -1448,7 +1448,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】曹婴⑤/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】曹婴⑤/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "caoying" },
@@ -1458,7 +1458,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】曹宪曹华①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】曹宪曹华①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "caoxiancaohua" },
@@ -1468,7 +1468,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】曹纯⑤/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】曹纯⑤/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__caochun" },
@@ -1478,7 +1478,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】曹金玉①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】曹金玉①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__caojinyu" },
@@ -1488,7 +1488,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】李典②/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】李典②/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__lidian" },
@@ -1498,7 +1498,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】李婉④/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】李婉④/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__liwan" },
@@ -1508,7 +1508,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】杨仪①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】杨仪①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__yangyi" },
@@ -1518,7 +1518,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】杨婉①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】杨婉①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__yangwan" },
@@ -1528,7 +1528,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】步骘①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】步骘①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "buzhi" },
@@ -1538,7 +1538,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】清河公主①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】清河公主①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "qinghegongzhu" },
@@ -1548,7 +1548,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】滕芳兰①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】滕芳兰①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__tengfanglan" },
@@ -1558,7 +1558,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】牛金①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】牛金①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__niujin" },
@@ -1568,7 +1568,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】王朗③/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】王朗③/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__wanglang" },
@@ -1578,7 +1578,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】王荣③/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】王荣③/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "wangrongh" },
@@ -1588,7 +1588,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界于吉④/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界于吉④/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__yuji" },
@@ -1598,7 +1598,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界伏皇后⑦/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界伏皇后⑦/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__fuhuanghou" },
@@ -1608,7 +1608,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界典韦④/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界典韦④/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__dianwei" },
@@ -1618,7 +1618,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界刘备⑨/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界刘备⑨/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__liubei" },
@@ -1628,7 +1628,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界刘禅③/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界刘禅③/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__liushan" },
@@ -1638,7 +1638,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界华雄③/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界华雄③/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__huaxiong" },
@@ -1648,7 +1648,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界卧龙诸葛亮⑫/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界卧龙诸葛亮⑫/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__wolong" },
@@ -1658,7 +1658,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界吕蒙②/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界吕蒙②/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__lvmeng" },
@@ -1668,7 +1668,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界周泰①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界周泰①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__zhoutai" },
@@ -1678,7 +1678,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界夏侯渊⑦/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界夏侯渊⑦/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__xiahouyuan" },
@@ -1688,7 +1688,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界太史慈①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界太史慈①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__taishici" },
@@ -1698,7 +1698,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界姜维③/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界姜维③/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__jiangwei" },
@@ -1708,7 +1708,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界孙策⑥/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界孙策⑥/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__sunce" },
@@ -1718,7 +1718,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界孙鲁班②/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界孙鲁班②/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__sunluban" },
@@ -1728,7 +1728,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界小乔①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界小乔①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__xiaoqiao" },
@@ -1738,7 +1738,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界左慈⑨/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界左慈⑨/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__zuoci" },
@@ -1748,7 +1748,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界庞德①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界庞德①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__pangde" },
@@ -1758,7 +1758,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界张角①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界张角①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__zhangjiao" },
@@ -1768,7 +1768,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界徐晃④/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界徐晃④/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__xuhuang" },
@@ -1778,7 +1778,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界徐盛②/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界徐盛②/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__xusheng" },
@@ -1788,7 +1788,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界曹仁①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界曹仁①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__caoren" },
@@ -1798,7 +1798,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界曹冲⑥/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界曹冲⑥/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__caochong" },
@@ -1808,7 +1808,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界曹操⑤/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界曹操⑤/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__caocao" },
@@ -1818,7 +1818,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界曹节①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界曹节①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__caojie" },
@@ -1828,7 +1828,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界朱桓⑥/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界朱桓⑥/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__zhuhuan" },
@@ -1838,7 +1838,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界李儒①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界李儒①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__liru" },
@@ -1848,7 +1848,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界法正②/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界法正②/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__fazheng" },
@@ -1858,7 +1858,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界王异①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界王异①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__wangyi" },
@@ -1868,7 +1868,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界祝融⑤/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界祝融⑤/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__zhurong" },
@@ -1878,7 +1878,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界荀彧⑦/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界荀彧⑦/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__xunyu" },
@@ -1888,7 +1888,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界董卓②/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界董卓②/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__dongzhuo" },
@@ -1898,7 +1898,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界蔡夫人③/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界蔡夫人③/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__caifuren" },
@@ -1908,7 +1908,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界蔡文姬②/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界蔡文姬②/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__caiwenji" },
@@ -1918,7 +1918,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界袁绍③/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界袁绍③/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__yuanshao" },
@@ -1928,7 +1928,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界贾诩②/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界贾诩②/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__jiaxu" },
@@ -1938,7 +1938,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界辛宪英⑧/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界辛宪英⑧/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__xinxianying" },
@@ -1948,7 +1948,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界邓艾④/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界邓艾④/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__dengai" },
@@ -1958,7 +1958,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界郭皇后①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界郭皇后①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__guohuanghou" },
@@ -1968,7 +1968,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界钟会①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界钟会①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__zhonghui" },
@@ -1978,7 +1978,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界高顺③/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界高顺③/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__gaoshun" },
@@ -1988,7 +1988,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界魏延①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界魏延①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__weiyan" },
@@ -1998,7 +1998,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界鲁肃①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界鲁肃①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__lusu" },
@@ -2008,7 +2008,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】界黄忠④/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】界黄忠④/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_ex__huangzhong" },
@@ -2018,7 +2018,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】石苞①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】石苞①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "shibao" },
@@ -2028,7 +2028,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】神曹操②/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】神曹操②/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__godcaocao" },
@@ -2038,7 +2038,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】程昱⑥/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】程昱⑥/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "chengyu" },
@@ -2048,7 +2048,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】糜竺①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】糜竺①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "mizhu" },
@@ -2058,7 +2058,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】胡金定①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】胡金定①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__hujinding" },
@@ -2068,7 +2068,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】苏飞②/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】苏飞②/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__sufei" },
@@ -2078,7 +2078,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】荀谌①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】荀谌①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__xunchen" },
@@ -2088,7 +2088,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】董允③/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】董允③/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "dongyun" },
@@ -2098,7 +2098,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】董昭①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】董昭①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__dongzhao" },
@@ -2108,7 +2108,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】董白①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】董白①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "dongbai" },
@@ -2118,7 +2118,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】蒋琬(方言)/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】蒋琬(方言)/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__jiangwan" },
@@ -2128,7 +2128,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】薛灵芸⑥/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】薛灵芸⑥/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__xuelingyun" },
@@ -2138,7 +2138,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】袁姬①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】袁姬①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__yuanji" },
@@ -2148,7 +2148,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】许靖①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】许靖①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__xujing" },
@@ -2158,7 +2158,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】诸葛果③/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】诸葛果③/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__zhugeguo" },
@@ -2168,7 +2168,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】诸葛瑾⑥/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】诸葛瑾⑥/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__zhugejin" },
@@ -2178,7 +2178,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】诸葛诞④/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】诸葛诞④/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__zhugedan" },
@@ -2188,7 +2188,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】谋姜维④/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】谋姜维④/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "olmou__jiangwei" },
@@ -2198,7 +2198,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】谋庞统⑤/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】谋庞统⑤/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "olmou__pangtong" },
@@ -2208,7 +2208,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】费祎①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】费祎①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__feiyi" },
@@ -2218,7 +2218,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】贾充②/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】贾充②/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__jiachong" },
@@ -2228,7 +2228,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】赵俨①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】赵俨①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "zhaoyan" },
@@ -2238,7 +2238,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】蹋顿①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】蹋顿①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "tadun" },
@@ -2248,7 +2248,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】邓芝①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】邓芝①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__dengzhi" },
@@ -2258,7 +2258,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】郭槐①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】郭槐①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "guohuaij" },
@@ -2268,7 +2268,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】钟琰①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】钟琰①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "zhongyan" },
@@ -2278,7 +2278,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】陈登①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】陈登①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__chendeng" },
@@ -2288,7 +2288,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】魔司马懿①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】魔司马懿①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_evil__simayi" },
@@ -2298,7 +2298,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】魔吕布①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】魔吕布①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_evil__lvbu" },
@@ -2308,7 +2308,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】魔张飞①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】魔张飞①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_evil__zhangfei" },
@@ -2318,7 +2318,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】魔曹操①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】魔曹操①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_evil__caocao" },
@@ -2328,7 +2328,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】魔貂蝉②/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】魔貂蝉②/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol_evil__diaochan" },
@@ -2338,7 +2338,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】鲁芝③/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】鲁芝③/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "luzhiw" },
@@ -2348,7 +2348,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】鲍三娘①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】鲍三娘①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__baosanniang" },
@@ -2358,7 +2358,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【OL】黄权①/packages/ol/image/generals",
+  path = "/精选原画/精选/【OL】黄权①/packages/ol/image/generals",
   content = {
     {
       enabled_generals = { "ol__huangquan" },
@@ -2368,7 +2368,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【SP】刘协②/packages/sp/image/generals",
+  path = "/精选原画/精选/【SP】刘协②/packages/sp/image/generals",
   content = {
     {
       enabled_generals = { "liuxie" },
@@ -2378,7 +2378,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【SP】曹昂②/packages/sp/image/generals",
+  path = "/精选原画/精选/【SP】曹昂②/packages/sp/image/generals",
   content = {
     {
       enabled_generals = { "caoang" },
@@ -2388,7 +2388,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【SP】曹洪⑤/packages/sp/image/generals",
+  path = "/精选原画/精选/【SP】曹洪⑤/packages/sp/image/generals",
   content = {
     {
       enabled_generals = { "caohong" },
@@ -2398,7 +2398,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【SP】杨修①/packages/sp/image/generals",
+  path = "/精选原画/精选/【SP】杨修①/packages/sp/image/generals",
   content = {
     {
       enabled_generals = { "yangxiu" },
@@ -2408,7 +2408,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【SP】蔡文姬⑥/packages/sp/image/generals",
+  path = "/精选原画/精选/【SP】蔡文姬⑥/packages/sp/image/generals",
   content = {
     {
       enabled_generals = { "sp__caiwenji" },
@@ -2418,7 +2418,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【SP】貂蝉④/packages/sp/image/generals",
+  path = "/精选原画/精选/【SP】貂蝉④/packages/sp/image/generals",
   content = {
     {
       enabled_generals = { "starsp__diaochan" },
@@ -2428,7 +2428,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【SP】赵云②/packages/sp/image/generals",
+  path = "/精选原画/精选/【SP】赵云②/packages/sp/image/generals",
   content = {
     {
       enabled_generals = { "starsp__zhaoyun" },
@@ -2438,7 +2438,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【SP】陈琳③/packages/sp/image/generals",
+  path = "/精选原画/精选/【SP】陈琳③/packages/sp/image/generals",
   content = {
     {
       enabled_generals = { "chenlin" },
@@ -2448,7 +2448,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【SP】魏姜维⑤/packages/sp/image/generals",
+  path = "/精选原画/精选/【SP】魏姜维⑤/packages/sp/image/generals",
   content = {
     {
       enabled_generals = { "jsp__jiangwei" },
@@ -2458,7 +2458,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【一将成名】关平②/packages/yj/image/generals",
+  path = "/精选原画/精选/【一将成名】关平②/packages/yj/image/generals",
   content = {
     {
       enabled_generals = { "guanping" },
@@ -2468,7 +2468,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【一将成名】刘谌①/packages/yj/image/generals",
+  path = "/精选原画/精选/【一将成名】刘谌①/packages/yj/image/generals",
   content = {
     {
       enabled_generals = { "liuchen" },
@@ -2478,7 +2478,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【一将成名】吴苋⑦/packages/yj/image/generals",
+  path = "/精选原画/精选/【一将成名】吴苋⑦/packages/yj/image/generals",
   content = {
     {
       enabled_generals = { "wuxian" },
@@ -2488,7 +2488,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【一将成名】孙登②/packages/yj/image/generals",
+  path = "/精选原画/精选/【一将成名】孙登②/packages/yj/image/generals",
   content = {
     {
       enabled_generals = { "sundeng" },
@@ -2498,7 +2498,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【一将成名】孙资刘放③/packages/yj/image/generals",
+  path = "/精选原画/精选/【一将成名】孙资刘放③/packages/yj/image/generals",
   content = {
     {
       enabled_generals = { "sunziliufang" },
@@ -2508,7 +2508,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【一将成名】张让②/packages/yj/image/generals",
+  path = "/精选原画/精选/【一将成名】张让②/packages/yj/image/generals",
   content = {
     {
       enabled_generals = { "zhangrang" },
@@ -2518,7 +2518,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【一将成名】徐庶⑤/packages/yj/image/generals",
+  path = "/精选原画/精选/【一将成名】徐庶⑤/packages/yj/image/generals",
   content = {
     {
       enabled_generals = { "xushu" },
@@ -2528,7 +2528,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【一将成名】徐氏⑦/packages/yj/image/generals",
+  path = "/精选原画/精选/【一将成名】徐氏⑦/packages/yj/image/generals",
   content = {
     {
       enabled_generals = { "xushi" },
@@ -2538,7 +2538,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【一将成名】旧王异⑤/packages/yj/image/generals",
+  path = "/精选原画/精选/【一将成名】旧王异⑤/packages/yj/image/generals",
   content = {
     {
       enabled_generals = { "nos__wangyi" },
@@ -2548,7 +2548,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【一将成名】曹冲⑥/packages/yj/image/generals",
+  path = "/精选原画/精选/【一将成名】曹冲⑥/packages/yj/image/generals",
   content = {
     {
       enabled_generals = { "caochong" },
@@ -2558,7 +2558,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【一将成名】曹叡④/packages/yj/image/generals",
+  path = "/精选原画/精选/【一将成名】曹叡④/packages/yj/image/generals",
   content = {
     {
       enabled_generals = { "caorui" },
@@ -2568,7 +2568,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【一将成名】朱治①/packages/yj/image/generals",
+  path = "/精选原画/精选/【一将成名】朱治①/packages/yj/image/generals",
   content = {
     {
       enabled_generals = { "zhuzhi" },
@@ -2578,7 +2578,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【一将成名】李严①/packages/yj/image/generals",
+  path = "/精选原画/精选/【一将成名】李严①/packages/yj/image/generals",
   content = {
     {
       enabled_generals = { "liyans" },
@@ -2588,7 +2588,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【一将成名】步练师③/packages/yj/image/generals",
+  path = "/精选原画/精选/【一将成名】步练师③/packages/yj/image/generals",
   content = {
     {
       enabled_generals = { "bulianshi" },
@@ -2598,7 +2598,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【一将成名】满宠①/packages/yj/image/generals",
+  path = "/精选原画/精选/【一将成名】满宠①/packages/yj/image/generals",
   content = {
     {
       enabled_generals = { "manchong" },
@@ -2608,7 +2608,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【一将成名】王异⑤/packages/yj/image/generals",
+  path = "/精选原画/精选/【一将成名】王异⑤/packages/yj/image/generals",
   content = {
     {
       enabled_generals = { "wangyi" },
@@ -2618,7 +2618,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【一将成名】秦宓②/packages/yj/image/generals",
+  path = "/精选原画/精选/【一将成名】秦宓②/packages/yj/image/generals",
   content = {
     {
       enabled_generals = { "qinmi" },
@@ -2628,7 +2628,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【一将成名】郭图逢纪②/packages/yj/image/generals",
+  path = "/精选原画/精选/【一将成名】郭图逢纪②/packages/yj/image/generals",
   content = {
     {
       enabled_generals = { "guotupangji" },
@@ -2638,7 +2638,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【一将成名】钟繇①/packages/yj/image/generals",
+  path = "/精选原画/精选/【一将成名】钟繇①/packages/yj/image/generals",
   content = {
     {
       enabled_generals = { "zhongyao" },
@@ -2648,7 +2648,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【一将成名】鲁肃②/packages/yj/image/generals",
+  path = "/精选原画/精选/【一将成名】鲁肃②/packages/yj/image/generals",
   content = {
     {
       enabled_generals = { "lusu" },
@@ -2658,7 +2658,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】(乐曹植x崔令仪)/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】(乐曹植x崔令仪)/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "cuilingyi", "mu__caozhi" },
@@ -2668,7 +2668,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】(关索x鲍三娘)②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】(关索x鲍三娘)②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__baosanniang", "ty__guansuo" },
@@ -2678,7 +2678,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】(夏侯氏x张星彩)/packages/mini/image/generals",
+  path = "/精选原画/精选/【十周年】(夏侯氏x张星彩)/packages/mini/image/generals",
   content = {
     {
       enabled_generals = { "mini__zhangxingcai" },
@@ -2688,7 +2688,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】(夏侯氏x张星彩)/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】(夏侯氏x张星彩)/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__xiahoushi" },
@@ -2698,7 +2698,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】(孙鲁班x孙鲁育)②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】(孙鲁班x孙鲁育)②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__sunluyu", "ty_ex__sunluban" },
@@ -2708,7 +2708,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】(曹髦x卞玥）/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】(曹髦x卞玥）/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "bianyue", "caomao" },
@@ -2718,7 +2718,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】(界曹叡x界郭皇后)/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】(界曹叡x界郭皇后)/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__caorui", "ty_ex__guohuanghou" },
@@ -2728,7 +2728,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】(蒯祺x诸葛梦雪)/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】(蒯祺x诸葛梦雪)/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "kuaiqi", "zhugemengxue" },
@@ -2738,7 +2738,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】(诸葛梦雪x若雪)/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】(诸葛梦雪x若雪)/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "zhugeruoxue" },
@@ -2748,7 +2748,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】(谋司马师x夏侯徽)/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】(谋司马师x夏侯徽)/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__xiahouhui", "tymou__simashi" },
@@ -2758,7 +2758,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】SP关羽①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】SP关羽①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_sp__guanyu" },
@@ -2768,7 +2768,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】SP庞统①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】SP庞统①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "sp__pangtong" },
@@ -2778,7 +2778,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】SP甄姬②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】SP甄姬②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_sp__zhenji" },
@@ -2788,7 +2788,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】SP赵云①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】SP赵云①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_sp__zhaoyun" },
@@ -2798,7 +2798,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】SP黄月英④/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】SP黄月英④/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__huangyueying" },
@@ -2808,7 +2808,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】丁原②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】丁原②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__dingyuan" },
@@ -2818,7 +2818,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】丁尚涴①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】丁尚涴①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "dingfuren" },
@@ -2828,7 +2828,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】万年公主③/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】万年公主③/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "wanniangongzhu" },
@@ -2838,7 +2838,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】东海龙王①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】东海龙王①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "longwang" },
@@ -2848,7 +2848,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】严夫人①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】严夫人①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "yanfuren" },
@@ -2858,7 +2858,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】严畯③/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】严畯③/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "yanjun" },
@@ -2868,7 +2868,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】乐大乔③/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】乐大乔③/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "mu__daqiao" },
@@ -2878,7 +2878,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】乐小乔③/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】乐小乔③/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "mu__xiaoqiao" },
@@ -2888,7 +2888,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】乐祢衡①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】乐祢衡①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "mu__miheng" },
@@ -2898,7 +2898,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】乐綝①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】乐綝①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "yuechen" },
@@ -2908,7 +2908,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】乐蔡文姬①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】乐蔡文姬①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "mu__caiwenji" },
@@ -2918,7 +2918,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】乐诸葛果①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】乐诸葛果①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "mu__zhugeguo" },
@@ -2928,7 +2928,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】乐貂蝉③/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】乐貂蝉③/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "mu__diaochan" },
@@ -2938,7 +2938,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】乐进③/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】乐进③/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__yuejin" },
@@ -2948,7 +2948,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】乐邹氏①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】乐邹氏①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "mu__zoushi" },
@@ -2958,7 +2958,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】任婉①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】任婉①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "renwan" },
@@ -2968,7 +2968,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】何晏②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】何晏②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "heyan" },
@@ -2978,7 +2978,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】兀突骨①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】兀突骨①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__wutugu" },
@@ -2988,7 +2988,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】全惠解①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】全惠解①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "quanhuijie" },
@@ -2998,7 +2998,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】公孙度①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】公孙度①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "gongsundu" },
@@ -3008,7 +3008,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】关宁②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】关宁②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "guannings" },
@@ -3018,7 +3018,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】冯妤①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】冯妤①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__fengfangnv" },
@@ -3028,7 +3028,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】刘宏①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】刘宏①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__liuhong" },
@@ -3038,7 +3038,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】刘巴①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】刘巴①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__liuba" },
@@ -3048,7 +3048,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】刘晔④/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】刘晔④/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__liuye" },
@@ -3058,7 +3058,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】刘永①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】刘永①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "liuyong" },
@@ -3068,7 +3068,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】刘焉⑨/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】刘焉⑨/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "liuyan" },
@@ -3078,7 +3078,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】刘矜刘佩①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】刘矜刘佩①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "liujinliupei" },
@@ -3088,7 +3088,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】刘辩②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】刘辩②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "liubian" },
@@ -3098,7 +3098,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】南华老仙④/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】南华老仙④/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__nanhualaoxian" },
@@ -3108,7 +3108,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】卢弈①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】卢弈①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "luyi" },
@@ -3118,7 +3118,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】司马孚①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】司马孚①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__simafu" },
@@ -3128,7 +3128,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】司马徽⑤/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】司马徽⑤/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "simahui" },
@@ -3138,7 +3138,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】吕玲绮②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】吕玲绮②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "lvlingqi" },
@@ -3148,7 +3148,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】周善①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】周善①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "zhoushan" },
@@ -3158,7 +3158,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】周宣③/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】周宣③/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "zhouxuan" },
@@ -3168,7 +3168,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】周鲂⑤/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】周鲂⑤/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "zhoufang" },
@@ -3178,7 +3178,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】唐咨①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】唐咨①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__tangzi" },
@@ -3188,7 +3188,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】唐姬②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】唐姬②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "tangji" },
@@ -3198,7 +3198,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】夏侯令女①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】夏侯令女①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "xiahoulingnv" },
@@ -3208,7 +3208,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】夏侯杰②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】夏侯杰②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "xiahoujie" },
@@ -3218,7 +3218,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】大小乔⑥/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】大小乔⑥/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__daqiaoxiaoqiao" },
@@ -3228,7 +3228,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】威关银屏(武)/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】威关银屏(武)/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_wei__guanyinping" },
@@ -3238,7 +3238,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】威刘备④/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】威刘备④/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_wei__liubei" },
@@ -3248,7 +3248,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】威孙尚香(武)/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】威孙尚香(武)/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_wei__sunshangxiang" },
@@ -3258,7 +3258,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】威张星彩(武)/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】威张星彩(武)/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_wei__xingcai" },
@@ -3268,7 +3268,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】威曹丕①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】威曹丕①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_wei__caopi" },
@@ -3278,7 +3278,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】威董卓①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】威董卓①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_wei__dongzhuo" },
@@ -3288,7 +3288,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】孙礼①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】孙礼①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "sunli" },
@@ -3298,7 +3298,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】孙綝②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】孙綝②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "sunchen" },
@@ -3308,7 +3308,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】孙翎鸾②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】孙翎鸾②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "sunlingluan" },
@@ -3318,7 +3318,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】宣公主①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】宣公主①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__xuangongzhu" },
@@ -3328,7 +3328,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】庞德公①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】庞德公①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__pangdegong" },
@@ -3338,7 +3338,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】张媱②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】张媱②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "zhangyao" },
@@ -3348,7 +3348,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】张昌蒲③/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】张昌蒲③/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__zhangchangpu" },
@@ -3358,7 +3358,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】张琪瑛①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】张琪瑛①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "zhangqiying" },
@@ -3368,7 +3368,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】张让①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】张让①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__zhangrang" },
@@ -3378,7 +3378,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】徐荣④/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】徐荣④/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "xurong" },
@@ -3388,7 +3388,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】文鸯③/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】文鸯③/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "wenyang" },
@@ -3398,7 +3398,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】星孙坚①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】星孙坚①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "tystar__sunjian" },
@@ -3408,7 +3408,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】星孙尚香②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】星孙尚香②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "tystar__sunshangxiang" },
@@ -3418,7 +3418,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】星曹仁①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】星曹仁①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "tystar__caoren" },
@@ -3428,7 +3428,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】星荀彧①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】星荀彧①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "tystar__xunyu" },
@@ -3438,7 +3438,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】星董卓②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】星董卓②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "tystar__dongzhuo" },
@@ -3448,7 +3448,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】星袁绍①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】星袁绍①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "tystar__yuanshao" },
@@ -3458,7 +3458,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】是仪①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】是仪①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "shiyi" },
@@ -3468,7 +3468,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】曹华②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】曹华②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "caohua" },
@@ -3478,7 +3478,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】曹宪③/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】曹宪③/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "caoxian" },
@@ -3488,7 +3488,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】曹性①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】曹性①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "caoxing" },
@@ -3498,7 +3498,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】曹纯①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】曹纯①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__caochun" },
@@ -3508,7 +3508,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】曹芳①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】曹芳①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "caofang" },
@@ -3518,7 +3518,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】曹金玉②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】曹金玉②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "caojinyu" },
@@ -3528,7 +3528,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】朱佩兰①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】朱佩兰①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "zhupeilan" },
@@ -3538,7 +3538,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】李傕①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】李傕①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "lijue" },
@@ -3548,7 +3548,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】李典①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】李典①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__lidian" },
@@ -3558,7 +3558,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】杜夔①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】杜夔①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "dukui" },
@@ -3568,7 +3568,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】杜夫人④/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】杜夫人④/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "dufuren" },
@@ -3578,7 +3578,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】来莺儿①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】来莺儿①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "laiyinger" },
@@ -3588,7 +3588,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】柏灵筠②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】柏灵筠②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "bailingyun" },
@@ -3598,7 +3598,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】柳婒①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】柳婒①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "liutan" },
@@ -3608,7 +3608,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】梁兴②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】梁兴②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "liangxing" },
@@ -3618,7 +3618,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】樊玉凤①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】樊玉凤①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "fanyufeng" },
@@ -3628,7 +3628,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】段煨②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】段煨②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "duanwei" },
@@ -3638,7 +3638,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】沙摩柯⑧/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】沙摩柯⑧/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "shamoke" },
@@ -3648,7 +3648,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】滕公主①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】滕公主①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "tenggongzhu" },
@@ -3658,7 +3658,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】潘淑①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】潘淑①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__panshu" },
@@ -3668,7 +3668,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】潘濬①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】潘濬①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "panjun" },
@@ -3678,7 +3678,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】灵雎①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】灵雎①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__lingju" },
@@ -3688,7 +3688,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】猪猪侠侠联动系列/packages/shzl/image/generals",
+  path = "/精选原画/精选/【十周年】猪猪侠侠联动系列/packages/shzl/image/generals",
   content = {
     {
       enabled_generals = { "xuyou" },
@@ -3698,7 +3698,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】猪猪侠侠联动系列/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】猪猪侠侠联动系列/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "chengui", "goddianwei", "godhuangzhong", "godpangtong", "godzhangfei", "ty__puyuan", "ty_ex__lingtong", "ty_wei__lvbu", "ty_wei__zhangliao", "tymou__dengai", "tymou__huanggai", "tymou__luotong" },
@@ -3708,7 +3708,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】王双①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】王双①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "wangshuang" },
@@ -3718,7 +3718,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】王悦①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】王悦①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "wangyues" },
@@ -3728,7 +3728,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】王昶①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】王昶①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__wangchang" },
@@ -3738,7 +3738,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】王桃②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】王桃②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "wangtao" },
@@ -3748,7 +3748,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】王荣①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】王荣①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__wangrongh" },
@@ -3758,7 +3758,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】甘夫人⑥/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】甘夫人⑥/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__ganfuren" },
@@ -3768,7 +3768,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】甘糜夫人②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】甘糜夫人②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ganfurenmifuren" },
@@ -3778,7 +3778,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】田丰①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】田丰①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__tianfeng" },
@@ -3788,7 +3788,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界SP太史慈②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界SP太史慈②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__taishici" },
@@ -3798,7 +3798,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界于禁⑥/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界于禁⑥/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__yujin" },
@@ -3808,7 +3808,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界伏皇后①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界伏皇后①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__fuhuanghou" },
@@ -3818,7 +3818,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界关平④/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界关平④/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__guanping" },
@@ -3828,7 +3828,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界刘封⑥/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界刘封⑥/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__liufeng" },
@@ -3838,7 +3838,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界刘琦①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界刘琦①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__liuqi" },
@@ -3848,7 +3848,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界刘表①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界刘表①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__liubiao" },
@@ -3858,7 +3858,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界刘谌②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界刘谌②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__liuchen" },
@@ -3868,7 +3868,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界司马朗②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界司马朗②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__simalang" },
@@ -3878,7 +3878,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界吴懿①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界吴懿①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__wuyi" },
@@ -3888,7 +3888,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界夏侯霸③/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界夏侯霸③/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__xiahouba" },
@@ -3898,7 +3898,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界孙休③/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界孙休③/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__sunxiu" },
@@ -3908,7 +3908,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界张嶷①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界张嶷①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__zhangyi" },
@@ -3918,7 +3918,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界张春华②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界张春华②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__zhangchunhua" },
@@ -3928,7 +3928,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界张松⑥/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界张松⑥/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__zhangsong" },
@@ -3938,7 +3938,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界徐庶①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界徐庶①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__xushu" },
@@ -3948,7 +3948,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界曹休①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界曹休①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__caoxiu" },
@@ -3958,7 +3958,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界曹真③/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界曹真③/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__caozhen" },
@@ -3968,7 +3968,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界朱治⑧/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界朱治⑧/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__zhuzhi" },
@@ -3978,7 +3978,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界朱然①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界朱然①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__zhuran" },
@@ -3988,7 +3988,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界李儒⑤/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界李儒⑤/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__liru" },
@@ -3998,7 +3998,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界步练师②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界步练师②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__bulianshi" },
@@ -4008,7 +4008,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界沮授④/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界沮授④/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__jvshou" },
@@ -4018,7 +4018,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界王异①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界王异①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__wangyi" },
@@ -4028,7 +4028,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界简雍①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界简雍①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__jianyong" },
@@ -4038,7 +4038,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界荀攸①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界荀攸①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__xunyou" },
@@ -4048,7 +4048,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界诸葛诞④/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界诸葛诞④/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__zhugedan" },
@@ -4058,7 +4058,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界辛宪英①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界辛宪英①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__xinxianying" },
@@ -4068,7 +4068,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界钟会②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界钟会②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__zhonghui" },
@@ -4078,7 +4078,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界陈宫①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界陈宫①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__chengong" },
@@ -4088,7 +4088,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界陈群④/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界陈群④/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__chenqun" },
@@ -4098,7 +4098,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】界高顺①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】界高顺①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__gaoshun" },
@@ -4108,7 +4108,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】神关羽②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】神关羽②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__godguanyu" },
@@ -4118,7 +4118,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】神刘备①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】神刘备①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__godliubei" },
@@ -4128,7 +4128,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】神姜维①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】神姜维①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "godjiangwei" },
@@ -4138,7 +4138,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】神孙权②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】神孙权②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__godsunquan" },
@@ -4148,7 +4148,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】神张角①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】神张角①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "godzhangjiao" },
@@ -4158,7 +4158,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】神邓艾①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】神邓艾①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "goddengai" },
@@ -4168,7 +4168,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】神钟会①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】神钟会①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "godzhonghui" },
@@ -4178,7 +4178,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】神马超③/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】神马超③/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "godmachao" },
@@ -4188,7 +4188,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】程昱①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】程昱①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__chengyu" },
@@ -4198,7 +4198,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】笮融①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】笮融①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "zerong" },
@@ -4208,7 +4208,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】管宁②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】管宁②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "guanning" },
@@ -4218,7 +4218,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】羊祜①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】羊祜①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__yanghu" },
@@ -4228,7 +4228,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】花鬘⑦/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】花鬘⑦/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__huaman" },
@@ -4238,7 +4238,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】苏飞②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】苏飞②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__sufei" },
@@ -4248,7 +4248,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】荀谌③/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】荀谌③/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__xunchen" },
@@ -4258,7 +4258,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】莫琼树②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】莫琼树②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "moqiongshu" },
@@ -4268,7 +4268,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】葛玄①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】葛玄①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "gexuan" },
@@ -4278,7 +4278,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】董承①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】董承①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__dongcheng" },
@@ -4288,7 +4288,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】董白①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】董白①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__dongbai" },
@@ -4298,7 +4298,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】董贵人①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】董贵人①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "dongguiren" },
@@ -4308,7 +4308,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】蒋干①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】蒋干①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "jianggan" },
@@ -4318,7 +4318,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】薛灵芸①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】薛灵芸①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "xuelingyun" },
@@ -4328,7 +4328,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】许贡①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】许贡①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__xugong" },
@@ -4338,7 +4338,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】许邵③/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】许邵③/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__xushao" },
@@ -4348,7 +4348,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】许靖③/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】许靖③/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__xujing" },
@@ -4358,7 +4358,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】诸葛京①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】诸葛京①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "zhugejing" },
@@ -4368,7 +4368,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】诸葛尚①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】诸葛尚①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "zhugeshang" },
@@ -4378,7 +4378,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】诸葛果②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】诸葛果②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__zhugeguo" },
@@ -4388,7 +4388,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】谋曹爽①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】谋曹爽①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "tymou__caoshuang" },
@@ -4398,7 +4398,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】谋诸葛瑾①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】谋诸葛瑾①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "tymou__zhugejin" },
@@ -4408,7 +4408,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】谋陈琳①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】谋陈琳①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "tymou__chenlin" },
@@ -4418,7 +4418,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】谯周①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】谯周①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__qiaozhou" },
@@ -4428,7 +4428,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】贾充①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】贾充①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__jiachong" },
@@ -4438,7 +4438,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】赵俨①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】赵俨①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__zhaoyan" },
@@ -4448,7 +4448,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】赵嫣①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】赵嫣①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "zhaoyanw" },
@@ -4458,7 +4458,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】赵直①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】赵直①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "zhaozhi" },
@@ -4468,7 +4468,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】赵襄①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】赵襄①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__zhaoxiang" },
@@ -4478,7 +4478,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】郑浑①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】郑浑①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "zhenghun" },
@@ -4488,7 +4488,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】郭照①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】郭照①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "guozhao" },
@@ -4498,7 +4498,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】钟繇①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】钟繇①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty_ex__zhongyao" },
@@ -4508,7 +4508,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】阎柔②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】阎柔②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "yanrou" },
@@ -4518,7 +4518,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】陆郁生①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】陆郁生①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "luyusheng" },
@@ -4528,7 +4528,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】陈式①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】陈式①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "chenshi" },
@@ -4538,7 +4538,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】陈琳①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】陈琳①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__chenlin" },
@@ -4548,7 +4548,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】韩馥②/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】韩馥②/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "hanfu" },
@@ -4558,7 +4558,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】马伶俐①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】马伶俐①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "malingli" },
@@ -4568,7 +4568,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】麴义①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】麴义①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__quyi" },
@@ -4578,7 +4578,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】黄承彦①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】黄承彦①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "ty__huangchengyan" },
@@ -4588,7 +4588,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【十周年】黄舞蝶①/packages/tenyear/image/generals",
+  path = "/精选原画/精选/【十周年】黄舞蝶①/packages/tenyear/image/generals",
   content = {
     {
       enabled_generals = { "huangwudie" },
@@ -4598,7 +4598,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【小程序】SP蔡文姬①/packages/mini/image/generals",
+  path = "/精选原画/精选/【小程序】SP蔡文姬①/packages/mini/image/generals",
   content = {
     {
       enabled_generals = { "mini_sp__caiwenji" },
@@ -4608,7 +4608,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【小程序】极(大乔x小乔)①/packages/mini/image/generals",
+  path = "/精选原画/精选/【小程序】极(大乔x小乔)①/packages/mini/image/generals",
   content = {
     {
       enabled_generals = { "miniex__daqiao", "miniex__xiaoqiao" },
@@ -4618,7 +4618,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【小程序】极郭嘉①/packages/mini/image/generals",
+  path = "/精选原画/精选/【小程序】极郭嘉①/packages/mini/image/generals",
   content = {
     {
       enabled_generals = { "miniex__guojia" },
@@ -4628,7 +4628,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【小程序】魏SP姜维⑤/packages/mini/image/generals",
+  path = "/精选原画/精选/【小程序】魏SP姜维⑤/packages/mini/image/generals",
   content = {
     {
       enabled_generals = { "mini_sp__jiangwei" },
@@ -4638,7 +4638,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】SP司马昭②/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】SP司马昭②/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "m_sp__simazhao" },
@@ -4648,7 +4648,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】兀突骨①/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】兀突骨①/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mobile__wutugu" },
@@ -4658,7 +4658,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】关银屏②/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】关银屏②/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mobile__guanyinping" },
@@ -4668,7 +4668,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】刘璋①/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】刘璋①/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "liuzhang" },
@@ -4678,7 +4678,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】势程普②/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】势程普②/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "m_shi__chengpu" },
@@ -4688,7 +4688,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】势魏延③/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】势魏延③/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "m_shi2__weiyan", "m_shi3__weiyan", "m_shi__weiyan" },
@@ -4698,7 +4698,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】嵇康②/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】嵇康②/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mobile__jikang" },
@@ -4708,7 +4708,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】庞羲①/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】庞羲①/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "pangxi" },
@@ -4718,7 +4718,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】张琪瑛③/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】张琪瑛③/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mobile__zhangqiying" },
@@ -4728,7 +4728,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】张翼①/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】张翼①/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "zhiyi" },
@@ -4738,7 +4738,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】徐荣②/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】徐荣②/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mobile__xurong" },
@@ -4748,7 +4748,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】文鸯(吴)②/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】文鸯(吴)②/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mobile__wenyang" },
@@ -4758,7 +4758,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】星徐晃②/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】星徐晃②/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mxing__xuhuang" },
@@ -4768,7 +4768,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】星甘宁①/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】星甘宁①/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mxing__ganning" },
@@ -4778,7 +4778,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】星黄忠③/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】星黄忠③/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mxing__huangzhong" },
@@ -4788,7 +4788,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】曹婴⑤/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】曹婴⑤/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mobile__caoying" },
@@ -4798,7 +4798,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】曹纯⑤/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】曹纯⑤/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "caochun" },
@@ -4808,7 +4808,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】李丰①/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】李丰①/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "lifeng" },
@@ -4818,7 +4818,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】杜预④/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】杜预④/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mobile__duyu" },
@@ -4828,7 +4828,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】杨彪③/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】杨彪③/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "yangbiao" },
@@ -4838,7 +4838,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】桥公②/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】桥公②/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "qiaogong" },
@@ -4848,7 +4848,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】清河公主①/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】清河公主①/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mobile__qinghegongzhu" },
@@ -4858,7 +4858,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】灵雎②/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】灵雎②/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mobile__lingju" },
@@ -4868,7 +4868,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】王元姬⑤/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】王元姬⑤/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mobile__wangyuanji" },
@@ -4878,7 +4878,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】界吴懿②/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】界吴懿②/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "m_ex__wuyi" },
@@ -4888,7 +4888,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】界周妃④/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】界周妃④/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "m_ex__zhoufei" },
@@ -4898,7 +4898,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】界小乔③/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】界小乔③/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "m_ex__xiaoqiao" },
@@ -4908,7 +4908,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】界廖化③/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】界廖化③/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "m_ex__liaohua" },
@@ -4918,7 +4918,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】界徐盛④/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】界徐盛④/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "m_ex__xusheng" },
@@ -4928,7 +4928,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】界曹植①/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】界曹植①/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "m_ex__caozhi" },
@@ -4938,7 +4938,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】界朱然⑦/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】界朱然⑦/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "m_ex__zhuran" },
@@ -4948,7 +4948,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】界李儒②/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】界李儒②/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "m_ex__liru" },
@@ -4958,7 +4958,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】界步练师⑤/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】界步练师⑤/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "m_ex__bulianshi" },
@@ -4968,7 +4968,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】界蔡文姬②/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】界蔡文姬②/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "m_ex__caiwenji" },
@@ -4978,7 +4978,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】界郭皇后②/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】界郭皇后②/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "m_ex__guohuanghou" },
@@ -4988,7 +4988,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】界钟会⑤/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】界钟会⑤/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "m_ex__zhonghui" },
@@ -4998,7 +4998,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】神吕布⑤/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】神吕布⑤/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mobile__godlvbu" },
@@ -5008,7 +5008,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】神荀彧①/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】神荀彧①/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "godxunyu" },
@@ -5018,7 +5018,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】神郭嘉①/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】神郭嘉①/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "godguojia" },
@@ -5028,7 +5028,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】神鲁肃①/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】神鲁肃①/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "godlusu" },
@@ -5038,7 +5038,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】祢衡①/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】祢衡①/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "miheng" },
@@ -5048,7 +5048,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】羊徽瑜①/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】羊徽瑜①/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mobile__yanghuiyu" },
@@ -5058,7 +5058,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】胡金定③/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】胡金定③/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "hujinding" },
@@ -5068,7 +5068,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】郭女王①/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】郭女王①/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mobile__guozhao" },
@@ -5078,7 +5078,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】陶谦②/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】陶谦②/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "taoqian" },
@@ -5088,7 +5088,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】马云騄⑥/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】马云騄⑥/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mobile__mayunlu" },
@@ -5098,7 +5098,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】马钧②/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】马钧②/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "majun" },
@@ -5108,7 +5108,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【手杀】骆统②/packages/mobile/image/generals",
+  path = "/精选原画/精选/【手杀】骆统②/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "luotong" },
@@ -5118,7 +5118,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【江山如故】合诸葛亮①/packages/jsrg/image/generals",
+  path = "/精选原画/精选/【江山如故】合诸葛亮①/packages/jsrg/image/generals",
   content = {
     {
       enabled_generals = { "js__zhugeliang" },
@@ -5128,7 +5128,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【界限突破】伊籍③/packages/standard_ex/image/generals",
+  path = "/精选原画/精选/【界限突破】伊籍③/packages/standard_ex/image/generals",
   content = {
     {
       enabled_generals = { "yijik" },
@@ -5138,7 +5138,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【界限突破】界关羽⑫/packages/standard_ex/image/generals",
+  path = "/精选原画/精选/【界限突破】界关羽⑫/packages/standard_ex/image/generals",
   content = {
     {
       enabled_generals = { "ex__guanyu" },
@@ -5148,7 +5148,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【界限突破】界司马懿④/packages/standard_ex/image/generals",
+  path = "/精选原画/精选/【界限突破】界司马懿④/packages/standard_ex/image/generals",
   content = {
     {
       enabled_generals = { "ex__simayi" },
@@ -5158,7 +5158,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【界限突破】界吕布④/packages/standard_ex/image/generals",
+  path = "/精选原画/精选/【界限突破】界吕布④/packages/standard_ex/image/generals",
   content = {
     {
       enabled_generals = { "ex__lvbu" },
@@ -5168,7 +5168,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【界限突破】界周瑜②/packages/standard_ex/image/generals",
+  path = "/精选原画/精选/【界限突破】界周瑜②/packages/standard_ex/image/generals",
   content = {
     {
       enabled_generals = { "ex__zhouyu" },
@@ -5178,7 +5178,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【界限突破】界夏侯惇⑪/packages/standard_ex/image/generals",
+  path = "/精选原画/精选/【界限突破】界夏侯惇⑪/packages/standard_ex/image/generals",
   content = {
     {
       enabled_generals = { "ex__xiahoudun" },
@@ -5188,7 +5188,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【界限突破】界大乔㉓/packages/standard_ex/image/generals",
+  path = "/精选原画/精选/【界限突破】界大乔㉓/packages/standard_ex/image/generals",
   content = {
     {
       enabled_generals = { "ex__daqiao" },
@@ -5198,7 +5198,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【界限突破】界孙尚香⑰/packages/standard_ex/image/generals",
+  path = "/精选原画/精选/【界限突破】界孙尚香⑰/packages/standard_ex/image/generals",
   content = {
     {
       enabled_generals = { "ex__sunshangxiang" },
@@ -5208,7 +5208,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【界限突破】界张辽④/packages/standard_ex/image/generals",
+  path = "/精选原画/精选/【界限突破】界张辽④/packages/standard_ex/image/generals",
   content = {
     {
       enabled_generals = { "ex__zhangliao" },
@@ -5218,7 +5218,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【界限突破】界甄姬①/packages/standard_ex/image/generals",
+  path = "/精选原画/精选/【界限突破】界甄姬①/packages/standard_ex/image/generals",
   content = {
     {
       enabled_generals = { "ex__zhenji" },
@@ -5228,7 +5228,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【界限突破】界甘宁②/packages/standard_ex/image/generals",
+  path = "/精选原画/精选/【界限突破】界甘宁②/packages/standard_ex/image/generals",
   content = {
     {
       enabled_generals = { "ex__ganning" },
@@ -5238,7 +5238,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【界限突破】界诸葛亮③/packages/standard_ex/image/generals",
+  path = "/精选原画/精选/【界限突破】界诸葛亮③/packages/standard_ex/image/generals",
   content = {
     {
       enabled_generals = { "ex__zhugeliang" },
@@ -5248,7 +5248,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【界限突破】界貂蝉⑰/packages/standard_ex/image/generals",
+  path = "/精选原画/精选/【界限突破】界貂蝉⑰/packages/standard_ex/image/generals",
   content = {
     {
       enabled_generals = { "ex__diaochan" },
@@ -5258,7 +5258,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【界限突破】界郭嘉③/packages/standard_ex/image/generals",
+  path = "/精选原画/精选/【界限突破】界郭嘉③/packages/standard_ex/image/generals",
   content = {
     {
       enabled_generals = { "ex__guojia" },
@@ -5268,7 +5268,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【界限突破】界陆逊①/packages/standard_ex/image/generals",
+  path = "/精选原画/精选/【界限突破】界陆逊①/packages/standard_ex/image/generals",
   content = {
     {
       enabled_generals = { "ex__luxun" },
@@ -5278,7 +5278,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【界限突破】界黄月英③/packages/standard_ex/image/generals",
+  path = "/精选原画/精选/【界限突破】界黄月英③/packages/standard_ex/image/generals",
   content = {
     {
       enabled_generals = { "ex__huangyueying" },
@@ -5288,7 +5288,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【界限突破】界黄盖①/packages/standard_ex/image/generals",
+  path = "/精选原画/精选/【界限突破】界黄盖①/packages/standard_ex/image/generals",
   content = {
     {
       enabled_generals = { "ex__huanggai" },
@@ -5298,7 +5298,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【神话再临】周妃⑥/packages/shzl/image/generals",
+  path = "/精选原画/精选/【神话再临】周妃⑥/packages/shzl/image/generals",
   content = {
     {
       enabled_generals = { "zhoufei" },
@@ -5308,7 +5308,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【神话再临】孙亮②/packages/shzl/image/generals",
+  path = "/精选原画/精选/【神话再临】孙亮②/packages/shzl/image/generals",
   content = {
     {
       enabled_generals = { "sunliang" },
@@ -5318,7 +5318,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【神话再临】张绣⑪/packages/shzl/image/generals",
+  path = "/精选原画/精选/【神话再临】张绣⑪/packages/shzl/image/generals",
   content = {
     {
       enabled_generals = { "zhangxiu" },
@@ -5328,7 +5328,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【神话再临】王基④/packages/shzl/image/generals",
+  path = "/精选原画/精选/【神话再临】王基④/packages/shzl/image/generals",
   content = {
     {
       enabled_generals = { "wangji" },
@@ -5338,7 +5338,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【神话再临】王平⑩/packages/shzl/image/generals",
+  path = "/精选原画/精选/【神话再临】王平⑩/packages/shzl/image/generals",
   content = {
     {
       enabled_generals = { "wangping" },
@@ -5348,7 +5348,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【神话再临】神吕布⑥/packages/shzl/image/generals",
+  path = "/精选原画/精选/【神话再临】神吕布⑥/packages/shzl/image/generals",
   content = {
     {
       enabled_generals = { "godlvbu" },
@@ -5358,7 +5358,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【神话再临】神周瑜①/packages/shzl/image/generals",
+  path = "/精选原画/精选/【神话再临】神周瑜①/packages/shzl/image/generals",
   content = {
     {
       enabled_generals = { "godzhouyu" },
@@ -5368,7 +5368,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【神话再临】神甘宁⑤/packages/shzl/image/generals",
+  path = "/精选原画/精选/【神话再临】神甘宁⑤/packages/shzl/image/generals",
   content = {
     {
       enabled_generals = { "godganning" },
@@ -5378,7 +5378,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【神话再临】神诸葛③/packages/shzl/image/generals",
+  path = "/精选原画/精选/【神话再临】神诸葛③/packages/shzl/image/generals",
   content = {
     {
       enabled_generals = { "godzhugeliang" },
@@ -5388,7 +5388,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【神话再临】神赵云②/packages/shzl/image/generals",
+  path = "/精选原画/精选/【神话再临】神赵云②/packages/shzl/image/generals",
   content = {
     {
       enabled_generals = { "godzhaoyun" },
@@ -5398,7 +5398,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【神话再临】神陆逊②/packages/shzl/image/generals",
+  path = "/精选原画/精选/【神话再临】神陆逊②/packages/shzl/image/generals",
   content = {
     {
       enabled_generals = { "godluxun" },
@@ -5408,7 +5408,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【神话再临】荀彧④/packages/shzl/image/generals",
+  path = "/精选原画/精选/【神话再临】荀彧④/packages/shzl/image/generals",
   content = {
     {
       enabled_generals = { "xunyu" },
@@ -5418,7 +5418,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【神话再临】诸葛瞻⑩/packages/shzl/image/generals",
+  path = "/精选原画/精选/【神话再临】诸葛瞻⑩/packages/shzl/image/generals",
   content = {
     {
       enabled_generals = { "zhugezhan" },
@@ -5428,7 +5428,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【神话再临】郝昭①/packages/shzl/image/generals",
+  path = "/精选原画/精选/【神话再临】郝昭①/packages/shzl/image/generals",
   content = {
     {
       enabled_generals = { "haozhao" },
@@ -5438,7 +5438,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【神话再临】陆抗③/packages/shzl/image/generals",
+  path = "/精选原画/精选/【神话再临】陆抗③/packages/shzl/image/generals",
   content = {
     {
       enabled_generals = { "lukang" },
@@ -5448,7 +5448,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【神话再临】陆绩①/packages/shzl/image/generals",
+  path = "/精选原画/精选/【神话再临】陆绩①/packages/shzl/image/generals",
   content = {
     {
       enabled_generals = { "luji" },
@@ -5458,7 +5458,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【神话再临】陈到①/packages/shzl/image/generals",
+  path = "/精选原画/精选/【神话再临】陈到①/packages/shzl/image/generals",
   content = {
     {
       enabled_generals = { "chendao" },
@@ -5468,7 +5468,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【线下】势小乔⑧(E)/packages/offline_new/image/generals",
+  path = "/精选原画/精选/【线下】势小乔⑧(E)/packages/offline_new/image/generals",
   content = {
     {
       enabled_generals = { "ofl__xiaoqiao" },
@@ -5478,7 +5478,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【线下】神黄月英①/packages/offline_new/image/generals",
+  path = "/精选原画/精选/【线下】神黄月英①/packages/offline_new/image/generals",
   content = {
     {
       enabled_generals = { "godhuangyueying" },
@@ -5488,7 +5488,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【谋攻】谋刘备②/packages/mobile/image/generals",
+  path = "/精选原画/精选/【谋攻】谋刘备②/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mou__liubei" },
@@ -5498,7 +5498,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【谋攻】谋刘赪①/packages/mobile/image/generals",
+  path = "/精选原画/精选/【谋攻】谋刘赪①/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mou__liucheng" },
@@ -5508,7 +5508,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【谋攻】谋张辽①/packages/mobile/image/generals",
+  path = "/精选原画/精选/【谋攻】谋张辽①/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mou__zhangliao" },
@@ -5518,7 +5518,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【谋攻】谋曹丕①/packages/mobile/image/generals",
+  path = "/精选原画/精选/【谋攻】谋曹丕①/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mou__caopi" },
@@ -5528,7 +5528,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【谋攻】谋荀彧⑦/packages/mobile/image/generals",
+  path = "/精选原画/精选/【谋攻】谋荀彧⑦/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mou__xunyu" },
@@ -5538,7 +5538,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【谋攻】谋贾诩④/packages/mobile/image/generals",
+  path = "/精选原画/精选/【谋攻】谋贾诩④/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mou__jiaxu" },
@@ -5548,7 +5548,7 @@ extension:addSkinPackage {
 }
 
 extension:addSkinPackage {
-  path = "/精选原画/resource_pak小弟精选/【谋攻】谋郭嘉④/packages/mobile/image/generals",
+  path = "/精选原画/精选/【谋攻】谋郭嘉④/packages/mobile/image/generals",
   content = {
     {
       enabled_generals = { "mou__guojia" },
