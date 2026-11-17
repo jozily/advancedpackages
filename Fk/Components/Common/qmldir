@@ -1,0 +1,5 @@
+// 权宜之计：只声明 Avatar 2.0 覆盖 core 的 Avatar 1.0。
+// 其余类型不在本 qmldir 声明，Qt 会从 core 的同名模块继续解析。
+module Fk.Components.Common
+
+Avatar 2.0 Avatar.qml
