@@ -23,10 +23,7 @@ if ok_titles and titles then
   packs[#packs + 1] = titles
 end
 
--- 2) 精选原画皮肤包（SkinPack，与 lunarltk_skins 同机制）
---    图片仍在原资源目录，本包只按武将注册皮肤。
-local ok_skins, skins = pcall(require, "packages.advancedpackages.skins")
-if ok_skins and skins then packs[#packs + 1] = skins end
+-- 2) 精选原画皮肤已拆分为独立包 rainbow_skins，本包不再注册皮肤。
 
 -- 3) 阴阳鱼技能包：走官方 loadSkillSkelsByPath → Package:install 正规登记，
 --    让客户端与服务端的 Fk.skills 都稳定有 "yinyangfish_skill&"（含正确的
