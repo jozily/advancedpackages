@@ -86,6 +86,9 @@ local SETTING_BANSCHEME = "hx3v3doubleBanScheme"
 local SETTING_DUALPOOL = "hx3v3dualPool"
 local SETTING_COUNT = "hxIndulgenceCount"
 local SETTING_EFFECT = "hxIndulgenceEffect"
+-- 借刀杀人牌名字数：默认 4 字（不和谐），开启后 2 字（OL 和谐口径）。
+-- 与双将无关、全模式通用，放在总开关之上，不设 enabled 门槛。
+local SETTING_JIEDAO = "hxJiedaoNameLen"
 -- 旧键：仅用于读回老存档，统一折算到 SETTING_ODD
 local SETTING_ARMOR_OLD = "3v3deputyExtraArmor"
 
@@ -103,7 +106,9 @@ local SKILL_NAME = "hx__3v3_indulgence_skill"
 local MARK_MAXHP = "__hx_indulgence_maxhp-turn"
 local MARK_SELF = "__hx_indulgence_self-turn"
 
--- 数量选项：值 - 要保留的张数
+-- 数量选项：值 - 要减去（移除）的张数。不同牌堆乐不思蜀总数不一样
+-- （比赛牌堆 2 张、混装牌堆 5 张），按「减几张」配置；减的数量超过牌堆
+-- 存量时按存量全减。
 local COUNT_KEYS = {
   hx_indulgence_count_3 = 3,
   hx_indulgence_count_2 = 2,
@@ -137,30 +142,68 @@ end
 
 -- 双禁将的「第二套」直接用房主自己的禁将方案：选项就是他的方案列表，
 -- 文字就是方案自己起的名字（没起名的显示「方案 N」）。
--- 方案名只有客户端知道（freekill.client.config.json 的 disableSchemes），
--- 服务端进程读不到就保持旧的「第 N 套」占位，不影响取值（值仍然是 hx_ban_scheme_N）。
+-- 方案名只有客户端知道（客户端全局 Config.disableSchemes）。
+-- model/value 在客户端 Lua VM 求值，渲染期读全局 Config 拿真实方案。
+-- 不再硬编码「第 1 套…第 8 套」8 个空占位：下拉只列房主真实存在的方案。
+local BAN_SCHEME_MAX = 30 -- 防止畸形配置刷爆下拉，正常按实际方案数
 local BAN_SCHEME_KEYS = {}
-for i = 1, 8 do
+for i = 1, BAN_SCHEME_MAX do
   BAN_SCHEME_KEYS["hx_ban_scheme_" .. i] = i
 end
 -- 没选过时按第 2 套算：第 1 套通常正是当前方案
 local DEFAULT_BAN_SCHEME_KEY = "hx_ban_scheme_2"
 
-local BAN_SCHEME_MODEL = {
-  "hx_ban_scheme_1", "hx_ban_scheme_2", "hx_ban_scheme_3", "hx_ban_scheme_4",
-  "hx_ban_scheme_5", "hx_ban_scheme_6", "hx_ban_scheme_7", "hx_ban_scheme_8",
-}
+-- 初始为空，渲染期由 refreshBanSchemeModel 填入真实方案；
+-- 读不到配置时保持空，绝不退回 8 个占位（用户明确要求删掉它们）。
+local BAN_SCHEME_MODEL = {}
 local BAN_SCHEME_LABELS = {}
 
--- 只列出房主真实存在的方案，并按方案名改写 hx_ban_scheme_N 的翻译；
--- ComboBox 的显示文本就是 Lua.tr(键)，所以改名即可，不必动取值逻辑。
-local function refreshBanSchemeModel()
+-- 房主本机禁将方案的中转槽：大厅 LobbyTask 收到后按玩家 id 存这里，
+-- 房间内的 applyDoubleBan / 双候选池按房主 id 读。
+-- asio 是单进程单 VM，模块级 table 跨大厅与房间线程共享，按 id 隔离不串数据。
+-- 这是替代被禁用的 hx_ban_scheme 命令（该命令会踢线）的传输方式。
+local HX_PLAYER_BAN_SCHEMES = {}
+-- 大厅 TaskPlayer.id 与房间内 serverPlayer.id 不是同一个域，按 id 存/读会对不上
+-- （日志里 push pid=4 成功，applyDoubleBan 按 owner.id 读却落空）。
+-- 因此额外按昵称索引，并留一份「最近推送槽」兜底：房间里通常只有房主一人
+-- 推方案，取最近那份最稳。三者都存，读取端依次回退。
+local HX_PLAYER_BAN_BY_NAME = {}
+local HX_LAST_PUSHED_SCHEMES = nil
+
+-- 读取本机禁将方案。
+-- 关键：model/value 函数在【客户端】Lua VM 求值（GetUIDataOfSettings →
+-- W.toQmlData 的 v(settings)）。客户端进程在 freekill.lua 启动时就把配置文件的
+-- 全文解进全局 Config（含 disableSchemes），这是最可靠的数据源。
+-- 之前用 io.open 相对路径读文件，受沙箱（assert(not f:startsWith(".."))）和
+-- 渲染期 CWD 影响，常读不到 → 下拉退回硬编码的 8 项占位，方案名全丢。
+local function readBanConfSchemes()
   local conf = rawget(_G, "Config")
-  local schemes = (type(conf) == "table") and conf.disableSchemes or nil
+  if type(conf) == "table" and type(conf.disableSchemes) == "table" then
+    return conf.disableSchemes
+  end
+  -- 服务端求值侧（或全局 Config 未就绪）才退回读文件
+  local okOpen, f = pcall(io.open, "freekill.client.config.json", "r")
+  if okOpen and f then
+    local okRead, text = pcall(f.read, f, "a")
+    f:close()
+    if okRead and type(text) == "string" then
+      local okDecode, d = pcall(json.decode, text)
+      if okDecode and type(d) == "table" and type(d.disableSchemes) == "table" then
+        return d.disableSchemes
+      end
+    end
+  end
+  return nil
+end
+
+-- 列出房主真实存在的方案，并按方案名改写 hx_ban_scheme_N 的翻译；
+-- ComboBox 的显示文本就是 Lua.tr(键)，所以把真实名字注入翻译表即可。
+local function refreshBanSchemeModel()
+  local schemes = readBanConfSchemes()
   if type(schemes) ~= "table" then return false end
   local n = #schemes
   if n <= 0 then return false end
-  if n > 8 then n = 8 end
+  if n > BAN_SCHEME_MAX then n = BAN_SCHEME_MAX end
 
   local model, labels = {}, {}
   for i = 1, n do
@@ -173,6 +216,10 @@ local function refreshBanSchemeModel()
   end
   BAN_SCHEME_MODEL = model
   BAN_SCHEME_LABELS = labels
+  -- 客户端渲染期把真实名字注入翻译表，Lua.tr(key) 就能显示方案名
+  if type(Fk) == "table" and type(Fk.loadTranslationTable) == "function" and next(labels) then
+    pcall(Fk.loadTranslationTable, Fk, labels)
+  end
   return true
 end
 pcall(refreshBanSchemeModel)
@@ -206,6 +253,84 @@ local function hxlog(msg)
   pcall(print, line)
 end
 
+-- 兼容修复：个别入口会在房间 settings 初始化之前读 getSettings，
+-- 官方 core 的实现直接对 nil 索引，报 roombase.lua:87
+-- "attempt to index a nil value (local 't')"。这里包一层守卫：
+-- settings 还不是 table 时返回 nil，不改官方文件本身。
+local function patchGetSettingsGuard()
+  -- RoomBase 的类名是 "Base.RoomBase"，不会挂到 _G.RoomBase 上；
+  -- 它登记在 Fk.Base.RoomBase（ModManager:initialize 里 require 的表）。
+  -- 依次尝试注册表、require、全局，三处都拿不到才返回 false 等下一轮重试。
+  local RB
+  if type(Fk) == "table" and type(Fk.Base) == "table" then
+    RB = Fk.Base.RoomBase
+  end
+  if type(RB) ~= "table" then
+    local ok, m = pcall(require, "core.roombase")
+    if ok and type(m) == "table" then RB = m end
+  end
+  if type(RB) ~= "table" then RB = rawget(_G, "RoomBase") end
+  if type(RB) ~= "table" or type(RB.getSettings) ~= "function" then
+    return false
+  end
+  if RB.__hx_getsettings_guard then return true end
+  local origGet = RB.getSettings
+  RB.getSettings = function(self, key)
+    if type(rawget(self, "settings")) ~= "table" then return nil end
+    return origGet(self, key)
+  end
+  RB.__hx_getsettings_guard = true
+  hxlog("getSettings nil-guard installed")
+  return true
+end
+patchGetSettingsGuard()
+latePatches[#latePatches + 1] = patchGetSettingsGuard
+
+----------------------------------------------------------------------
+-- 借刀杀人牌名字数：默认 4 字（不和谐），开启后 2 字（OL 和谐口径）。
+-- 全模式通用，不依赖 isModeRoom，与双将无关。
+----------------------------------------------------------------------
+-- getNameLength 是 Card 的全局方法、调用时没有 room 参数，统一从当前房间
+-- 读设置；服务端判定技能时必定有 currentRoom，读不到时按默认 4 字处理。
+local function jiedaoTwoChars()
+  -- 服务端：技能判定场景必有 currentRoom
+  local ok, room = pcall(function() return Fk:currentRoom() end)
+  if ok and room and type(room.getSettings) == "function" then
+    local ok2, v = pcall(room.getSettings, room, SETTING_JIEDAO)
+    if ok2 then return v == true end
+  end
+  -- 客户端：本机读同一房间的设置，保证 UI 预览与服务端判定一致
+  local ok3, v = pcall(function()
+    if type(ClientInstance) == "table" and type(ClientInstance.getSettings) == "function" then
+      return ClientInstance:getSettings(SETTING_JIEDAO)
+    end
+  end)
+  if ok3 then return v == true end
+  return false
+end
+
+-- 官方无参调用本来就是 4 字；天宗包几十个技能用 getNameLength(true) 传 true，
+-- 这里把 true 解释成「按本局开关取字数」：开关开 → 2，关 → 4。
+-- 这样默认与官方一致，开启后天宗技能与 ol 包技能口径统一。
+local function patchJiedaoNameLen()
+  local CardCls = rawget(_G, "Card")
+  if type(CardCls) ~= "table" or type(CardCls.getNameLength) ~= "function" then
+    return false
+  end
+  if CardCls.__hx_jiedao_namelen_patched then return true end
+  local orig = CardCls.getNameLength
+  CardCls.__hx_jiedao_namelen_patched = true
+  CardCls.getNameLength = function(self, ol_rule)
+    if self and self.trueName == "collateral" then
+      return jiedaoTwoChars() and 2 or 4
+    end
+    return orig(self, ol_rule)
+  end
+  return true
+end
+latePatches[#latePatches + 1] = patchJiedaoNameLen
+pcall(patchJiedaoNameLen)
+
 -- 每个补丁在「已装好」或「本次装上」时返回真，未就绪返回假；
 -- 全部就绪后不再重复尝试，getSettings 上只剩一次布尔判断的开销
 local function tryLatePatches()
@@ -224,9 +349,13 @@ end
 -- 血战包原先把主帅称作「队长」，且弃置备选武将的文案与成组界面不符。
 -- 模式文件在本文件之后加载，翻译需要在其后覆盖一次，故留出独立入口。
 local LATE_TRANSLATION = {
-  ["#HX3v3_AskForThrowGeneral_tips"] = "请主帅弃置 %arg 张备选武将（每组两张）",
+  -- 文案保持中性：关掉双将后官方单将流程也用这句，不能再写「每组两张」。
+  -- 双将成组界面自己按 num 显示「已选 N / num」，不依赖这里的括注。
+  ["#HX3v3_AskForThrowGeneral_tips"] = "请主帅弃置 %arg 张备选武将",
   ["HX3v3_AskForThrowGeneral"] = "弃置备选武将",
   ["hx__3v3_swap_prompt"] = "请为阵亡角色选择一组武将",
+  -- 成组选择界面走 CustomDialog 命令，烧条默认显示命令名；这里给出可读标题
+  ["hx__3v3_swap_title"] = "换将",
   ["HX3v3_PairThrow_count"] = "已选",
 }
 
@@ -257,13 +386,91 @@ end
 local okW, W = pcall(require, "ui_emu.preferences")
 -- 比赛规则的胜利判定在模式表上，等它注册时再包一层；函数体在后面补
 local applyFullWin = nil
-if okW and type(W) == "table" and type(W.PreferenceGroup) == "function"
-    and type(W.SwitchRow) == "function" and type(W.ComboRow) == "function" and Fk then
-  local origAddGameMode = Fk.addGameMode
-  if type(origAddGameMode) == "function" then
-    Fk.addGameMode = function(self, mode)
-      origAddGameMode(self, mode)
-      if type(mode) ~= "table" or mode.name ~= MODE_NAME then return end
+-- ui_emu.preferences 的可用性受装载顺序影响：个别顺序下装载期 require 会
+-- 失败，而血战包注册模式同样发生在装载期，钩子装晚了模式就已注册完，
+-- 设置组就永远挂不上去（2026-11-17 恢复官方 core 后出现过）。
+-- 因此把安装包成函数：装载期试一次，latePatches 里再补一次；
+-- 模式若已注册，直接在 Fk.game_modes 里找到并补跑注册逻辑。
+local onHxModeRegistered
+local onAnyModeRegistered
+
+-- 「通用设置」组：称号入口 + 借刀字数开关。所有游戏模式都要显示，
+-- 与血战双将无关。称号本就是账号级 LobbyTask 功能；借刀字数全模式生效。
+-- 放到每个模式 ui_settings 的最前面（table.insert 第 1 位）。
+onAnyModeRegistered = function(mode)
+  if type(mode) ~= "table" then return end
+  if type(mode.ui_settings) ~= "table" then
+    -- 少数模式没有自己的设置页，建一个空表让它也能显示通用项
+    mode.ui_settings = {}
+  end
+  if mode.__hx_common_group_patched then return end
+  mode.__hx_common_group_patched = true
+  pcall(function()
+    table.insert(mode.ui_settings, 1, W.PreferenceGroup {
+      title = "hx_settings_common_group_title",
+      -- 称号入口：账号级，所有模式可见
+      {
+        _qml = {
+          url = "packages/advancedpackages/qml/hx__3v3_TitleButton.qml",
+        },
+        _settingsKey = "hxTitleBtn",
+        _children = {},
+        title = "hx_settings_title_title",
+      },
+      -- 借刀杀人牌名字数：默认 4 字，开 → 2 字，全模式生效
+      W.SwitchRow {
+        _settingsKey = SETTING_JIEDAO,
+        title = "hx_settings_jiedao_title",
+      },
+    })
+  end)
+end
+
+local function installSettingsHook()
+  local function wReady()
+    return okW and type(W) == "table" and type(W.PreferenceGroup) == "function"
+        and type(W.SwitchRow) == "function" and type(W.ComboRow) == "function"
+  end
+  if not wReady() then
+    local okRetry, W2 = pcall(require, "ui_emu.preferences")
+    if okRetry and type(W2) == "table" then okW, W = true, W2 end
+  end
+  if not (wReady() and Fk) then
+    hxlog("hx3v3 settings: ui_emu.preferences unavailable, 设置组未安装")
+    return false
+  end
+  if not Fk.__hx_settings_hook_installed then
+    Fk.__hx_settings_hook_installed = true
+    local origAddGameMode = Fk.addGameMode
+    if type(origAddGameMode) == "function" then
+      Fk.addGameMode = function(self, mode)
+        origAddGameMode(self, mode)
+        if type(mode) ~= "table" then return end
+        -- 所有模式：通用组（称号 + 借刀字数）
+        pcall(onAnyModeRegistered, mode)
+        -- 仅血战模式：双将专属组（乐不思蜀、换将清理等）
+        if mode.name == MODE_NAME then
+          pcall(onHxModeRegistered, mode)
+        end
+      end
+    end
+  end
+  -- 钩子装好前就已注册的模式，这里直接补。game_modes 是「模式名→模式」字典，
+  -- 必须用 pairs（ipairs 遍历字典无效）。
+  if type(Fk.game_modes) == "table" then
+    for _, m in pairs(Fk.game_modes) do
+      if type(m) == "table" then
+        pcall(onAnyModeRegistered, m)
+        if m.name == MODE_NAME then
+          pcall(onHxModeRegistered, m)
+        end
+      end
+    end
+  end
+  return true
+end
+
+onHxModeRegistered = function(mode)
 
       -- 每次建房都会调用 mode.logic 得到一个新建的 logic 子类。
       -- 包加载期全局 Request 还不存在，只能等运行期补装；
@@ -315,6 +522,7 @@ if okW and type(W) == "table" and type(W.PreferenceGroup) == "function"
       pcall(function()
         table.insert(mode.ui_settings, W.PreferenceGroup {
           title = "hx_settings_extra_rules_group_title",
+          -- 称号入口已移到「通用设置」组（所有模式可见），此处不再重复。
           -- 乐不思蜀两项与双将无关，放在总开关之上：单将模式也能用，
           -- 因此不设 enabled 门槛（血战模式内恒可点，服务端也只认 isModeRoom）
           W.ComboRow {
@@ -337,31 +545,8 @@ if okW and type(W) == "table" and type(W.PreferenceGroup) == "function"
               "hx_indulgence_effect_self",
             },
           },
-          W.SwitchRow {
-            _settingsKey = SETTING_MASTER,
-            title = "hx_settings_signature_deputy_title",
-            enabled = masterEnabled,
-          },
-          W.SwitchRow {
-            _settingsKey = SETTING_ONESHOT,
-            title = "hx_settings_one_shot_groups_title",
-            enabled = subEnabled,
-          },
-          W.ComboRow {
-            _settingsKey = SETTING_ODD,
-            title = "hx_settings_odd_comp_title",
-            model = {
-              "hx_odd_comp_off",
-              "hx_odd_comp_armor",
-              "hx_odd_comp_yinyang",
-            },
-            enabled = subEnabled,
-          },
-          W.SwitchRow {
-            _settingsKey = SETTING_ENDTURN,
-            title = "hx_settings_end_turn_on_death_title",
-            enabled = subEnabled,
-          },
+          -- 换将时清理旧将状态：独立开关，放在模式总开关之前
+          --（11-17 应用户要求上移，单独可点，不受总开关灰化控制）
           W.SwitchRow {
             _settingsKey = SETTING_SWAPFIX,
             title = "hx_settings_swap_skill_fix_title",
@@ -371,6 +556,30 @@ if okW and type(W) == "table" and type(W.PreferenceGroup) == "function"
               if v == nil then return true end
               return v == true
             end,
+          },
+          -- 一次选完三组 / 回合内阵亡：移到总开关之前，单独可点，
+          -- 不受总开关灰化控制（11-17 应用户要求上移，与"换将清理"同列）
+          W.SwitchRow {
+            _settingsKey = SETTING_ONESHOT,
+            title = "hx_settings_one_shot_groups_title",
+          },
+          W.SwitchRow {
+            _settingsKey = SETTING_ENDTURN,
+            title = "hx_settings_end_turn_on_death_title",
+          },
+          W.SwitchRow {
+            _settingsKey = SETTING_MASTER,
+            title = "hx_settings_signature_deputy_title",
+            enabled = masterEnabled,
+          },
+          W.ComboRow {
+            _settingsKey = SETTING_ODD,
+            title = "hx_settings_odd_comp_title",
+            model = {
+              "hx_odd_comp_off",
+              "hx_odd_comp_armor",
+              "hx_odd_comp_yinyang",
+            },
             enabled = subEnabled,
           },
           W.SwitchRow {
@@ -386,7 +595,12 @@ if okW and type(W) == "table" and type(W.PreferenceGroup) == "function"
           W.ComboRow {
             _settingsKey = SETTING_BANSCHEME,
             title = "hx_settings_double_ban_scheme_title",
-            model = BAN_SCHEME_MODEL,
+            -- 函数形式：在客户端渲染设置页时求值，那时再读本机配置，
+            -- 方案数量与名字都是最新的（含更新按钮刚拉下来的 6 套默认方案）。
+            model = function()
+              pcall(refreshBanSchemeModel)
+              return BAN_SCHEME_MODEL
+            end,
             -- 没存过时默认第 2 套（只剩一套时就是那一套），
             -- 存过的方案被删掉也要退回到列表里还有的项，否则下拉框会显示空
             value = function(settings)
@@ -412,19 +626,47 @@ if okW and type(W) == "table" and type(W.PreferenceGroup) == "function"
                   and settingsFlag(settings, SETTING_DOUBLEBAN) == true
             end,
           },
+          -- 云端默认禁将方案【更新】按钮，所有人可用。
+          -- 组件本体在 advancedpackages/qml/ 下：点击发 LobbyTask 拉取云端
+          -- 6 套默认方案；管理员点击时组件会顺带上送本地方案，由服务端判定后覆盖。
+          {
+            _qml = {
+              url = "packages/advancedpackages/qml/hx__3v3_UpdateSchemesButton.qml",
+            },
+            _settingsKey = "hxBanUpdateSchemesBtn",
+            _children = {},
+            title = "hx_settings_update_schemes_title",
+          },
+          -- 一键删除本地禁将方案：只清本客户端方案，不碰云端全服存档。
+          -- 放在「更新默认禁将方案」下面，二者配合：删光本地后可点上面重新拉取 6 套默认。
+          {
+            _qml = {
+              url = "packages/advancedpackages/qml/hx__3v3_DeleteSchemesButton.qml",
+            },
+            _settingsKey = "hxBanDeleteSchemesBtn",
+            _children = {},
+            title = "hx_settings_delete_schemes_title",
+          },
         })
       end)
-    end
-  end
 end
+
+pcall(installSettingsHook)
 
 if type(Fk.loadTranslationTable) == "function" then
   pcall(Fk.loadTranslationTable, Fk, {
+    -- 通用设置组：所有游戏模式可见
+    ["hx_settings_common_group_title"] = "通用设置",
+    ["hx_settings_jiedao_title"] = "借刀杀人算2字",
+    ["help: hx_settings_jiedao_title"] =
+      "开启后，本局所有按「牌名字数」判定的技能都将【借刀杀人】算作 2 字（OL 和谐口径）；"
+      .. "默认关闭时算 4 字。对所有游戏模式生效。",
+
     ["hx_settings_extra_rules_group_title"] = "血战附加规则",
 
-    ["hx_settings_signature_deputy_title"] = "模式总开关",
+    ["hx_settings_signature_deputy_title"] = "双将模式规则",
     ["help: hx_settings_signature_deputy_title"] =
-      "本组设置的总开关，必须先开启房间设置中的「启用副将」才能开启。"
+      "双将模式规则的总开关，必须先开启房间设置中的「启用副将」才能开启。"
       .. "\n开启后每名玩家依次选择三组武将（共六张）：第一组登场，其余两组进入备选池，"
       .. "选将结束时由主帅从备选池统一弃置两组；阵亡换将按本人选定的组合依次上场。",
 
@@ -465,8 +707,7 @@ if type(Fk.loadTranslationTable) == "function" then
     ["help: hx_settings_double_ban_scheme_title"] =
       "下拉里列出房主自己保存的禁将方案，"
       .. "顺序与禁将页面一致，改名或添加新方案后需重进服务器才能生效。"
-      .. "\n选中的那一套会与禁将页面当前方案取并集，与当前方案是同一套时不会重复生效。"
-      .. "\n下面是方案名读取不到时的兜底写法：",
+      .. "\n选中的那一套会与禁将页面当前方案取并集，与当前方案是同一套时不会重复生效。",
     ["hx_ban_scheme_1"] = "第 1 套",
     ["hx_ban_scheme_2"] = "第 2 套",
     ["hx_ban_scheme_3"] = "第 3 套",
@@ -482,6 +723,30 @@ if type(Fk.loadTranslationTable) == "function" then
       .. "\n注意：两池各自独立，所以可能出现「方案 A 禁掉、方案 B 没禁」的武将，"
       .. "它只会出现在右池，选中后照常登场。",
 
+    ["hx_settings_update_schemes_title"] = "更新默认禁将方案",
+    ["help: hx_settings_update_schemes_title"] =
+      "点击后从服务器拉取最新的 6 套默认禁将方案，追加到你本机的禁将方案列表末尾（已有同名方案不会重复）。"
+      .. "\n管理员点击时，还会把你本机前 6 套方案上传，更新服务器上的默认方案供其他人拉取。",
+    ["hx_ban_sync_ok"] = "已更新 %1 套默认方案",
+    ["hx_ban_sync_admin"] = "已上传并更新服务器默认方案（%1 套）",
+    ["hx_ban_sync_latest"] = "已是最新，本地已有全部 6 套默认方案",
+    ["hx_ban_sync_fail"] = "更新失败，请确认已连接服务器后重试",
+
+    ["hx_settings_delete_schemes_title"] = "删除本地禁将方案",
+    ["help: hx_settings_delete_schemes_title"] =
+      "点击后清空你本机保存的全部禁将方案（不影响服务器云端方案）。"
+      .. "\n删光后可再点上面的「更新默认禁将方案」重新拉取 6 套默认方案。",
+
+    ["hx_settings_title_title"] = "我的称号（云端）",
+    ["help: hx_settings_title_title"] =
+      "从服务器读取并选择称号，无需升级服务器。选中的称号保存在账号里，"
+      .. "重连、换设备都保留，其他玩家也能看到。\n"
+      .. "说明：这是独立于大厅个人信息页的那套称号入口；"
+      .. "个人信息页的原生称号按钮依赖服务器特性，本服务器不支持，请忽略。",
+
+    -- 技能名用国战原名 "yinyangfish_skill&"：末尾 & 让它成为隐藏技能，不进技能栏；
+    -- 客户端 SpecialMarkSkillArea 只认这个名字，才会在角色下方画可点击的阴阳鱼图标。
+    ["yinyangfish_skill&"] = "阴阳鱼",
     ["hx__3v3_yinyang_skill"] = "阴阳鱼",
     ["#hx__3v3_yinyang_skill"] = "你可弃一枚「阴阳鱼」，摸一张牌",
     ["#hx__3v3_yinyang_max"] = "你可弃一枚「阴阳鱼」，此回合手牌上限 +2",
@@ -508,14 +773,16 @@ if type(Fk.loadTranslationTable) == "function" then
       "开启后不再分三次弹选将框，改为一次性选满三组。"
       .. "\n前两张为首发组，后四张按顺序依次是备选第一组、第二组。",
 
-    ["hx_settings_indulgence_count_title"] = "牌堆中乐不思蜀数量",
+    ["hx_settings_indulgence_count_title"] = "牌堆减去乐不思蜀",
     ["help: hx_settings_indulgence_count_title"] =
-      "本局牌堆保留的【乐不思蜀】张数，默认三张，若小于三张则补为花色点数相同的【兵粮寸断】。"
+      "从本局牌堆里减去的【乐不思蜀】张数，默认减三张。"
+      .. "不同牌堆存量不同（比赛牌堆 2 张、混装牌堆 5 张），减的数量超过存量时按存量全减；"
+      .. "被减的换成花色点数相同的【兵粮寸断】，减剩时优先保留黑桃、红桃。"
       .. "此项与双将无关，单将模式同样生效。",
-    ["hx_indulgence_count_3"] = "3张",
-    ["hx_indulgence_count_2"] = "2张",
-    ["hx_indulgence_count_1"] = "1张",
-    ["hx_indulgence_count_0"] = "0张",
+    ["hx_indulgence_count_3"] = "减三张",
+    ["hx_indulgence_count_2"] = "减两张",
+    ["hx_indulgence_count_1"] = "减一张",
+    ["hx_indulgence_count_0"] = "不减",
 
     ["hx_settings_indulgence_effect_title"] = "乐不思蜀调整",
     ["help: hx_settings_indulgence_effect_title"] =
@@ -573,9 +840,21 @@ if okRB and type(RoomBase) == "table" and type(RoomBase.getSettings) == "functio
   RoomBase.getSettings = function(self, key)
     -- 运行期补装：Request / qml_mark 在包加载时还不存在
     pcall(tryLatePatches)
-    if key == "3v3thegeneralsNum" and masterOn(self) then
-      -- 选将结束时主帅统一弃置两组（四张）；关掉总开关即恢复原设置
-      return 4
+    if key == "3v3thegeneralsNum" then
+      -- 3v3thegeneralsNum 只有血战模式会读，无需再比 gameMode 字符串
+      -- （origGetSettings 取 gameMode 时会走 _mode/_game 分层，曾读不到而漏判）。
+      -- 双将模式（总开关开）：每方 12 张备选，统一弃两组（四张）
+      if masterOn(self) then
+        hxlog("thegeneralsNum: deputy on -> 4")
+        return 4
+      end
+      -- 单将模式（关掉双将 / enableDeputy=false）：每方本就只有 6 张备选，
+      -- 血战公式 12 - 6*1 = 6 会把 6 张全弃光，导致无将可用。返回 0 让官方
+      -- `if thegeneralsNum > 0` 不成立，直接跳过弃置，6 张备选全部保留。
+      -- 一律用 rawSetting（与 masterOn 同源），避免包装层读不到导致漏判。
+      local rawDep = rawSetting(self, "enableDeputy")
+      hxlog("thegeneralsNum: masterOff enableDeputy=" .. tostring(rawDep) .. " -> 0")
+      return 0
     end
     return origGetSettings(self, key)
   end
@@ -637,71 +916,79 @@ end
 -- 它遍历【本机】packages/<包>/image/mark/<标记名>.png，跳过已禁用的包。
 -- 也就是说这是纯客户端资源查找，服务器上有没有国战包不影响；本机有 hegemony 的
 -- @!!yinyangfish.png 就有图标。标记值即数量，1 不显示数字（与国战一致）。
-local YINYANG_SKILL = "hx__3v3_yinyang_skill"
+-- 技能名用国战原名（末尾 & = 隐藏技能）：客户端 SpecialMarkSkillArea.qml 只认
+-- "yinyangfish_skill&"，才会在角色下方画那枚可点击的阴阳鱼图标，且技能不进技能栏。
+-- 11-17 曾误改成 hx__3v3_yinyang_skill，导致技能变常驻、图标区认不出。
+local YINYANG_SKILL = "yinyangfish_skill&"
 local YINYANG_MARK = "@!!yinyangfish"
 
--- 技能骨架在包加载期创建；fk 的子项不一定就绪，统一 pcall 兜住。
--- 骨架必须由本文件 return 出去交给 loadSkillSkelsByPath 登记：只有登记过的技能
--- 才会进 Fk.skills，而 room:handleAddLoseSkills → Player:addSkill 第一步就是
--- getActualSkill(name) → Fk.skills[name] → assert(isInstanceOf(Skill))。
--- 之前本文件 return false，技能从没进表，加技能时断言失败被 pcall 吞掉，
--- 于是标记（图标）在、技能不在，主动与弃牌阶段都用不了。
-local yinyangSkel
-local function buildYinyangSkill()
-  local yinyangSkill = fk.CreateSkill { name = YINYANG_SKILL }
-
-  yinyangSkill:addEffect("active", {
-    prompt = "#hx__3v3_yinyang_skill",
-    anim_type = "drawcard",
-    can_use = function(self, player)
-      return player:getMark(YINYANG_MARK) > 0
-    end,
-    card_filter = Util.FalseFunc,
-    target_num = 0,
-    on_use = function(self, room, effect)
-      local player = effect.from
-      room:removePlayerMark(player, YINYANG_MARK, 1)
-      player:drawCards(1, YINYANG_SKILL)
-    end,
-  })
-
-  yinyangSkill:addEffect(fk.EventPhaseStart, {
-    priority = 0.1,
-    anim_type = "defensive",
-    can_trigger = function(self, event, target, player, data)
-      return target == player and player.phase == Player.Discard
-        and player:getMark(YINYANG_MARK) > 0
-        and player:getHandcardNum() > player:getMaxCards()
-    end,
-    on_cost = function(self, event, target, player, data)
-      return player.room:askToSkillInvoke(player, {
-        skill_name = YINYANG_SKILL,
-        prompt = "#hx__3v3_yinyang_max",
-      })
-    end,
-    on_use = function(self, event, target, player, data)
-      local room = player.room
-      room:removePlayerMark(player, YINYANG_MARK, 1)
-      room:addPlayerMark(target, MarkEnum.AddMaxCardsInTurn, 2)
-      room:broadcastProperty(player, "MaxCards")
-    end,
-  })
-
-  return yinyangSkill
+-- 和国战 HegUtil.removeHegMark 一致：用掉最后一枚 mark 时把隐藏技能一起摘掉，
+-- 技能与 mark 严格挂钩，mark 没了技能栏下方那枚图标也随之消失。
+local function removeYinyangIfEmpty(room, player)
+  if player:getMark(YINYANG_MARK) <= 0 and type(room.handleAddLoseSkills) == "function" then
+    pcall(room.handleAddLoseSkills, room, player, "-" .. YINYANG_SKILL, nil, false)
+  end
 end
-yinyangSkel = select(2, pcall(buildYinyangSkill))
-if type(yinyangSkel) ~= "table" then yinyangSkel = nil end
+
+-- 阴阳鱼技能骨架在 rules/skills/yinyangfish.lua。
+-- 11-17 20:00 实测发现：只在 init.lua 里走 Package:loadSkillSkelsByPath，
+-- 客户端进程并未稳定把 "yinyangfish_skill&" 注册进 Fk.skills，角色下方小鱼
+-- 图标（只认本机 Fk.skills 里这个技能名）就画不出来。这里在本文件顶层再显式
+-- createSkill + Fk:addSkill 兜底一次：和 init.lua 的骨架加载是同一个 skel，
+-- Fk:addSkill 对同名技能是覆盖式写入（不会报错），缺哪条路都能补上。
+-- 关键：角色下方图标由客户端 Ltk.createSkillModel → getSkillData 遍历玩家技能
+-- 生成，而玩家技能是服务端 addYinyang 加的，两端都必须认得这个名字。
+local function ensureYinyangSkillRegistered()
+  if type(Fk) ~= "table" or type(Fk.addSkill) ~= "function"
+      or type(Fk.skills) ~= "table" then
+    return false
+  end
+  if Fk.skills[YINYANG_SKILL] then return true end
+  if type(fk) ~= "table" or type(fk.CreateSkill) ~= "function" then return false end
+
+  -- 优先复用 init.lua 已加载进 Fk.skill_skels 的骨架；没有就现场 require 一份。
+  local skel = type(Fk.skill_skels) == "table" and Fk.skill_skels[YINYANG_SKILL] or nil
+  if not skel then
+    local okReq, mod = pcall(require, "packages.advancedpackages.rules.skills.yinyangfish")
+    if okReq and type(mod) == "table" then skel = mod end
+  end
+  if type(skel) ~= "table" or type(skel.createSkill) ~= "function" then return false end
+
+  local okCreate, realSkill = pcall(function() return skel:createSkill() end)
+  if not okCreate or not realSkill then
+    hxlog("yinyang createSkill FAILED: " .. tostring(realSkill))
+    return false
+  end
+  if type(Fk.skill_skels) == "table" then
+    pcall(function() Fk.skill_skels[YINYANG_SKILL] = skel end)
+  end
+  local okAdd, errAdd = pcall(Fk.addSkill, Fk, realSkill)
+  if okAdd then
+    hxlog("yinyang skill registered into Fk.skills (explicit fallback)")
+  else
+    hxlog("yinyang addSkill FAILED: " .. tostring(errAdd))
+  end
+  return okAdd
+end
+pcall(ensureYinyangSkillRegistered)
 
 -- 补偿方式：新键优先；老存档里的布尔开关折算成「护甲」
 local function oddCompKind(room)
-  local kind = normCompKind(rawSetting(room, SETTING_ODD))
-  if kind then return kind end
-  if rawSetting(room, SETTING_ARMOR_OLD) == true then return "armor" end
+  local raw = rawSetting(room, SETTING_ODD)
+  local kind = normCompKind(raw)
+  if kind then
+    hxlog(("odd comp: raw=%s kind=%s"):format(tostring(raw), kind))
+    return kind
+  end
+  local old = rawSetting(room, SETTING_ARMOR_OLD)
+  hxlog(("odd comp: raw=%s oldarmor=%s -> fallback off")
+    :format(tostring(raw), tostring(old)))
+  if old == true then return "armor" end
   return "off"
 end
 
 -- scene: "start" 开局公布武将 / "swap" 阵亡换将
--- 两种场合原有的基础护甲口径不同，这里各自沿用原口径，只叠加补偿的那一枚
+-- 护甲与体力同口径：主副将初始护甲合计后除二向下取整，再叠加奇数体力补偿的一枚
 local function adjustDeputyHp(player, scene)
   local room = player and player.room
   if not isDeputyRoom(room) then return end
@@ -722,27 +1009,33 @@ local function adjustDeputyHp(player, scene)
     fix = fix and math.min(fix, dfix) or dfix
   end
 
-  -- 体力上限与当前体力一致，体力牌不再出现空格
+  -- 上限按 maxHp 字段相加除以二；当前体力另按 hp 字段相加除以二（官方
+  -- gamelogic.lua:156 口径：math.floor((deputy.hp + general.hp)/2)），再夹到上限内。
+  -- 11-17 曾把 hp 直接设成 maxHp，导致选阴阳鱼后一律满血；1/6 将那种 hp≠maxHp
+  -- 的武将尤其明显。fixMaxHp 只压上限，不把体力抬满。
   local maxHp = fix or floorHp
+  local hpFromGenerals = (main.hp or mainCap) + (deputy.hp or depCap)
   player.maxHp = maxHp
-  player.hp = maxHp
+  player.hp = math.min(maxHp, hpFromGenerals // 2)
   room:broadcastProperty(player, "maxHp")
   room:broadcastProperty(player, "hp")
   hxlog(("adjust hp scene=%s main=%s(hp%s/max%s adj%s fix%s) dep=%s(hp%s/max%s adj%s fix%s)"
-    .. " sum=%s floor=%s -> maxHp=%s cur=%s")
+    .. " sum=%s floor=%s -> maxHp=%s hpSum=%s cur=%s shield=%s+%s->%s")
     :format(tostring(scene), tostring(main.name), tostring(main.hp), tostring(main.maxHp),
       tostring(main.mainMaxHpAdjustedValue), tostring(main.fixMaxHp),
       tostring(deputy.name), tostring(deputy.hp), tostring(deputy.maxHp),
       tostring(deputy.deputyMaxHpAdjustedValue), tostring(deputy.fixMaxHp),
-      tostring(sum), tostring(floorHp), tostring(maxHp), tostring(player.hp)))
+      tostring(sum), tostring(floorHp), tostring(maxHp), tostring(hpFromGenerals), tostring(player.hp),
+      tostring(main.shield or 0), tostring(deputy.shield or 0), tostring(player.shield)))
 
   -- 补偿：合计为奇数说明舍去了半点体力，按设置给一枚护甲或一枚阴阳鱼
   local kind = oddCompKind(room)
   local odd = (sum % 2 == 1)
   local comp = (odd and kind == "armor") and 1 or 0
-  local base = (scene == "swap")
-      and (main.shield or 0)
-      or math.min((main.shield or 0) + (deputy.shield or 0), 5)
+  -- 护甲与体力同口径：主副将初始护甲合计后除二向下取整，仍按官方上限 5 封顶。
+  -- （11-17 之前换将场景只算主将，界沮授 m_ex__jvshou 护甲3 在副将位会被抹掉，
+  --   现与主将一并纳入合计再折半。）
+  local base = math.min(((main.shield or 0) + (deputy.shield or 0)) // 2, 5)
   player.shield = math.max(0, base + comp)
   room:broadcastProperty(player, "shield")
 
@@ -776,6 +1069,35 @@ local function patchBroadcastHp()
 end
 pcall(patchBroadcastHp)
 latePatches[#latePatches + 1] = patchBroadcastHp
+
+-- 出场顺序排序弹窗：血战原版给主帅发的是 bloodybattle/qml/3v3Box.qml（小卡）。
+-- 11-17 换成双将牌展示样式：包装 Request.setData，仅当组件 url 指向 3v3Box
+-- 时替换为本包 hx__3v3_OrderPanel.qml；交互与回传契约不变（确认回传排序后
+-- 的武将名数组，取消回传空串），不碰血战官方包一个字节。
+local function patchLordPowerDialog()
+  if type(Request) ~= "table" or type(Request.setData) ~= "function" then return false end
+  if rawget(Request, "__hx_order_patched") then return true end
+  rawset(Request, "__hx_order_patched", true)
+  local origSetData = Request.setData
+  Request.setData = function(self, player, data)
+    if type(data) == "table" and type(data.component) == "table"
+        and type(data.component.url) == "string"
+        and data.component.url:find("3v3Box", 1, true) then
+      -- 仅在双将模式（总开关开 + 启用副将）换成双将牌面板；
+      -- 关掉双将后单将模式保留官方 3v3Box 单卡，出场顺序也不受影响。
+      local room = player and player.room
+      local ok, deputy = pcall(function() return room and isDeputyRoom(room) end)
+      if not ok or deputy then
+        data.component.url = "packages/advancedpackages/qml/hx__3v3_OrderPanel.qml"
+      end
+    end
+    return origSetData(self, player, data)
+  end
+  hxlog("lord power dialog: Request.setData patched (3v3Box -> OrderPanel)")
+  return true
+end
+latePatches[#latePatches + 1] = patchLordPowerDialog
+pcall(patchLordPowerDialog)
 
 ----------------------------------------------------------------------
 -- 四、选将后记录每名玩家自己的主副将组合
@@ -875,6 +1197,23 @@ local function oneShotGroupsOn(room)
   return rawSetting(room, SETTING_ONESHOT) == true
 end
 
+-- 官方自由选将：客户端右键候选卡弹 FreeAssign，从全将池把这张换成任意将。
+-- 换回来的将可能不在发牌小池里，服务端按 Fk:canUseGeneral 校验后照样收下，
+-- 不能再用 table.contains(pool, g) 把它过滤掉（否则等于禁用了自由选将）。
+local function freePickAllowed(room, name)
+  if not (room and room:getSettings("enableFreeAssign")) then return false end
+  if type(name) ~= "string" then return false end
+  local g = Fk.generals[name]
+  if not g then return false end
+  if g.hidden or g.total_hidden then return false end
+  -- 不在这里查 Fk:canUseGeneral（房间 disabled_generals / disabled_packs）：
+  -- 客户端 FreeAssign.qml 按 OnlyEnableGeneral 决定要不要查禁用表，关掉该开关
+  -- 就允许选任何将；服务端若无条件按房间禁用表复核，就会把玩家自由选来的将
+  -- 判为非法丢弃、再用池首旧将回填——表现为「选完又复原成被替换的将」。
+  -- 自由选将本就允许突破候选池，客户端那道过滤已足够，服务端只验将真实存在。
+  return true
+end
+
 local function askAllGroups(players, params, origAskToGeneral)
   local per = SIGNATURE_SIZE * SIGNATURE_ROUNDS
   local once = {}
@@ -913,7 +1252,8 @@ local function askAllGroups(players, params, origAskToGeneral)
     if type(got) == "table" then
       for _, g in ipairs(got) do
         if #list >= per then break end
-        if table.contains(pool, g) and not table.contains(list, g) then
+        if (table.contains(pool, g) or freePickAllowed(p.room, g))
+            and not table.contains(list, g) then
           list[#list + 1] = g
         end
       end
@@ -962,7 +1302,8 @@ local function askInGroups(players, params, origAskToGeneral)
         local n = 0
         for _, g in ipairs(got) do
           if n >= SIGNATURE_SIZE then break end
-          if table.contains(pool, g) and not table.contains(total[p], g) then
+          if (table.contains(pool, g) or freePickAllowed(p.room, g))
+              and not table.contains(total[p], g) then
             table.insert(total[p], g)
             table.removeOne(pool, g)
             n = n + 1
@@ -1205,6 +1546,33 @@ local function cleanupAfterSwap(player)
       tostring(player.general), tostring(player.deputyGeneral)))
 end
 
+-- 驻颜快照保护：血战换将时官方会用新将的 fk.GameStart 触发驻颜的无条件
+-- refresh（zhuyan.lua 的 can_refresh=Util.TrueFunc），把 mark "zhuyan" 覆盖成
+-- 「刚换将那一刻」的体力/手牌。用户要的是保留「上一个武将上个结束阶段」的
+-- 快照。这里在换将事件 main 执行前存下旧快照、执行后写回；没有该 mark 的
+-- 角色一律不动，对无驻颜的对局零影响。
+local function saveZhuyanBeforeSwap(who)
+  if not who or type(who.getMark) ~= "function" then return end
+  local m = who:getMark("zhuyan")
+  if type(m) == "table" and m[1] ~= nil and m[2] ~= nil then
+    rawset(who, "__hx_zhuyan_snapshot", { m[1], m[2] })
+  else
+    rawset(who, "__hx_zhuyan_snapshot", nil)
+  end
+end
+
+local function restoreZhuyanAfterSwap(who)
+  if not who then return end
+  local m = rawget(who, "__hx_zhuyan_snapshot")
+  rawset(who, "__hx_zhuyan_snapshot", nil)
+  if not m then return end
+  local room = who.room
+  if not room or type(room.setPlayerMark) ~= "function" then return end
+  pcall(room.setPlayerMark, room, who, "zhuyan", { m[1], m[2] })
+  hxlog(("zhuyan restored: id=%s hp=%s hand=%s")
+    :format(tostring(who.id), tostring(m[1]), tostring(m[2])))
+end
+
 local function afterSwap(who, ev)
   -- 常规路径和运行期兜底可能把事件包两层，用事件实例去重，纠正只做一次
   if ev and ev.__hx_after_swap_done then return end
@@ -1234,7 +1602,9 @@ for _, ev in ipairs(Fk._custom_events or {}) do
     ev.m = function(self)
       local who = self and self.data and self.data.who
       if who then pcall(hoistOwnPair, who.room, who) end
+      if who then pcall(saveZhuyanBeforeSwap, who) end
       local ret = orig(self)
+      if who then pcall(restoreZhuyanAfterSwap, who) end
       if who then afterSwap(who, self) end
       return ret
     end
@@ -1253,7 +1623,9 @@ local function patchSwapEventClass()
   cls.main = function(self)
     local who = self and self.data and self.data.who
     if who then pcall(hoistOwnPair, who.room, who) end
+    if who then pcall(saveZhuyanBeforeSwap, who) end
     local ret = origMain(self)
+    if who then pcall(restoreZhuyanAfterSwap, who) end
     if who then afterSwap(who, self) end
     return ret
   end
@@ -1268,8 +1640,12 @@ pcall(patchSwapEventClass)
 ----------------------------------------------------------------------
 local function applyIndulgenceCount(room)
   if not isModeRoom(room) then return false end
-  -- 乐不思蜀与双将无关，单将模式（不开副将 / 总开关关）同样生效
-  local keep = COUNT_KEYS[room:getSettings(SETTING_COUNT)] or 3
+  -- 乐不思蜀与双将无关，单将模式（不开副将 / 总开关关）同样生效。
+  -- 口径为「减去 N 张」：不同牌堆存量不同（比赛牌堆 2、混装牌堆 5），
+  -- 减的数量超过存量时按存量全减。移除顺序 方块>梅花>红桃>黑桃，
+  -- 尽量把黑桃、红桃留在牌堆里（对齐「默认留一黑一红」的预期）。
+  local removeN = COUNT_KEYS[room:getSettings(SETTING_COUNT)]
+  if removeN == nil then removeN = 3 end
   local draw = room.draw_pile
   if type(draw) ~= "table" or type(room.printCard) ~= "function" then return false end
 
@@ -1280,10 +1656,27 @@ local function applyIndulgenceCount(room)
       table.insert(indexes, i)
     end
   end
-  if #indexes <= keep then return false end
+  if #indexes == 0 or removeN <= 0 then return false end
+  if removeN > #indexes then removeN = #indexes end
+
+  -- 按移除优先级排序，取前 removeN 张替换成兵粮寸断
+  local removeRank = {
+    [Card.Diamond] = 1,
+    [Card.Club] = 2,
+    [Card.Heart] = 3,
+    [Card.Spade] = 4,
+  }
+  table.sort(indexes, function(a, b)
+    local ca = Fk:getCardById(draw[a])
+    local cb = Fk:getCardById(draw[b])
+    local ra = removeRank[ca and ca.suit] or 9
+    local rb = removeRank[cb and cb.suit] or 9
+    if ra ~= rb then return ra < rb end
+    return a < b
+  end)
 
   local changed = false
-  for k = #indexes, keep + 1, -1 do
+  for k = removeN, 1, -1 do
     local i = indexes[k]
     local old = Fk:getCardById(draw[i])
     if old then
@@ -1317,6 +1710,13 @@ if okGL and type(GameLogic) == "table"
     if changed then
       room:doBroadcastNotify("PrepareDrawPile", room.draw_pile)
     end
+    -- 开局广播全房称号快照：core 的 Mediator 收到 PlayerTitlesSnapshot 后逐个
+    -- applyPlayerTitle 填进 Config.playerTitles，头像旁的 TitleItem 自动显示他人称号。
+    pcall(function()
+      if type(HX_BroadcastRoomTitles) == "function" then
+        HX_BroadcastRoomTitles(room)
+      end
+    end)
   end
 end
 
@@ -1553,6 +1953,24 @@ local function patchThrowRequest()
     if self.command == "AskForGeneral" then
       hxlog("ask focus=" .. tostring(self.focus_text) .. " players=" .. #(self.players or {}))
     end
+    -- 单将弃置兜底：血战公式写死 12=6*2，关副将后 thegeneralsNum 只按 1 倍算，
+    -- 会算出「弃 6 张」把单将每方 6 张备选全弃光，随后死亡换将因池空直接判死。
+    -- getSettings hook 可能没生效，这里在请求层再拦一道：单将模式把弃置数强制归零，
+    -- 保留全部备选，保证阵亡后总有将可续。双将/比赛规则一律不碰。
+    if self.focus_text == THROW_FOCUS and not rawget(self, "__hx_single_throw_skip") then
+      local room = self.players and self.players[1] and self.players[1].room
+      if room and isModeRoom(room) and rawSetting(room, "enableDeputy") ~= true
+          and not room:getSettings("3v3competition") then
+        rawset(self, "__hx_single_throw_skip", true)
+        hxlog("throw single-general: force num=0 to keep all spares")
+        for pid, d in pairs(self.data or {}) do
+          if type(d) == "table" and type(d[2]) == "number" then d[2] = 0 end
+        end
+        if type(self.default_reply) == "table" then
+          for pid in pairs(self.default_reply) do self.default_reply[pid] = {} end
+        end
+      end
+    end
     -- 阵亡换将：换成成组界面，点一组就是一组主副将
     if self.command == "AskForGeneral" and not rawget(self, "__hx_pair_swap_done") then
       rawset(self, "__hx_pair_swap_done", true)
@@ -1582,6 +2000,8 @@ local function patchThrowRequest()
           list = table.simpleClone(list), num = num, force = true,
         } })
         self.command = "CustomDialog"
+        -- 烧条标题：CustomDialog 命令默认显示命令名，这里改成可读的「换将」
+        self.focus_text = "hx__3v3_swap_title"
         hxlog("swap replaced: pairs=" .. math.floor(#list / 2) .. " num=" .. num)
       end
     end
@@ -1610,6 +2030,8 @@ local function patchThrowRequest()
         end
         rawset(self, "__hx_pair_throw_meta", meta)
         self.command = "CustomDialog"
+        -- 烧条标题：同上，改成可读的「弃置备选武将」
+        self.focus_text = "HX3v3_AskForThrowGeneral"
         hxlog("throw replaced, players=" .. total)
       else
         hxlog("throw not replaced, data entries=" .. total)
@@ -2071,6 +2493,11 @@ end
 -- 客户端：进房后把本机的方案表整份送到服务端。方案随时可能改动，
 -- 所以每次进房都现读一遍 Config，而不是在启动时缓存。
 local function hxSendBanSchemes()
+  -- 2026-11-17：0.1.17 服务端的 C++ 房间命令是白名单制，hx_ban_scheme 不在
+  -- 名单里，方案传不上去；且该包经此客户端发出后服务端 CBOR 解码失败
+  -- （Malformed data），直接把玩家踢下线。故停用网络发送，方案改由服务端
+  -- 读取同目录 freekill.client.config.json 获得，功能不受影响。
+  do return false end
   if type(Config) ~= "table" then return false end
   local schemes = Config.disableSchemes
   if type(schemes) ~= "table" then return false end
@@ -2165,12 +2592,43 @@ local function applyDoubleBan(room)
     return false
   end
 
-  -- 优先用房主进房时送来的那份；没有网络数据（自己建房时也可能还没到）
-  -- 才退回去读本机文件。
-  local schemes, numA = room.__hx_ban_schemes, nil
-  if type(schemes) == "table" and next(schemes) ~= nil then
+  -- 方案来源优先级：
+  --   1) 房主通过 LobbyTask 推到服务端的玩家专属槽（新通道，跨机可用）；
+  --   2) 旧 hx_ban_scheme 命令存下的 room.__hx_ban_schemes（已停用，留兼容）；
+  --   3) 服务端本机配置文件（仅单机/服务端就是房主时才对得上）。
+  -- 之前只走 3)，服务端读的是它自己机器上的 2 套旧方案，房主客户端却已有
+  -- 8 套+，选第 17/19 套时 scheme missing，双禁将/双池整体失效。
+  local schemes, numA = nil, nil
+  local ownerId, ownerName = nil, nil
+  if type(room.getOwner) == "function" then
+    local okO, owner = pcall(room.getOwner, room)
+    if okO and type(owner) == "table" then
+      ownerId = owner.id
+      -- serverPlayer 提供 getScreenName（asio 版与 TaskPlayer 同名方法）
+      if type(owner.getScreenName) == "function" then
+        local okN, n = pcall(owner.getScreenName, owner)
+        if okN and n then ownerName = tostring(n) end
+      end
+    end
+  end
+  -- 依次回退：owner.id → 房主昵称 → 最近一次推送槽。
+  -- 大厅 tp.id 与房间 owner.id 不同域，单靠 id 命中不了，故必须留后两条。
+  local slot = nil
+  if ownerId then slot = HX_PLAYER_BAN_SCHEMES[ownerId] end
+  if not slot and ownerName then slot = HX_PLAYER_BAN_BY_NAME[ownerName] end
+  if not slot then slot = HX_LAST_PUSHED_SCHEMES end
+  if type(slot) == "table" and type(slot.schemes) == "table" and #slot.schemes > 0 then
+    schemes = slot.schemes
+    numA = tonumber(slot.cur) or 1
+    hxlog(("double ban: use pushed schemes owner=%s name=%s (%d)")
+      :format(tostring(ownerId), tostring(ownerName), #schemes))
+  end
+  if not schemes and type(room.__hx_ban_schemes) == "table"
+      and next(room.__hx_ban_schemes) ~= nil then
+    schemes = room.__hx_ban_schemes
     numA = tonumber(room.__hx_ban_cur) or 0
-  else
+  end
+  if not schemes then
     local conf = readClientConf()
     schemes = conf and conf.disableSchemes
     -- 配置里的 currentDisableIdx 是 0 起算，界面上说的是第 N 套
@@ -2203,9 +2661,12 @@ local function applyDoubleBan(room)
     room.__hx_banA = { gens = ag, packs = ap }
   end
   room.__hx_banB = { gens = gens, packs = packs }
+  -- 两池显示名固定为「将池A / 将池B」，不再跟方案自己的 name 走。
+  -- 方案名常因改配置、服务端快照不一致而对不上，固定名直观且永不错位。
+  -- 设置下拉里仍保留各方案自己的名字（refreshBanSchemeModel），供选择区分。
   room.__hx_ban_names = {
-    a = schemeNameOf(schemes, numA),
-    b = schemeNameOf(schemes, numB),
+    a = "将池A",
+    b = "将池B",
   }
 
   -- 双候选池：B 不并进房间，选将时单独成池（见 applyDualPools）
@@ -2441,21 +2902,41 @@ latePatches[#latePatches + 1] = patchDualPools
 pcall(patchDualPools)
 latePatches[#latePatches + 1] = patchClientSender
 pcall(patchClientSender)
+latePatches[#latePatches + 1] = installSettingsHook
+pcall(installSettingsHook)
 
 -- 换将水位线：包装 GameLogic.getEventsOfScope。血战房间里，玩家换将时会记下
--- SWAP_WATERMARK（当时的事件 id）。这里对「本回合 UseCard 事件」做一次后处理：
--- 若事件目标里含有带水位线的玩家、且事件发生在该玩家换将之前，就剔除掉。
--- 这样胆守这类「按本回合被指定次数计数」的技能会从换将后重新累计。
--- 其他房间/玩家没有水位线标记，走原样返回，零影响。
+-- SWAP_WATERMARK（当时的事件 id）。这里对「本回合的事件」做一次后处理：
+-- 若事件与该玩家相关、且发生在换将之前，就剔除掉，让该玩家的计数从换将后
+-- 重新累计。覆盖两类技能：
+--   UseCard   —— 胆守（十周年 ty_ex__danshou 等）：按本回合被指定为目标次数计数；
+--   MoveCards —— 先谋（十周年 tymou__guojia）：按本回合失去的牌数计数。
+-- 其他房间/玩家没有水位线标记，或事件类型不在上述两类，走原样返回，零影响。
 local function patchEventScopeWatermark()
   local ok, GL = pcall(require, "ltk.server.gamelogic")
   if not ok or type(GL) ~= "table" or type(GL.getEventsOfScope) ~= "function" then return false end
   if GL.__hx_watermark_patched then return true end
   GL.__hx_watermark_patched = true
   local orig = GL.getEventsOfScope
+  -- 判断事件 data 是否与玩家相关；不同事件类型字段不同
+  local function eventTouchesPlayer(eventType, data, p)
+    if eventType == GameEvent.UseCard then
+      return type(data.tos) == "table" and table.contains(data.tos, p)
+    elseif eventType == GameEvent.MoveCards then
+      -- 先谋统计的是「失去的牌」，moves 里 from == p 才算；拿到牌不算失去
+      if type(data.moves) == "table" then
+        for _, mv in ipairs(data.moves) do
+          if type(mv) == "table" and mv.from == p then return true end
+        end
+      end
+      return false
+    end
+    return false
+  end
   GL.getEventsOfScope = function(self, eventType, n, func, scope)
     local res = orig(self, eventType, n, func, scope)
-    if eventType ~= GameEvent.UseCard or type(res) ~= "table" or #res == 0 then return res end
+    if type(res) ~= "table" or #res == 0 then return res end
+    if eventType ~= GameEvent.UseCard and eventType ~= GameEvent.MoveCards then return res end
     if scope ~= nil and scope ~= Player.HistoryTurn then return res end
     local room = self.room
     if not room or type(room.players) ~= "table" then return res end
@@ -2470,10 +2951,11 @@ local function patchEventScopeWatermark()
     for _, ev in ipairs(res) do
       local drop = false
       local data = ev.data
-      if ev.id and data and type(data.tos) == "table" then
-        for _, to in ipairs(data.tos) do
-          local wm = marks[to]
-          if wm and ev.id <= wm then drop = true break end
+      if ev.id and data then
+        for p, wm in pairs(marks) do
+          if eventTouchesPlayer(eventType, data, p) and ev.id <= wm then
+            drop = true break
+          end
         end
       end
       if not drop then table.insert(kept, ev) end
@@ -2518,13 +3000,428 @@ end
 latePatches[#latePatches + 1] = patchAdvancedQmlRedirect
 pcall(patchAdvancedQmlRedirect)
 
+----------------------------------------------------------------------
+-- 十一、云端默认禁将方案同步
+----------------------------------------------------------------------
+-- 所有人点【更新】：从服务端全服存档拉取 6 套默认方案，追加进自己本地的
+-- 禁将方案（Config.disableSchemes）并存盘；白名单管理员点同一个按钮时，
+-- 额外把本地前 6 套方案上传覆盖全服存档，实现「远端更新」。
+-- 走官方 LobbyTask 通道（lobby.cpp 白名单内），载荷是 JSON 字符串，
+-- 服务端用 Fk:addTaskDef 注册 handler，回传用 task.player:doNotify。
+-- 全服存档 key 带版本号，确保本次内置的带前缀方案首次生效，不受旧存档干扰。
+local BAN_SYNC_TASK = "hx_ban_sync"
+local BAN_SYNC_RESULT = "hx_ban_sync_result"
+-- v3：v2 里是旧名字（小弟彩虹…）；改名后换 key，让内置 6 套带新名字的方案
+-- （小弟界将池…26王战池）首次生效，不受旧存档干扰。
+local BAN_SYNC_SAVE_KEY = "hx_ban_schemes_v3_20261117"
+-- 白名单管理员（按游戏内昵称 getScreenName 判定）
+local BAN_ADMINS = {
+  ["彩虹小弟"] = true,
+  ["周宣"] = true,
+}
+
+local function loadBuiltinBanSchemes()
+  local ok, defs = pcall(require, "packages.advancedpackages.rules.hx_ban_defaults")
+  if ok and type(defs) == "table" and #defs > 0 then return defs end
+  return {}
+end
+
+-- 服务端：注册 LobbyTask 处理器。客户端也会执行本文件，但没有 addTaskDef
+-- 或没有 task 系统时，pcall 兜住即可，不会报错。
+if type(Fk) == "table" and type(Fk.addTaskDef) == "function" then
+  local okDef, errDef = pcall(function()
+    Fk:addTaskDef {
+      type = BAN_SYNC_TASK,
+      handler = function(task)
+        local tp = task.player
+        if not tp then return end
+
+        -- task.data 是 LobbyTask 第二个载荷，这里约定为 JSON 字符串
+        local payload = {}
+        local d = task.data
+        if type(d) == "string" then
+          local ok, decoded = pcall(json.decode, d)
+          if ok and type(decoded) == "table" then payload = decoded end
+        elseif type(d) == "table" then
+          payload = d
+        end
+
+        -- 判定管理员：asio 版 TaskPlayer 的 _splayer 提供 getScreenName
+        local isAdmin = false
+        local nm = ""
+        local sp = tp._splayer
+        if sp and type(sp.getScreenName) == "function" then
+          local ok, name = pcall(sp.getScreenName, sp)
+          if ok then nm = tostring(name) end
+          if ok and BAN_ADMINS[nm] then isAdmin = true end
+        end
+        hxlog(("ban sync enter name=%s admin=%s dataLen=%s")
+          :format(nm, tostring(isAdmin), tostring(type(d) == "string" and #d or 0)))
+
+        -- 房主建房/进房时推送本机全部禁将方案：存进玩家专属槽，供房间内
+        -- applyDoubleBan / 双候选池读取。按玩家 id 隔离，不写全服存档，
+        -- 所以不会多人串数据，也和云端默认方案（管理员上传那套）互不干扰。
+        if payload.op == "push_schemes" and type(payload.schemes) == "table"
+            and #payload.schemes > 0 then
+          local pid = tp.id
+          local slot = {
+            schemes = payload.schemes,
+            cur = tonumber(payload.cur) or 1,
+            name = nm,
+          }
+          HX_PLAYER_BAN_SCHEMES[pid] = slot
+          HX_LAST_PUSHED_SCHEMES = slot
+          if nm ~= "" then HX_PLAYER_BAN_BY_NAME[nm] = slot end
+          hxlog(("ban sync push pid=%s name=%s n=%s cur=%s")
+            :format(tostring(pid), nm, #payload.schemes, tostring(payload.cur)))
+          return -- 这类后台推送不需要回传，避免刷新按钮状态
+        end
+
+        -- 读全服存档（Task:getGlobalSaveState 走 uid=0，跨玩家共享）
+        local saved = nil
+        local okR, ret = pcall(function() return task:getGlobalSaveState(BAN_SYNC_SAVE_KEY) end)
+        if okR and type(ret) == "table" and type(ret.schemes) == "table" and #ret.schemes > 0 then
+          saved = ret
+        end
+
+        -- 管理员上传：只接受「有效方案」（名字非空且含禁将表），
+        -- 避免把客户端尚未写盘的空名/临时方案覆盖到云端（v1 就是这么被污染的）。
+        local pushed = false
+        if isAdmin and type(payload.schemes) == "table" then
+          local valid = {}
+          for _, s in ipairs(payload.schemes) do
+            if type(s) == "table" and type(s.name) == "string" and s.name ~= ""
+                and (type(s.banPkg) == "table" or type(s.normalPkg) == "table"
+                     or type(s.banCardPkg) == "table") then
+              table.insert(valid, s)
+            end
+          end
+          if #valid > 0 then
+            -- 11-17 改为按名称合并：与云端（或内置默认）同名的方案原位替换，
+            -- 云端没有的新名字追加到末尾。客户端不再固定传本地前六套，
+            -- 管理员本地怎么排序、怎么增删都不影响对号入座。
+            local defs = (type(saved) == "table" and type(saved.schemes) == "table"
+              and #saved.schemes > 0) and saved.schemes or loadBuiltinBanSchemes()
+            local byName, out = {}, {}
+            for _, s in ipairs(defs) do
+              if type(s) == "table" and type(s.name) == "string" and s.name ~= "" then
+                byName[s.name] = s
+                table.insert(out, s)
+              end
+            end
+            local replaced, appended = 0, 0
+            for _, s in ipairs(valid) do
+              if byName[s.name] then
+                for k, old in ipairs(out) do
+                  if old.name == s.name then
+                    out[k] = s
+                    replaced = replaced + 1
+                    break
+                  end
+                end
+              else
+                byName[s.name] = s
+                table.insert(out, s)
+                appended = appended + 1
+              end
+            end
+            saved = { schemes = out }
+            local okW = pcall(function() task:saveGlobalState(BAN_SYNC_SAVE_KEY, saved) end)
+            pushed = okW
+            hxlog(("ban sync admin upload valid=%s replaced=%s appended=%s ok=%s")
+              :format(#valid, replaced, appended, tostring(okW)))
+          else
+            hxlog("ban sync admin upload SKIPPED: no valid scheme in payload")
+          end
+        end
+
+        -- 存档为空用内置 6 套初始化并写入
+        if not saved then
+          saved = { schemes = loadBuiltinBanSchemes() }
+          pcall(function() task:saveGlobalState(BAN_SYNC_SAVE_KEY, saved) end)
+          hxlog(("ban sync init builtin count=%s"):format(#saved.schemes))
+        end
+
+        -- 回传的一定是「有效方案」：把存档里空名/残缺的项过滤掉，
+        -- 这样普通玩家点更新后本地能看到完整的默认方案，而不是一堆空名项。
+        local out = {}
+        for _, s in ipairs(saved.schemes or {}) do
+          if type(s) == "table" and type(s.name) == "string" and s.name ~= "" then
+            table.insert(out, s)
+          end
+        end
+        -- 若云端有效项不足 6 套，用内置补齐（按名字去重）
+        if #out < 6 then
+          local have = {}
+          for _, s in ipairs(out) do have[s.name] = true end
+          for _, s in ipairs(loadBuiltinBanSchemes()) do
+            if type(s) == "table" and s.name and s.name ~= "" and not have[s.name] then
+              table.insert(out, s)
+              have[s.name] = true
+            end
+            if #out >= 6 then break end
+          end
+        end
+
+        -- 用 JSON 字符串回传，不用 Lua table：table 经 CBOR 编码后嵌套的
+        -- scheme.name/banPkg 在 QML 侧解出来形态不稳，方案名会丢成「第 N 套」。
+        -- JSON 字符串到 QML 就是纯字符串，客户端 JSON.parse 后结构完整。
+        local reply = {
+          ok = true,
+          admin = isAdmin,
+          pushed = pushed,
+          schemes = out,
+        }
+        local okEnc, replyJson = pcall(json.encode, reply)
+        local okN = false
+        if okEnc then
+          okN = pcall(tp.doNotify, tp, BAN_SYNC_RESULT, replyJson)
+        end
+        hxlog(("ban sync reply schemes=%s json=%s ok=%s len=%s")
+          :format(#out, tostring(okEnc), tostring(okN),
+            tostring(okEnc and #replyJson or 0)))
+        if not okN then
+          pcall(fk.qWarning, "[hx_ban_sync] doNotify failed")
+        end
+      end, -- handler function end
+    }
+    end) -- pcall(function() Fk:addTaskDef{...})
+  hxlog("ban sync taskdef register=" .. tostring(okDef) .. " err=" .. tostring(errDef))
+else
+  hxlog("ban sync taskdef SKIPPED: addTaskDef unavailable")
+end
+
+----------------------------------------------------------------------
+-- 十二、官方 player titles（不升级 asio、不改 core）
+----------------------------------------------------------------------
+-- asio 0.1.17 的 supportedFeatures 编译期写死只有 AddRobot/ChangeRoom，
+-- 客户端 Config.titleServerSupported 因此恒为 false，"更换称号"按钮灰着，
+-- 原生 GetTitleProfile/UpdateTitle 命令服务端也不认。
+--
+-- 绕过办法：全程借用 asio 0.1.17 白名单内的 LobbyTask 通道，以及 core 自带
+-- 的称号命令 handler（Mediator.qml 对 TitleProfile/PlayerTitle/
+-- PlayerTitlesSnapshot 都有处理，联机时同样在跑）：
+--   客户端发 LobbyTask("hx_title", {op=...}) →
+--   服务端 Fk:addTaskDef 的 handler 读/写玩家存档 →
+--   task.player:doNotify("TitleProfile", 载荷) 回传。
+-- 关键点：applyTitleProfile() 里有一句 titleServerSupported = data.supported
+-- === true，所以回传里带上 supported=true 就把那道硬门槛打开了——提示消失、
+-- 称号列表出现、原生按钮解灰，全部由 core 自己的逻辑完成，core 一行未动。
+--
+-- 存档用 TaskPlayer:getGlobalSaveState/saveGlobalState（服务端原生、按账号隔离），
+-- 换设备/重连都保留。可选称号表来自 rainbow_titles/styles.lua 注册到
+-- Fk.title_styles 的样式，与客户端 TitleBank 渲染的是同一份。
+local TITLE_TASK = "hx_title"
+local TITLE_SAVE_KEY = "hx_title_equipped_v1"
+
+-- 进程内快照：账号 id -> {playerId,id,title,style}，供房间开局广播他人称号。
+-- 大厅 task 与房间 room 在同一 Lua 进程，全局表可共享。
+HX_TITLE_EQUIPPED = HX_TITLE_EQUIPPED or {}
+
+-- 称号权威列表写死在服务端，id 与 rainbow_titles/styles.lua 的 key 一一对应，
+-- 不依赖服务端进程是否加载了 rainbow_titles 包（它的 init 只在客户端渲染样式
+-- 时真正需要）。渲染组件路径仍由客户端 TitleBank 按 style=id 查 Fk.title_styles。
+local HX_TITLE_DEFS = {
+  { "rainbow_titles.rainbowfamily",         "彩虹家族" },
+  { "rainbow_titles.dreamingsaint",         "大梦仙尊" },
+  { "rainbow_titles.bigdreamingsaint",      "极大梦仙尊" },
+  { "rainbow_titles.shiningrainbowfamily",  "闪光彩虹家族" },
+  { "rainbow_titles.dynsatenruiko",         "动·佐天泪子" },
+  { "rainbow_titles.dynmisakamikoto",       "动·御坂美琴" },
+  { "rainbow_titles.dyndreamingsaint",      "动·大梦仙尊" },
+  { "rainbow_titles.dynrainbowfamily",      "动·彩虹家族" },
+}
+
+-- 专属称号：仅周宣(id=1)可佩戴；其他账号看得见（快照广播全量），但候选列表
+-- 里不出现、也无法装备，存档中若残留（旧数据）读取时自动清除。
+local HX_TITLE_OWNER_PID = 1
+local HX_TITLE_EXCLUSIVE = {
+  ["rainbow_titles.dreamingsaint"]    = true, -- 大梦仙尊
+  ["rainbow_titles.bigdreamingsaint"] = true, -- 极大梦仙尊
+  ["rainbow_titles.dyndreamingsaint"] = true, -- 动·大梦仙尊
+}
+
+local function hxTitleAllowed(pid, id)
+  if HX_TITLE_EXCLUSIVE[id] then
+    return tonumber(pid) == HX_TITLE_OWNER_PID
+  end
+  return true
+end
+
+-- pid 为 nil 时返回全量（快照/广播取名用）；传具体账号则过滤掉他无权佩戴的专属。
+local function hxTitleList(pid)
+  local out = {}
+  local owner = (pid == nil) or (tonumber(pid) == HX_TITLE_OWNER_PID)
+  for _, def in ipairs(HX_TITLE_DEFS) do
+    if owner or not HX_TITLE_EXCLUSIVE[def[1]] then
+      table.insert(out, { id = def[1], title = def[2], style = def[1] })
+    end
+  end
+  return out
+end
+
+local function hxFindTitle(list, id)
+  for _, t in ipairs(list) do
+    if t.id == id then return t end
+  end
+  return nil
+end
+
+-- 进程内已知的所有称号快照（数组形态，直接交给 PlayerTitlesSnapshot）。
+-- 玩家通过 hx_title 换过称号后都会写进 HX_TITLE_EQUIPPED，所以这张表就是
+-- "本服已装备称号的玩家"全集，回传给任一玩家即可让其看到其他人。
+function HX_TitleSnapshotArray()
+  local out = {}
+  for pid, entry in pairs(HX_TITLE_EQUIPPED) do
+    if type(entry) == "table" and type(entry.id) == "string" and entry.id ~= "" then
+      table.insert(out, {
+        playerId = tonumber(pid) or tonumber(entry.playerId) or 0,
+        id = entry.id,
+        title = entry.title or "",
+        style = entry.style or entry.id,
+      })
+    end
+  end
+  return out
+end
+
+-- 房间开局/进房时，把房间内每人的称号汇总后广播给所有人。
+-- 先取进程内快照（本次会话换过称号的）；缺失的再从账号存档补读，
+-- 这样服务重启后没打开过设置页的玩家，称号依然能被读到。
+-- 定义为全局函数，文件前部的开局 hook 在运行时调用（那时已加载完）。
+function HX_BroadcastRoomTitles(room)
+  if not room or type(room.doBroadcastNotify) ~= "function" then return end
+  local defs = hxTitleList()
+  local list = {}
+  for _, p in ipairs(room.players or {}) do
+    local pid = p.id
+    if pid then
+      local entry = HX_TITLE_EQUIPPED[pid]
+      local sid = entry and entry.id or ""
+      if (not sid or sid == "") and type(p.getGlobalSaveState) == "function" then
+        pcall(function()
+          local s = p:getGlobalSaveState(TITLE_SAVE_KEY)
+          if type(s) == "table" and type(s.id) == "string" then sid = s.id end
+        end)
+      end
+      if sid and sid ~= "" and hxTitleAllowed(pid, sid) then
+        local t = hxFindTitle(defs, sid)
+        if t then
+          table.insert(list, { playerId = pid, id = t.id, title = t.title, style = t.style })
+          -- 回填进程内表，后续 profile 请求也能直接带上
+          HX_TITLE_EQUIPPED[pid] = { playerId = pid, id = t.id, title = t.title, style = t.style }
+        end
+      end
+    end
+  end
+  if #list > 0 then
+    local ok = pcall(room.doBroadcastNotify, room, "PlayerTitlesSnapshot", list)
+    hxlog("title snapshot broadcast n=" .. #list .. " ok=" .. tostring(ok))
+  end
+end
+
+if type(Fk) == "table" and type(Fk.addTaskDef) == "function" then
+  local okTitle, errTitle = pcall(function()
+    Fk:addTaskDef {
+      type = TITLE_TASK,
+      handler = function(task)
+        local tp = task.player
+        if not tp then return end
+        local pid = tp.id
+
+        local payload = {}
+        local d = task.data
+        if type(d) == "string" then
+          local ok, dec = pcall(json.decode, d)
+          if ok and type(dec) == "table" then payload = dec end
+        elseif type(d) == "table" then
+          payload = d
+        end
+        local op = payload.op or "profile"
+        -- 候选列表按账号过滤：非周宣看不到也不选不了专属称号
+        local list = hxTitleList(pid)
+
+        -- 读存档：getGlobalSaveState 已经是解码后的 table（见 taskplayer.lua）
+        local savedId = ""
+        pcall(function()
+          local s = tp:getGlobalSaveState(TITLE_SAVE_KEY)
+          if type(s) == "table" then
+            savedId = s.id or ""
+          elseif type(s) == "string" then
+            local ok, dec = pcall(json.decode, s)
+            if ok and type(dec) == "table" then savedId = dec.id or "" end
+          end
+        end)
+        -- 存档残留（旧数据/他人冒领的专属）：无权限则清掉，本人不显示也戴不了
+        if savedId ~= "" and not hxTitleAllowed(pid, savedId) then
+          hxlog(("title task clear unauthorized pid=%s id=%s")
+            :format(tostring(pid), tostring(savedId)))
+          savedId = ""
+          pcall(function() tp:saveGlobalState(TITLE_SAVE_KEY, { id = "" }) end)
+        end
+        local equipped = hxFindTitle(list, savedId) or {}
+
+        -- 装备：校验 id 在本人可用列表里（专属仅周宣可写），写入账号存档
+        if op == "equip" then
+          local want = payload.id or ""
+          if want == "" then
+            equipped = {}
+            pcall(function() tp:saveGlobalState(TITLE_SAVE_KEY, { id = "" }) end)
+          elseif hxTitleAllowed(pid, want) then
+            local t = hxFindTitle(list, want)
+            if t then
+              equipped = t
+              pcall(function() tp:saveGlobalState(TITLE_SAVE_KEY, { id = want }) end)
+            end
+          else
+            hxlog(("title task equip denied pid=%s id=%s")
+              :format(tostring(pid), tostring(want)))
+          end
+          savedId = equipped.id or ""
+        end
+
+        -- 更新进程内快照
+        HX_TITLE_EQUIPPED[pid] = {
+          playerId = pid,
+          id = equipped.id or "", title = equipped.title or "", style = equipped.style or "",
+        }
+
+        -- 回传 TitleProfile：传 table（不传 JSON 字符串）——core 的
+        -- applyTitleProfile 要求 data.titles 是真数组，JSON 字符串会解不出来。
+        local profile = {
+          playerId = pid,
+          supported = true,
+          titles = list,
+          equipped = equipped,
+          ok = true,
+          error = "",
+        }
+        local okN = pcall(tp.doNotify, tp, "TitleProfile", profile)
+        -- 同时回传全服称号快照：core 的 Mediator 收到 PlayerTitlesSnapshot 后
+        -- 会逐个 applyPlayerTitle 填进 Config.playerTitles，等待室卡片按 playerId
+        -- 自动显示他人称号。玩家自己这条由上面的 TitleProfile.equipped 也覆盖。
+        local snap = HX_TitleSnapshotArray()
+        local okS = pcall(tp.doNotify, tp, "PlayerTitlesSnapshot", snap)
+        hxlog(("title task pid=%s op=%s equipped=%s n=%s notify=%s snap=%s/%s")
+          :format(tostring(pid), tostring(op), tostring(savedId), #list,
+            tostring(okN), tostring(okS), #snap))
+        if not okN then pcall(fk.qWarning, "[hx_title] doNotify TitleProfile failed") end
+        if not okS then pcall(fk.qWarning, "[hx_title] doNotify snapshot failed") end
+      end,
+    }
+  end)
+  hxlog("title taskdef register=" .. tostring(okTitle) .. " err=" .. tostring(errTitle))
+else
+  hxlog("title taskdef SKIPPED: addTaskDef unavailable")
+end
+
 -- 加载自检：日志里能确认本文件在哪个进程跑到、标记表当时有没有就绪
 hxlog("extra rules loaded, marks=" .. tostring(Fk and type(Fk.qml_marks) == "table")
   .. " private=" .. tostring(Fk and type(Fk.qml_marks) == "table"
     and Fk.qml_marks["private"] ~= nil)
   .. " getqmlmark=" .. tostring(type(GetQmlMark) == "function"))
 
--- 本文件主体是补丁，只顺带造一个技能骨架（阴阳鱼）。loadSkillSkelsByPath 会拿
--- require 的返回值当技能骨架（先写 skel.file_path，再 createSkill 并登记进 Fk.skills），
--- 所以这里要返回骨架本身；骨架没建成才返回 false。返回 true 会在 skel.file_path 那步崩。
-return yinyangSkel or false
+-- 本文件主体是补丁，技能骨架（阴阳鱼）已移到 rules/skills/yinyangfish.lua，
+-- 由 init.lua 的 Package:loadSkillSkelsByPath 正规登记。这里只返回 false，
+-- 避免被误当成技能骨架（init.lua 用 pcall(require) 加载本文件，不看返回值）。
+return false

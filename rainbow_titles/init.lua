@@ -1,7 +1,6 @@
 -- 自用称号包。开启客户端本地称号模式：
--- 服务端 asio 0.1.17 不提供 PlayerTitles 特性，官方也无更高版本，
--- 因此改用 TitleBank 的本地测试模式，称号的拥有/装备全部从本包样式表读取，
--- 无需服务端支持，也不改任何 core 文件。
+-- 服务端 asio 0.1.17 不提供 PlayerTitles 特性，官方 Release 到顶。
+-- 称号的拥有/装备全部从本包样式表读取，联机也走本地档案，不依赖服务端协议。
 local extension = Package:new("rainbow_titles", Package.SkinPack)
 extension.extensionName = "rainbow_titles"
 
@@ -10,7 +9,8 @@ for id, style in pairs(require "packages.advancedpackages.rainbow_titles.styles"
   Fk.title_styles[id] = style
 end
 
--- 打开本地称号模式（TitleBank.refresh() 读取该全局）
-Fk.title_test_enabled = true
+-- 联机称号走本地档案；关闭 test_console 分支以免加载缺失的 TitlePreview.qml。
+Fk.title_test_enabled = false
+Fk.title_local_enabled = true
 
 return extension
