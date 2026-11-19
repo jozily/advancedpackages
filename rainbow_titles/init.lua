@@ -4,6 +4,11 @@
 local extension = Package:new("rainbow_titles", Package.SkinPack)
 extension.extensionName = "rainbow_titles"
 
+-- 大厅“更多”页按包名查翻译，缺这条会直接显示 rainbow_titles。
+Fk:loadTranslationTable {
+  ["rainbow_titles"] = "特色称号",
+}
+
 Fk.title_styles = Fk.title_styles or {}
 for id, style in pairs(require "packages.advancedpackages.rainbow_titles.styles") do
   Fk.title_styles[id] = style

@@ -394,8 +394,8 @@ local applyFullWin = nil
 local onHxModeRegistered
 local onAnyModeRegistered
 
--- 「通用设置」组：称号入口 + 借刀字数开关。所有游戏模式都要显示，
--- 与血战双将无关。称号本就是账号级 LobbyTask 功能；借刀字数全模式生效。
+-- 「通用设置」组：借刀字数开关。所有游戏模式都要显示，
+-- 与血战双将无关。借刀字数全模式生效。
 -- 放到每个模式 ui_settings 的最前面（table.insert 第 1 位）。
 onAnyModeRegistered = function(mode)
   if type(mode) ~= "table" then return end
@@ -408,15 +408,6 @@ onAnyModeRegistered = function(mode)
   pcall(function()
     table.insert(mode.ui_settings, 1, W.PreferenceGroup {
       title = "hx_settings_common_group_title",
-      -- 称号入口：账号级，所有模式可见
-      {
-        _qml = {
-          url = "packages/advancedpackages/qml/hx__3v3_TitleButton.qml",
-        },
-        _settingsKey = "hxTitleBtn",
-        _children = {},
-        title = "hx_settings_title_title",
-      },
       -- 借刀杀人牌名字数：默认 4 字，开 → 2 字，全模式生效
       W.SwitchRow {
         _settingsKey = SETTING_JIEDAO,
@@ -446,7 +437,7 @@ local function installSettingsHook()
       Fk.addGameMode = function(self, mode)
         origAddGameMode(self, mode)
         if type(mode) ~= "table" then return end
-        -- 所有模式：通用组（称号 + 借刀字数）
+        -- 所有模式：通用组（借刀字数）
         pcall(onAnyModeRegistered, mode)
         -- 仅血战模式：双将专属组（乐不思蜀、换将清理等）
         if mode.name == MODE_NAME then
@@ -522,7 +513,6 @@ onHxModeRegistered = function(mode)
       pcall(function()
         table.insert(mode.ui_settings, W.PreferenceGroup {
           title = "hx_settings_extra_rules_group_title",
-          -- 称号入口已移到「通用设置」组（所有模式可见），此处不再重复。
           -- 乐不思蜀两项与双将无关，放在总开关之上：单将模式也能用，
           -- 因此不设 enabled 门槛（血战模式内恒可点，服务端也只认 isModeRoom）
           W.ComboRow {
@@ -736,13 +726,6 @@ if type(Fk.loadTranslationTable) == "function" then
     ["help: hx_settings_delete_schemes_title"] =
       "点击后清空你本机保存的全部禁将方案（不影响服务器云端方案）。"
       .. "\n删光后可再点上面的「更新默认禁将方案」重新拉取 6 套默认方案。",
-
-    ["hx_settings_title_title"] = "我的称号（云端）",
-    ["help: hx_settings_title_title"] =
-      "从服务器读取并选择称号，无需升级服务器。选中的称号保存在账号里，"
-      .. "重连、换设备都保留，其他玩家也能看到。\n"
-      .. "说明：这是独立于大厅个人信息页的那套称号入口；"
-      .. "个人信息页的原生称号按钮依赖服务器特性，本服务器不支持，请忽略。",
 
     -- 技能名用国战原名 "yinyangfish_skill&"：末尾 & 让它成为隐藏技能，不进技能栏；
     -- 客户端 SpecialMarkSkillArea 只认这个名字，才会在角色下方画可点击的阴阳鱼图标。
