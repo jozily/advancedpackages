@@ -46,9 +46,9 @@
       每名玩家依次选三组武将（共六张），第一组登场，其余两组进入备选池；
       选将结束时由主帅从备选池统一弃置两组（四张）。
 
-  七、比赛规则·击穿全部备选才获胜（子开关，默认关）
-      比赛规则下必须击杀对方全部备选武将（四组）才判负，
-      每击穿一组记一分，全部击穿记五分。
+  七、血战比赛规则（子开关，默认关）
+      关：击杀对方三组备选、留一组即胜（六分口径）；
+      开：必须击杀对方全部备选才胜（全歼口径）。
 
   八、双禁将方案（子开关，默认关）
       除禁将页面当前选中的那套方案之外，再把指定的第二套方案的禁将并进本房间。
@@ -84,6 +84,16 @@ local SETTING_DOUBLEBAN = "hx3v3doubleBan"
 local SETTING_BANSCHEME = "hx3v3doubleBanScheme"
 -- 子项：两个候选池（选将时把两套方案的可用将分成两池，各标方案名）
 local SETTING_DUALPOOL = "hx3v3dualPool"
+-- 子项：本局全体禁将（独立开关，放在总控之前，单双将都生效）
+-- 开启后所有人选将前先从候选里禁 1-4 名（双将按「组」禁），汇总为全局禁用
+local SETTING_GLOBALBAN = "hx3v3globalBan"
+-- 子项：本局每人禁将数量（ComboRow，值 1-4；双将下表示禁几组）
+local SETTING_GLOBALBANCOUNT = "hx3v3globalBanCount"
+-- 子项：双将禁配（放在总控之后）。房主用禁配方案把武将两两配对标号，
+-- 同号两将不得组成一组双将；双候选池下 A/B 各出一将组成一组。
+local SETTING_NOPAIR = "hx3v3noPair"
+-- 子项：禁配方案选择（1 起算，对应禁配方案列表第 N 套）
+local SETTING_PAIRSCHEME = "hx3v3pairScheme"
 local SETTING_COUNT = "hxIndulgenceCount"
 local SETTING_EFFECT = "hxIndulgenceEffect"
 -- 借刀杀人牌名字数：默认 4 字（不和谐），开启后 2 字（OL 和谐口径）。
@@ -170,6 +180,25 @@ local HX_PLAYER_BAN_SCHEMES = {}
 local HX_PLAYER_BAN_BY_NAME = {}
 local HX_LAST_PUSHED_SCHEMES = nil
 
+-- 双将禁配：房主本机禁配方案的中转槽，机制同禁将方案（LobbyTask 推送，
+-- 按玩家 id / 昵称 / 最近推送三路索引）。每套方案形如：
+--   { name = "方案名", pairs = { { "将A", "将B" }, ... } }
+-- 每一对就是一个标号（pairs 下标 1 起：第一对=1号，第二对=2号…），
+-- 同对两将不得组成一组双将。
+local HX_PLAYER_PAIR_SCHEMES = {}
+local HX_PLAYER_PAIR_BY_NAME = {}
+local HX_LAST_PUSHED_PAIRS = nil
+-- 禁配方案云端存档 key（与禁将方案分开，互不干扰）
+local PAIR_SYNC_SAVE_KEY = "hx_pair_schemes_v1_20261120"
+
+-- 本局全体禁将：全局禁用表记在房间 banner 上，选将过滤钩子从这里读。
+-- 值形如 { [玩家id] = { 将名/组... } }，最终并成 room.disabled_generals。
+local GLOBAL_BAN_BANNER = "hx__3v3_global_ban"
+
+-- 本局禁配：当前生效禁配方案的 pairs 广播到房间 banner，客户端备选面板
+-- 据此显示「本局已禁配」。值形如 { pairs = {{g1,g2},...}, dual = bool }。
+local GLOBAL_PAIR_BANNER = "hx__3v3_global_pair"
+
 -- 读取本机禁将方案。
 -- 关键：model/value 函数在【客户端】Lua VM 求值（GetUIDataOfSettings →
 -- W.toQmlData 的 v(settings)）。客户端进程在 freekill.lua 启动时就把配置文件的
@@ -223,6 +252,66 @@ local function refreshBanSchemeModel()
   return true
 end
 pcall(refreshBanSchemeModel)
+
+-- 禁配方案：读取本机 Config.pairSchemes（与禁将方案 disableSchemes 平行），
+-- 用同一套「渲染期读全局 Config」的办法拿真实方案名填入下拉。
+local PAIR_SCHEME_MAX = 30
+local PAIR_SCHEME_MODEL = {}
+local PAIR_SCHEME_LABELS = {}
+local DEFAULT_PAIR_SCHEME_KEY = "hx_pair_scheme_1"
+
+local function readPairConfSchemes()
+  local conf = rawget(_G, "Config")
+  if type(conf) == "table" then
+    if type(conf.pairSchemes) == "table" then return conf.pairSchemes end
+    -- QML 侧把禁配方案存在 Config.conf.pairSchemes 里（saveConf 会整体写盘）
+    if type(conf.conf) == "table" and type(conf.conf.pairSchemes) == "table" then
+      return conf.conf.pairSchemes
+    end
+  end
+  local okOpen, f = pcall(io.open, "freekill.client.config.json", "r")
+  if okOpen and f then
+    local okRead, text = pcall(f.read, f, "a")
+    f:close()
+    if okRead and type(text) == "string" then
+      local okDecode, d = pcall(json.decode, text)
+      if okDecode and type(d) == "table" and type(d.pairSchemes) == "table" then
+        return d.pairSchemes
+      end
+    end
+  end
+  return nil
+end
+
+local function refreshPairSchemeModel()
+  local schemes = readPairConfSchemes()
+  if type(schemes) ~= "table" then return false end
+  local n = math.min(#schemes, PAIR_SCHEME_MAX)
+  if n <= 0 then
+    -- 保底留一项：ComboBox 的 model 为空会进入 currentIndex=-1 的异常态，
+    -- 展开后关不掉、点不到，还会把紧邻的「奇数体力值补偿」行挤到重叠。
+    PAIR_SCHEME_MODEL = { "hx_pair_scheme_1" }
+    PAIR_SCHEME_LABELS = { ["hx_pair_scheme_1"] = "禁配方案 1" }
+    return false
+  end
+  local model, labels = {}, {}
+  for i = 1, n do
+    local key = "hx_pair_scheme_" .. i
+    model[i] = key
+    local s = schemes[i]
+    local name = type(s) == "table" and s.name or ""
+    if type(name) ~= "string" then name = "" end
+    name = name:gsub("^%s+", ""):gsub("%s+$", "")
+    labels[key] = (name ~= "") and name or ("禁配方案 " .. i)
+  end
+  PAIR_SCHEME_MODEL = model
+  PAIR_SCHEME_LABELS = labels
+  if type(Fk) == "table" and type(Fk.loadTranslationTable) == "function" and next(labels) then
+    pcall(Fk.loadTranslationTable, Fk, labels)
+  end
+  return true
+end
+pcall(refreshPairSchemeModel)
 
 local function isModeRoom(room)
   if not room or type(room.getSettings) ~= "function" then return false end
@@ -557,11 +646,49 @@ onHxModeRegistered = function(mode)
             _settingsKey = SETTING_ENDTURN,
             title = "hx_settings_end_turn_on_death_title",
           },
+          -- 本局全体禁将 + 禁将数量：放在总控之前，独立可点，单双将都生效
+          --（应用户要求放在总控前面；与"换将清理""一次选完"同列）
+          W.SwitchRow {
+            _settingsKey = SETTING_GLOBALBAN,
+            title = "hx_settings_global_ban_title",
+          },
+          W.ComboRow {
+            _settingsKey = SETTING_GLOBALBANCOUNT,
+            title = "hx_settings_global_ban_count_title",
+            model = {
+              "hx_global_ban_count_1",
+              "hx_global_ban_count_2",
+              "hx_global_ban_count_3",
+              "hx_global_ban_count_4",
+            },
+            -- 没存过时按 1 名/组
+            value = function(settings)
+              local v = settingsFlag(settings, SETTING_GLOBALBANCOUNT)
+              for _, key in ipairs({
+                "hx_global_ban_count_1", "hx_global_ban_count_2",
+                "hx_global_ban_count_3", "hx_global_ban_count_4",
+              }) do
+                if v == key then return v end
+              end
+              return "hx_global_ban_count_1"
+            end,
+            enabled = function(settings)
+              return settingsFlag(settings, SETTING_GLOBALBAN) == true
+            end,
+          },
           W.SwitchRow {
             _settingsKey = SETTING_MASTER,
             title = "hx_settings_signature_deputy_title",
             enabled = masterEnabled,
           },
+          -- 双将禁配：放在总控之后，受总控灰化控制（双将才有"配对"概念）
+          W.SwitchRow {
+            _settingsKey = SETTING_NOPAIR,
+            title = "hx_settings_no_pair_title",
+            enabled = subEnabled,
+          },
+          -- 「禁配方案」下拉框已移除：用哪套方案改为在下方「禁配方案管理」
+          -- 窗口里直接选择，选中即生效；SETTING_PAIRSCHEME 保留仅为兼容旧存档。
           W.ComboRow {
             _settingsKey = SETTING_ODD,
             title = "hx_settings_odd_comp_title",
@@ -637,6 +764,17 @@ onHxModeRegistered = function(mode)
             _children = {},
             title = "hx_settings_delete_schemes_title",
           },
+          -- 禁配方案管理窗口入口：编辑成对武将/标号、命名、保存，
+          -- 管理员还可上传/拉取云端禁配方案（与禁将方案云备份分开）。
+          -- 放在组最末尾，避免裸 QML 组件影响上面「奇数体力值补偿」行的布局。
+          {
+            _qml = {
+              url = "packages/advancedpackages/qml/hx__3v3_PairSchemesButton.qml",
+            },
+            _settingsKey = "hxPairSchemesBtn",
+            _children = {},
+            title = "hx_settings_pair_manage_title",
+          },
         })
       end)
 end
@@ -659,6 +797,50 @@ if type(Fk.loadTranslationTable) == "function" then
       "双将模式规则的总开关，必须先开启房间设置中的「启用副将」才能开启。"
       .. "\n开启后每名玩家依次选择三组武将（共六张）：第一组登场，其余两组进入备选池，"
       .. "选将结束时由主帅从备选池统一弃置两组；阵亡换将按本人选定的组合依次上场。",
+
+    -- 本局全体禁将（总控之前）
+    ["hx_settings_global_ban_title"] = "本局全体禁将",
+    ["help: hx_settings_global_ban_title"] =
+      "开启后，所有人在正式选将前先从自己的候选里禁若干名武将，"
+      .. "汇总后本局对所有人都不再可选。单将按名禁；双将按「组」禁（一组两张）。"
+      .. "每人可禁的数量由下面的「本局禁将数量」决定（1-4）。",
+    ["hx_settings_global_ban_count_title"] = "本局禁将数量",
+    ["help: hx_settings_global_ban_count_title"] =
+      "每名玩家在禁将阶段可禁的数量：单将模式为 1-4 名武将，双将模式为 1-4 组（每组两张）。",
+    ["hx_global_ban_count_1"] = "1 名/组",
+    ["hx_global_ban_count_2"] = "2 名/组",
+    ["hx_global_ban_count_3"] = "3 名/组",
+    ["hx_global_ban_count_4"] = "4 名/组",
+    ["#hx__3v3_global_ban_prompt"] = "本局禁将：请从候选中禁用 %arg 名/组（禁用后本局所有人都不能选）",
+    ["hx__3v3_global_ban_toast"] = "本局禁将已汇总",
+    -- 照 fengsui 的 @& banner 方案：官方 LtkLuaUtil 会把 @& 开头的 banner
+    -- 渲染成 Room 场景常驻的 ViewGeneralPile 标签，点开可见名单，
+    -- 不依赖备选池 PairPanel（那套自定义 QML 反复不显示，弃用）。
+    ["@&hx__3v3_ban_list"] = "本局已禁用",
+    ["@&hx__3v3_pair_list"] = "本局已禁配",
+    ["@[hxpair]&hx__3v3_pair_list"] = "本局已禁配",
+
+    -- 双将禁配（总控之后）
+    ["hx_settings_no_pair_title"] = "双将禁配",
+    ["help: hx_settings_no_pair_title"] =
+      "开启后，用「禁配方案」把武将两两配成标号（第一对为 1 号，第二对为 2 号，依此类推），"
+      .. "同一标号的两名武将不得组成一组双将。"
+      .. "\n开启「选将分两个候选池」时改为 A 池出一将、B 池出一将组成一组，"
+      .. "同样禁止同标号跨池配对。禁配方案在下方「禁配方案管理」里编辑。",
+    ["hx_settings_pair_scheme_title"] = "禁配方案",
+    ["help: hx_settings_pair_scheme_title"] =
+      "下拉里列出房主自己保存的禁配方案，顺序与禁配方案管理窗口一致。",
+    ["hx_pair_scheme_1"] = "禁配方案 1",
+    ["hx_pair_scheme_2"] = "禁配方案 2",
+    ["hx_pair_scheme_3"] = "禁配方案 3",
+    ["hx_pair_scheme_4"] = "禁配方案 4",
+    ["hx_pair_scheme_5"] = "禁配方案 5",
+    ["hx_pair_scheme_6"] = "禁配方案 6",
+    ["hx_settings_pair_manage_title"] = "禁配方案管理",
+    ["help: hx_settings_pair_manage_title"] =
+      "打开禁配方案管理窗口：新增/重命名方案，搜索并添加武将两两成标号，"
+      .. "可预览、保存。管理员还能上传本机方案到云端供其他人拉取。",
+    ["hx_pair_ban_conflict"] = "禁配冲突：同标号武将不能组成一组，请重新选择",
 
     ["hx_settings_odd_comp_title"] = "奇数体力值补偿",
     ["help: hx_settings_odd_comp_title"] =
@@ -685,8 +867,8 @@ if type(Fk.loadTranslationTable) == "function" then
 
     ["hx_settings_full_win_title"] = "血战比赛规则",
     ["help: hx_settings_full_win_title"] =
-      "仅比赛规则生效。开启后必须击杀对方全部备选武将才算获胜，"
-      .. "每击穿一组记一分，全部击穿记五分胜利。",
+      "开启后必须击杀对方全部备选武将才算获胜（全歼口径）；"
+      .. "关闭时击杀三组、留一组备选即胜（六分口径）。",
 
     ["hx_settings_double_ban_title"] = "双禁将方案",
     ["help: hx_settings_double_ban_title"] =
@@ -854,39 +1036,48 @@ local function poolScore(pool)
   return math.max(0, 4 - left)
 end
 
-local function fullWinOn(room)
-  return masterOn(room) and rawSetting(room, "3v3competition") == true
-      and rawSetting(room, SETTING_FULLWIN) == true
+-- 备选池取数：比赛规则用公开池，其余用 private 池
+local function poolLists(room)
+  if room:getSettings("3v3competition") then
+    return room:getBanner("@&hx__cool_generals") or {}, room:getBanner("@&hx__warm_generals") or {}
+  end
+  local cb = room:getBanner("@[private]&hx__cool_generals")
+  local wb = room:getBanner("@[private]&hx__warm_generals")
+  return (type(cb) == "table" and cb.value) or {}, (type(wb) == "table" and wb.value) or {}
 end
 
+-- 引擎实际调用的是 mode.getWinner（CreateGameMode 只把 spec.winner_getter
+-- 赋给 getWinner，不会动态回读 winner_getter 字段）。以前包 winner_getter
+-- 等于没装，必须包 getWinner 才生效。
 applyFullWin = function(mode)
-  if type(mode) ~= "table" or type(mode.winner_getter) ~= "function" then return false end
+  if type(mode) ~= "table" or type(mode.getWinner) ~= "function" then return false end
   if mode.__hx_fullwin_patched then return true end
   mode.__hx_fullwin_patched = true
-  local orig = mode.winner_getter
-  mode.winner_getter = function(self, victim)
+  local orig = mode.getWinner
+  mode.getWinner = function(self, victim)
     local room = Fk:currentRoom()
-    if not (room and victim and fullWinOn(room)) then
+    if not (room and victim and masterOn(room)) then
       return orig(self, victim)
     end
-    -- 原逻辑在这里先 table.remove 掉一张，等于「剩一名备选即判负」；
-    -- 全歼口径下不预扣，备选清零才判负
-    local cool = room:getBanner("@&hx__cool_generals") or {}
-    local warm = room:getBanner("@&hx__warm_generals") or {}
+    local cool, warm = poolLists(room)
+    -- getWinner 在阵亡换将之前调用，判负发生在本轮取将之前。
+    -- 关全歼：池剩一组（2张）即判负；开全歼：池空（0张）才判负。
+    -- 少算一组修正 2026-11-20：旧值 4/2 实际留了 2 组/1 组，多留一组。
+    local limit = rawSetting(room, SETTING_FULLWIN) == true and 0 or 2
     local winner = ""
     if victim.role:startsWith("warm") then
-      if #warm == 0 then winner = victim:getEnemies(true) end
+      if #warm <= limit then winner = victim:getEnemies(true) end
     elseif victim.role:startsWith("cool") then
-      if #cool == 0 then winner = victim:getEnemies(true) end
+      if #cool <= limit then winner = victim:getEnemies(true) end
     end
-    if #cool > 0 and #warm > 0 then winner = "" end
+    if #cool > limit and #warm > limit then winner = "" end
     if victim.surrendered and (victim.role == "cool_marshal" or victim.role == "warm_marshal") then
       winner = victim:getEnemies(true)
     end
     if not winner then winner = "" end
     return winner
   end
-  hxlog("fullwin getter installed")
+  hxlog("fullwin getter installed on getWinner")
   return true
 end
 
@@ -1154,6 +1345,13 @@ local function buildRoundParams(players, params, pools, round)
     if type(table.simpleClone) == "function" then extra = table.simpleClone(extra) end
     extra.n = SIGNATURE_SIZE
     extra.choiceNum = SIGNATURE_SIZE
+    -- 本局已禁用名单从 room banner 回读，确保每轮选将框左上角都能显示
+    local room = p.room
+    if room and room:getBanner(GLOBAL_BAN_BANNER .. "_done") == true then
+      extra.showBanList = true
+      local gb = room:getBanner(GLOBAL_BAN_BANNER)
+      extra.globalBanned = (type(gb) == "table") and table.simpleClone(gb) or {}
+    end
     data.extraData = extra
     -- 选牌本身不限势力，沿用血战原来的无限制选将规则。
     -- 不启用国战（hegemony）分支：hxfs.lua:411-422 的默认回复配对循环在
@@ -1212,6 +1410,12 @@ local function askAllGroups(players, params, origAskToGeneral)
         and table.simpleClone(data.extraData) or {}
     extra.n = per
     extra.choiceNum = per
+    local room = p.room
+    if room and room:getBanner(GLOBAL_BAN_BANNER .. "_done") == true then
+      extra.showBanList = true
+      local gb = room:getBanner(GLOBAL_BAN_BANNER)
+      extra.globalBanned = (type(gb) == "table") and table.simpleClone(gb) or {}
+    end
     data.extraData = extra
     data.hegemony = false
     data.ruleType = "askForGeneralsChosen"
@@ -1857,6 +2061,10 @@ local function buildThrowData(player, data)
       prop = {
         dialog = true,
         generals = list,
+        -- 深层嵌套的 Lua table 经 CustomDialog prop 桥接到 QML 后可能退化成
+        -- 空表，弃置弹窗的牌就全没了。这里同时给一条纯字符串通道：武将名
+        -- 不含 |，用 | 拼接；QML 侧 seq() 优先切开它，table 只作兜底。
+        generalsFlat = table.concat(list, "|"),
         num = num,
         prompt = prompt,
         -- 奇数体力值补偿的方式，界面据此在双将牌上画护盾或阴阳鱼
@@ -1967,6 +2175,8 @@ local function patchThrowRequest()
             prop = {
               dialog = true,
               generals = table.simpleClone(list),
+              -- 同弃置弹窗：给一条纯字符串通道兜住深层 table 桥接退化的情况
+              generalsFlat = table.concat(list, "|"),
               num = num,
               prompt = swapPrompt(),
               fallback = fb,
@@ -2088,6 +2298,7 @@ local COMP_COOL = "@&hx__cool_generals"
 local COMP_WARM = "@&hx__warm_generals"
 local SCORE_MARK = "hx__3v3_score"
 local PILE_QML = PANEL_QML
+local PAIR_LIST_QML = "packages/advancedpackages/qml/hx__3v3_PairList.qml"
 
 -- mark 的 qml 函数在客户端执行，客户端读不到服务端包装后的设置，
 -- 统一走 ClientInstance。读不到时按「已开启」处理：宁可多框一层，也不要退回散牌
@@ -2127,6 +2338,54 @@ local function poolListOf(name, value)
   return value.value
 end
 
+-- 客户端读「本局已禁用」展示信息（带是否双将标志）。读不到就交回 nil，
+-- 面板据此决定显示与否；全程 pcall 防止客户端 banner API 差异抛错。
+local function clientBanInfo()
+  local ok, v = pcall(function()
+    if type(ClientInstance) ~= "table" then return nil end
+    if type(ClientInstance.getBanner) ~= "function" then return nil end
+    return ClientInstance:getBanner(GLOBAL_BAN_BANNER .. "_info")
+  end)
+  if ok and type(v) == "table" and type(v.names) == "table" and #v.names > 0 then
+    return { names = v.names, grouped = v.grouped == true }
+  end
+  return nil
+end
+
+-- 客户端读「本局已禁配」展示信息：{ pairs = {{g1,g2},...}, dual }。
+-- 与 clientBanInfo 同机制，读不到交回 nil 让面板不显示。
+local function clientPairInfo()
+  local ok, v = pcall(function()
+    if type(ClientInstance) ~= "table" then return nil end
+    if type(ClientInstance.getBanner) ~= "function" then return nil end
+    return ClientInstance:getBanner(GLOBAL_PAIR_BANNER .. "_info")
+  end)
+  if ok and type(v) == "table" and type(v.pairs) == "table" and #v.pairs > 0 then
+    return { pairs = v.pairs, dual = v.dual == true }
+  end
+  return nil
+end
+
+-- 把客户端读到的禁用/禁配名单转成纯字符串，随 prop 注入 PILE_QML。
+-- 关键：嵌套 table {names=...,grouped=...} 经 CBOR 桥接到 QML 会丢字段，
+-- 备选池武将用的 cardNames 是字符串/数组通道所以显示正常；名单也走纯字符串
+-- 这条已证明可靠的通道，QML 侧解析即可。
+local function banInfoToFlat(bi)
+  if type(bi) ~= "table" or type(bi.names) ~= "table" or #bi.names == 0 then return nil end
+  return ((bi.grouped == true) and "1|" or "0|") .. table.concat(bi.names, "|")
+end
+local function pairInfoToFlat(pi)
+  if type(pi) ~= "table" or type(pi.pairs) ~= "table" or #pi.pairs == 0 then return nil end
+  local ps = {}
+  for _, pr in ipairs(pi.pairs) do
+    if type(pr) == "table" and #pr >= 2 then
+      ps[#ps + 1] = tostring(pr[1]) .. "," .. tostring(pr[2])
+    end
+  end
+  if #ps == 0 then return nil end
+  return ((pi.dual == true) and "1|" or "0|") .. table.concat(ps, ";")
+end
+
 -- 能不能看这个池子：value.players 里没有自己就交回原组件（它会返回 nil）
 -- 判定不能用 type(Self) 判表：客户端里的 Self 不是 table。
 -- 取不到「谁在看」时不额外过滤，交给官方那层挡，避免因为拿不到 Self 就退回散牌
@@ -2162,12 +2421,31 @@ local function patchMarks()
       local list = poolListOf(name, value)
       if list and clientSetting(SETTING_MASTER) ~= false and canSeePool(value, player) then
         local comp = compOnClient()
-        hxlog("mark hit private " .. tostring(name) .. " n=" .. #list)
-        return {
-          url = PILE_QML,
-          prop = { dialog = false, name = name, cardNames = list,
-            armorOn = comp == "armor", comp = comp },
-        }
+        local bi = clientBanInfo()
+        local pi = clientPairInfo()
+        -- 若搭车广播带了名单，优先用它（与备选池同一条 CBOR 通道，最可靠）
+        if type(value) == "table" and type(value.banInfo) == "table" and not bi then
+          bi = value.banInfo
+        end
+        if type(value) == "table" and type(value.pairInfo) == "table" and not pi then
+          pi = value.pairInfo
+        end
+        -- 纯字符串兜底：服务端搭车时已算好塞进 value，直接透传；
+        -- 若没有再用本地 table 转一次。字符串不会被 CBOR 桥接丢字段。
+        local bFlat = (type(value) == "table" and type(value.banFlat) == "string")
+          and value.banFlat or banInfoToFlat(bi)
+        local pFlat = (type(value) == "table" and type(value.pairFlat) == "string")
+          and value.pairFlat or pairInfoToFlat(pi)
+        hxlog(("mark hit private %s n=%d banInfo=%s pairInfo=%s bFlat=%s pFlat=%s")
+          :format(tostring(name), #list, tostring(bi ~= nil), tostring(pi ~= nil),
+            tostring(bFlat ~= nil), tostring(pFlat ~= nil)))
+          return {
+            url = PILE_QML,
+            prop = { dialog = false, name = name, cardNames = list,
+              armorOn = comp == "armor", comp = comp,
+              banInfo = bi, pairInfo = pi,
+              banFlat = bFlat, pairFlat = pFlat },
+          }
       end
       if poolListOf(name, value) then
         hxlog("pool mark not shown: master=" .. tostring(clientSetting(SETTING_MASTER))
@@ -2176,6 +2454,33 @@ local function patchMarks()
       return origQml(name, value, player)
     end
     hxlog("patched mark private")
+  end
+
+  -- 本局已禁配：自定义 mark，直接复用现成的双将配对视觉。
+  -- value 是 info.pairs（每对 {A,B}），交给专用 QML 画成双将牌。
+  if type(Fk.qml_marks["hxpair"]) ~= "table" then
+    Fk.qml_marks["hxpair"] = {
+      how_to_show = function(_, value)
+        if type(value) ~= "table" then return " " end
+        return tostring(#value)
+      end,
+      qml = function(name, value, player)
+        local pairs = (type(value) == "table") and value or {}
+        -- 纯字符串兜底：嵌套 table 经 CBOR 桥接常被拆坏，字符串最可靠
+        local parts = {}
+        for _, pr in ipairs(pairs) do
+          if type(pr) == "table" and (#pr >= 2) then
+            parts[#parts + 1] = tostring(pr[1]) .. "," .. tostring(pr[2])
+          end
+        end
+        local flat = table.concat(parts, ";")
+        return {
+          url = PAIR_LIST_QML,
+          prop = { name = name, pairs = pairs, pairsFlat = flat },
+        }
+      end,
+    }
+    hxlog("registered mark hxpair")
   end
 
   -- 比赛规则的计分牌同时是双方备选池的入口，值是 { 冷方池, 暖方池 }
@@ -2188,11 +2493,21 @@ local function patchMarks()
       if type(value) == "table" and type(value[1]) == "table" and type(value[2]) == "table"
           and signatureOnClient() then
         local comp = compOnClient()
-        hxlog("mark hit score")
+        local bi = clientBanInfo()
+        local pi = clientPairInfo()
+        if type(value.banInfo) == "table" and not bi then bi = value.banInfo end
+        if type(value.pairInfo) == "table" and not pi then pi = value.pairInfo end
+        local bFlat = (type(value.banFlat) == "string") and value.banFlat or banInfoToFlat(bi)
+        local pFlat = (type(value.pairFlat) == "string") and value.pairFlat or pairInfoToFlat(pi)
+        hxlog(("mark hit score banInfo=%s pairInfo=%s bFlat=%s pFlat=%s")
+          :format(tostring(bi ~= nil), tostring(pi ~= nil),
+            tostring(bFlat ~= nil), tostring(pFlat ~= nil)))
         return {
           url = PILE_QML,
           prop = { dialog = false, name = name, value = value,
-            armorOn = comp == "armor", comp = comp },
+            armorOn = comp == "armor", comp = comp,
+            banInfo = bi, pairInfo = pi,
+            banFlat = bFlat, pairFlat = pFlat },
         }
       end
       return origScore(name, value, player)
@@ -2283,9 +2598,21 @@ local function patchServerBanner()
     -- 原名存一份，模式后面的 getBanner("@&...") 照旧能读到
     Fk.Base.RoomBase.setBanner(self, name, list)
     hxlog("pool broadcast " .. target .. " " .. #list)
-    self:doBroadcastNotify("SetBanner", {
-      target, { value = list, players = poolViewerIds(self) },
-    })
+    -- 把「本局已禁用/已禁配」名单直接搭这段广播的 value 一起送出去：
+    -- 备选池名单这条 CBOR 通道已被证明能到达 PairPanel，搭车最可靠，
+    -- 不再依赖单独的 _info banner（那条反复读不到）。
+    local broadcastValue = { value = list, players = poolViewerIds(self) }
+    local okInfo, info = pcall(function() return self:getBanner(GLOBAL_BAN_BANNER .. "_info") end)
+    if okInfo and type(info) == "table" then
+      if type(info.names) == "table" and #info.names > 0 then
+        broadcastValue.banInfo = { names = info.names, grouped = info.grouped == true }
+      end
+    end
+    local okPair, pinfo = pcall(function() return self:getBanner(GLOBAL_PAIR_BANNER .. "_info") end)
+    if okPair and type(pinfo) == "table" and type(pinfo.pairs) == "table" and #pinfo.pairs > 0 then
+      broadcastValue.pairInfo = { pairs = pinfo.pairs, dual = pinfo.dual == true }
+    end
+    self:doBroadcastNotify("SetBanner", { target, broadcastValue })
   end
   hxlog("pool banner hooked on Room.setBanner")
   return true
@@ -2306,6 +2633,16 @@ local function patchBanners()
       return table.slice(list, 1, #list - 1)
     end
 
+    -- 比赛模式(3v3competition)备选池走 @&hx__cool_generals / @&hx__warm_generals
+    -- 纯数组通道，且每次登场后由 hxfs.lua 重新 setBanner。这条原先没裁，
+    -- 导致对面偶尔看到 5 张（末张落单）。这里与 private/score 保持同一口径。
+    if name == "@&hx__cool_generals" or name == "@&hx__warm_generals" then
+      if type(value) == "table" then
+        local t = trimOdd(value)
+        if t ~= value then value = t end
+      end
+    end
+
     if name == COOL_GEN_BANNER or name == WARM_GEN_BANNER then
       if type(value) == "table" and type(value.value) == "table" then
         local t = trimOdd(value.value)
@@ -2313,8 +2650,75 @@ local function patchBanners()
           local copy = table.simpleClone(value)
           copy.value = t
           value = copy
+        else
+          -- 必走 clone：下面要往 broadcastValue 塞 banInfo/pairInfo，
+          -- 不能污染模式自己持有的那张 value 表
+          local copy = table.simpleClone(value)
+          value = copy
         end
         hxlog((name == COOL_GEN_BANNER and "cool pool=" or "warm pool=") .. #t)
+        -- 本局已禁用 / 本局已禁配：搭备选池广播这条已证明可靠的通道送给面板。
+        -- 关键教训：不要挂在 require("ltk.server.room").setBanner 上——include 是
+        -- 逐方法复制，room 实例实际走的是 RoomBase.setBanner（就是这里），
+        -- 挂在那张类表上的 hook 从不命中，名单永远发不出去。
+        local okB, binfo = pcall(function() return self:getBanner(GLOBAL_BAN_BANNER .. "_info") end)
+        if okB and type(binfo) == "table" and type(binfo.names) == "table" and #binfo.names > 0 then
+          value.banInfo = { names = binfo.names, grouped = binfo.grouped == true }
+          -- 纯字符串兜底：嵌套 table 桥接会丢字段，字符串不会（与 cardNames 同通道）
+          value.banFlat = ((binfo.grouped == true) and "1|" or "0|") .. table.concat(binfo.names, "|")
+          -- 名单只走 banFlat 字符串 prop（不塞进武将数组，避免污染牌面配对）
+        end
+        local okP, pinfo = pcall(function() return self:getBanner(GLOBAL_PAIR_BANNER .. "_info") end)
+        if okP and type(pinfo) == "table" and type(pinfo.pairs) == "table" and #pinfo.pairs > 0 then
+          value.pairInfo = { pairs = pinfo.pairs, dual = pinfo.dual == true }
+          local parts = {}
+          for _, pr in ipairs(pinfo.pairs) do
+            if type(pr) == "table" and #pr >= 2 then
+              parts[#parts + 1] = tostring(pr[1]) .. "," .. tostring(pr[2])
+            end
+          end
+          value.pairFlat = ((pinfo.dual == true) and "1|" or "0|") .. table.concat(parts, ";")
+        end
+        if value.banInfo or value.pairInfo then
+          hxlog(("pool carry: ban=%s pair=%s"):format(
+            tostring(value.banInfo ~= nil), tostring(value.pairInfo ~= nil)))
+        end
+      end
+    end
+    -- 名单同时在独立的 _flat 字符串通道再广播一次：即便备选池 value 的
+    -- 嵌套 table 经桥接丢字段，QML 的 pollBanners 也能从 getBanner 读到。
+    do
+      local okB, binfo = pcall(function() return self:getBanner(GLOBAL_BAN_BANNER .. "_info") end)
+      if okB and type(binfo) == "table" and type(binfo.names) == "table" and #binfo.names > 0 then
+        local flat = ((binfo.grouped == true) and "1|" or "0|") .. table.concat(binfo.names, "|")
+        pcall(function() self:doBroadcastNotify("SetBanner", { GLOBAL_BAN_BANNER .. "_flat", flat }) end)
+      end
+      local okP, pinfo = pcall(function() return self:getBanner(GLOBAL_PAIR_BANNER .. "_info") end)
+      if okP and type(pinfo) == "table" and type(pinfo.pairs) == "table" and #pinfo.pairs > 0 then
+        local parts = {}
+        for _, pr in ipairs(pinfo.pairs) do
+          if type(pr) == "table" and #pr >= 2 then
+            parts[#parts + 1] = tostring(pr[1]) .. "," .. tostring(pr[2])
+          end
+        end
+        local pflat = ((pinfo.dual == true) and "1|" or "0|") .. table.concat(parts, ";")
+        pcall(function() self:doBroadcastNotify("SetBanner", { GLOBAL_PAIR_BANNER .. "_flat", pflat }) end)
+      end
+    end
+    -- 比赛规则：客户端备选池走计分牌 @[hx__3v3_score] 的 { 冷方池, 暖方池 }。
+    -- 这条路径原先没做奇偶裁剪，托管/超时兜底给 num+1 张时会漏出奇数池，
+    -- 双将下就表现为某一方备选武将变成 5 张（成组弃置会出现落单牌）。
+    -- 这里对两方各自裁成偶数，和上面 private/@& 池保持同一口径。
+    if name == "@[hx__3v3_score]" or name == SCORE_MARK then
+      if type(value) == "table" and type(value[1]) == "table"
+          and type(value[2]) == "table" then
+        local a, b = trimOdd(value[1]), trimOdd(value[2])
+        if a ~= value[1] or b ~= value[2] then
+          local copy = table.simpleClone(value)
+          copy[1], copy[2] = a, b
+          value = copy
+          hxlog(("score pool trim: cool=%d warm=%d"):format(#a, #b))
+        end
       end
     end
     return origSet(self, name, value)
@@ -2848,6 +3252,413 @@ local function patchDualPools()
   return true
 end
 
+----------------------------------------------------------------------
+-- 九·五、本局全体禁将 + 双将禁配
+----------------------------------------------------------------------
+-- 两个功能都包在 askToGeneral 最外层：禁将先剔除候选（内层双池/分组才用到
+-- 干净候选），禁配在最终结果上校验同组同标号。二者各自独立开关、互不依赖。
+
+-- 禁将数量选项（ComboRow 存的是翻译键本身）
+local GLOBAL_BAN_COUNT_KEYS = {
+  hx_global_ban_count_1 = 1,
+  hx_global_ban_count_2 = 2,
+  hx_global_ban_count_3 = 3,
+  hx_global_ban_count_4 = 4,
+}
+local function globalBanCount(room)
+  local v = rawSetting(room, SETTING_GLOBALBANCOUNT)
+  local n = GLOBAL_BAN_COUNT_KEYS[v] or GLOBAL_BAN_COUNT_KEYS[v]
+  if type(n) == "number" then return n end
+  -- 兼容直接存数字的情况
+  n = tonumber(v)
+  if n and n >= 1 and n <= 4 then return math.floor(n) end
+  return 1
+end
+
+local function globalBanOn(room)
+  if not isModeRoom(room) then return false end
+  return rawSetting(room, SETTING_GLOBALBAN) == true
+end
+
+local function noPairOn(room)
+  if not masterOn(room) then return false end
+  return rawSetting(room, SETTING_NOPAIR) == true
+end
+
+-- 读房主禁配方案列表：优先 LobbyTask 推送槽（跨机可用），再回退本机配置。
+local function readPairSchemes(room)
+  local schemes, numA = nil, 1
+  local ownerId, ownerName = nil, nil
+  if type(room.getOwner) == "function" then
+    local ok, owner = pcall(room.getOwner, room)
+    if ok and owner then
+      ownerId = owner.id
+      if type(owner.getScreenName) == "function" then
+        local okN, nm = pcall(owner.getScreenName, owner)
+        if okN then ownerName = tostring(nm) end
+      end
+    end
+  end
+  local slot = ownerId and HX_PLAYER_PAIR_SCHEMES[ownerId] or nil
+  if not slot and ownerName then slot = HX_PLAYER_PAIR_BY_NAME[ownerName] end
+  if not slot then slot = HX_LAST_PUSHED_PAIRS end
+  if type(slot) == "table" and type(slot.schemes) == "table" and #slot.schemes > 0 then
+    schemes = slot.schemes
+    numA = tonumber(slot.cur) or 1
+  end
+  if not schemes then
+    schemes = readPairConfSchemes()
+    local conf = readClientConf()
+    numA = (tonumber(conf and conf.currentPairIdx) or 0) + 1
+  end
+  return schemes, numA
+end
+
+-- 取当前生效的禁配方案，折成「将名 -> 标号」映射。
+-- pairs 下标即标号：pairs[1] 两将标号 1，pairs[2] 标号 2 ...
+local function pairLabelMapOf(room)
+  local map = {}
+  -- 用管理窗口里当前选中的方案（房主 push_pairs 推的 cur），
+  -- 不再依赖已删除的「禁配方案」下拉框 SETTING_PAIRSCHEME。
+  local schemes, idx = readPairSchemes(room)
+  if type(schemes) ~= "table" then return map end
+  idx = tonumber(idx) or 1
+  local s = schemes[idx] or schemes[1]
+  if type(s) ~= "table" or type(s.pairs) ~= "table" then return map end
+  for label, pair in ipairs(s.pairs) do
+    if type(pair) == "table" then
+      for _, g in ipairs(pair) do
+        if type(g) == "string" then map[g] = label end
+      end
+    end
+  end
+  return map
+end
+
+-- 把当前生效的禁配方案发布到房间 banner，客户端备选面板据此显示
+-- 「本局已禁配」。禁配开关关闭时发布空表，清掉上一局残留。
+-- dual=true 表示这套方案是「双禁将方案」模式（每组一将来自 A 池、一将来自 B 池）。
+local function publishPairInfo(room)
+  if type(room) ~= "table" or type(room.setBanner) ~= "function" then return end
+  local info = { pairs = {}, dual = false }
+  hxlog(("pair publish: master=%s noPair=%s"):format(
+    tostring(masterOn(room)), tostring(noPairOn(room))))
+  if noPairOn(room) then
+    local schemes, idx = readPairSchemes(room)
+    local s = type(schemes) == "table" and (schemes[idx] or schemes[1]) or nil
+    if type(s) == "table" then
+      if type(s.pairs) == "table" then info.pairs = s.pairs end
+      info.dual = s.dual == true
+      hxlog(("pair publish: scheme found pairs=%d dual=%s"):format(
+        #info.pairs, tostring(info.dual)))
+    else
+      hxlog("pair publish: no scheme (s is nil/not table)")
+    end
+  end
+  hxlog(("pair publish: final pairs=%d -> @& banner"):format(#info.pairs))
+  -- 官方 @& banner：Room 场景常驻显示「本局已禁配 (N)」，点开看名单
+  local pairView = {}
+  local pairSeen = {}
+  for _, pair in ipairs(info.pairs) do
+    if type(pair) == "table" then
+      for _, g in ipairs(pair) do
+        -- 官方 @& banner 走 ViewGeneralPile，每个元素必须是合法武将名；
+        -- 若把两个将名拼成 "A x B"，createGeneralCardModel 会当成不存在的
+        -- 武将，渲染成两个代号叠加的乱码。故逐将拆成独立元素并去重。
+        if type(g) == "string" and g ~= "" and not pairSeen[g] then
+          pairSeen[g] = true
+          pairView[#pairView + 1] = g
+        end
+      end
+    end
+  end
+  -- 现成双将配对 UI：用 @[hxpair]& 自定义 mark，把每对原样传成 {A,B} 数组，
+  -- 交给 hx__3v3_PairList.qml 画成一张双将牌（左主将右副将），
+  -- 不再把 "A x B" 拼成单个假武将名（那会被官方 ViewGeneralPile 渲染成乱码）。
+  if #info.pairs > 0 then
+    pcall(room.setBanner, room, "@[hxpair]&hx__3v3_pair_list", info.pairs)
+    pcall(room.setBanner, room, "@&hx__3v3_pair_list", nil)
+  else
+    pcall(room.setBanner, room, "@[hxpair]&hx__3v3_pair_list", nil)
+    pcall(room.setBanner, room, "@&hx__3v3_pair_list", nil)
+  end
+  pcall(room.setBanner, room, GLOBAL_PAIR_BANNER .. "_info", info)
+  -- 纯字符串通道，避开嵌套 table 桥接：每组用逗号连两个将名，组间用分号，
+  -- 首字符 1=双方案/0=单方案。例："1|a,b;c,d"
+  local parts = {}
+  for _, pair in ipairs(info.pairs) do
+    if type(pair) == "table" and #pair >= 2 then
+      parts[#parts + 1] = tostring(pair[1]) .. "," .. tostring(pair[2])
+    end
+  end
+  local pairFlat = ((info.dual == true) and "1|" or "0|") .. table.concat(parts, ";")
+  pcall(room.setBanner, room, GLOBAL_PAIR_BANNER .. "_flat", pairFlat)
+  pcall(function()
+    if type(room.doBroadcastNotify) == "function" then
+      room:doBroadcastNotify("SetBanner", { GLOBAL_PAIR_BANNER .. "_info", info })
+      room:doBroadcastNotify("SetBanner", { GLOBAL_PAIR_BANNER .. "_flat", pairFlat })
+    end
+  end)
+end
+
+-- 本局禁将：每个玩家分到一份独立的随机候选池（张数 = 选将数 generalNum，
+-- 各人内容不同），从中禁 n 名（双将按组，n 组 = 2n 张）。禁掉的将并入房间
+-- 禁用表（本局在禁将方案之外又禁一遍），与正式选将的候选池分开。
+-- 候选来源是当前禁将方案过滤后的全将池，不是正式选将分到的那几张。
+-- 只做一次（room 标记），换将/后续批次不再触发。
+local function runGlobalBanPhase(room, players, params)
+  if room:getBanner(GLOBAL_BAN_BANNER .. "_done") == true then return false end
+  local okReq, Req = pcall(require, "server.request")
+  if not okReq or type(Req) ~= "table" or type(Req.new) ~= "function" then
+    hxlog("global ban: Request unavailable, skipped")
+    return false
+  end
+  local n = globalBanCount(room)
+  local groups = signatureDeputyOn(room)
+  -- 双将按「组」禁：一组两张，故每人禁 n 组 = 2n 张；单将禁 n 张
+  local pickNum = groups and (n * 2) or n
+
+  -- 独立禁将池：把房间当前禁用方案折算成集合，再列出可用全将
+  local banGens, banPacks = {}, {}
+  for _, g in ipairs(room.disabled_generals or {}) do banGens[g] = true end
+  for _, pkg in ipairs(room.disabled_packs or {}) do banPacks[pkg] = true end
+  local fullPool = generalsAllowedBy(banGens, banPacks)
+  -- 每人一份独立随机候选：张数 = 选将数 generalNum（至少 6），各人洗牌后
+  -- 各取 X 张并按 trueName 去重，保证每人看到的候选池不一样。
+  local X = room:getSettings("generalNum") or 6
+  X = math.max(tonumber(X) or 6, 6)
+  if X < pickNum then X = pickNum end
+
+  local req = Req:new(players, "CustomDialog")
+  req.focus_text = "AskForGeneral"
+  local timeout = room:getSettings("generalTimeout")
+  req.timeout = (type(timeout) == "number" and timeout > 0) and timeout or 30
+  local UI = "packages/advancedpackages/qml/ChooseGeneralWithCanChange.qml"
+  local MODEL = "packages/advancedpackages/qml/models/ChooseGeneralWithCanChangeModel.qml"
+  for _, p in ipairs(players) do
+    -- 每人独立洗牌，取 X 张互不重名的武将作本轮禁将候选
+    local mine, usedTrue = {}, {}
+    local copy = table.simpleClone(fullPool)
+    table.shuffle(copy)
+    for _, g in ipairs(copy) do
+      if #mine >= X then break end
+      local gen = Fk.generals[g]
+      local tn = gen and gen.trueName or g
+      if not usedTrue[tn] then
+        usedTrue[tn] = true
+        mine[#mine + 1] = g
+      end
+    end
+    local data = {
+      generals = mine,
+      choiceNum = pickNum,
+      change = {},
+      skills = {},
+      convertDisabled = false,
+      hegemony = false,
+      ruleType = "askForGeneralsChosen",
+      groupSize = groups and 2 or 0,
+      -- 禁将框左上角也显示「本局已禁用」（进房禁将方案已禁掉的将）；
+      -- hideGroupLabel 让禁将框不显示双将的「首发/备选一」组标签。
+      extraData = {
+        n = pickNum, choiceNum = pickNum,
+        globalBanned = table.simpleClone(room.disabled_generals or {}),
+        hideGroupLabel = true,
+        showBanList = true,
+      },
+      prompt = "#hx__3v3_global_ban_prompt:::seat#" .. tostring(p.seat) .. ":" .. n,
+      cancelable = false,
+    }
+    req:setData(p, {
+      component = { url = UI, model = { url = MODEL, prop = data } },
+    })
+    req:setDefaultReply(p, table.slice(mine, 1, pickNum))
+  end
+  local banned = {}
+  for _, p in ipairs(players) do
+    local got = req:getResult(p)
+    if type(got) == "table" then
+      for _, g in ipairs(got) do
+        if type(g) == "string" then banned[g] = true end
+      end
+    end
+  end
+
+  -- 本局又禁一遍：并入房间禁用表，后续取将（含备选池轮次）都自然过滤
+  local allBanned = {}
+  for g in pairs(banned) do
+    allBanned[#allBanned + 1] = g
+    if not table.contains(room.disabled_generals, g) then
+      room.disabled_generals[#room.disabled_generals + 1] = g
+    end
+  end
+
+  -- 选将候选：剔除被禁的，再从独立全将池补足到原张数（选将数量不变）
+  for _, p in ipairs(players) do
+    local base = paramOf(params, p, #players)
+    if type(base) == "table" and type(base.generals) == "table" then
+      local want = #base.generals
+      local kept, usedTrue = {}, {}
+      for _, g in ipairs(base.generals) do
+        if not banned[g] then
+          local gen = Fk.generals[g]
+          local tn = gen and gen.trueName or g
+          if not usedTrue[tn] then
+            usedTrue[tn] = true
+            kept[#kept + 1] = g
+          end
+        end
+      end
+      if #kept < want then
+        local copy = table.simpleClone(fullPool)
+        table.shuffle(copy)
+        for _, g in ipairs(copy) do
+          if #kept >= want then break end
+          if not banned[g] then
+            local gen = Fk.generals[g]
+            local tn = gen and gen.trueName or g
+            if not usedTrue[tn] then
+              usedTrue[tn] = true
+              kept[#kept + 1] = g
+            end
+          end
+        end
+      end
+      base.generals = kept
+      -- 把本局禁用名单随选将数据下发，供选将界面左上角「本局已禁用」入口展示
+      base.extraData = base.extraData or {}
+      base.extraData.showBanList = true
+      base.extraData.globalBanned = allBanned
+    end
+  end
+
+  room:setBanner(GLOBAL_BAN_BANNER, allBanned)
+  room:setBanner(GLOBAL_BAN_BANNER .. "_done", true)
+  -- 官方 @& banner：Room 场景常驻显示「本局已禁用 (N)」，点开看名单
+  if #allBanned > 0 then
+    pcall(room.setBanner, room, "@&hx__3v3_ban_list", allBanned)
+  else
+    pcall(room.setBanner, room, "@&hx__3v3_ban_list", nil)
+  end
+  -- 展示用：带「是否双将」标志，供备选面板「本局已禁用」入口决定单将逐个/双将按组显示
+  local banInfoValue = { names = allBanned, grouped = (groups == true) }
+  room:setBanner(GLOBAL_BAN_BANNER .. "_info", banInfoValue)
+  -- 纯字符串通道：嵌套 table 经 CBOR/Lua proxy 桥接到 QML 时字段可能丢失，
+  -- 而官方 getBanner("RoundCount") 那种标量值一直可靠。这里把名单编码成
+  -- 单个字符串（首字符 1=双将按组/0=单将，其后用竖线分隔将名），
+  -- PairPanel.qml 用 split 解析，彻底绕开嵌套 table 的桥接不确定性。
+  local banFlat = ((groups == true) and "1|" or "0|") .. table.concat(allBanned, "|")
+  room:setBanner(GLOBAL_BAN_BANNER .. "_flat", banFlat)
+  -- 再显式广播一次：确保客户端 ClientInstance.banners 一定有这份数据，
+  -- 备选面板的 QML 轮询 Lua.client.getBanner 才能读到。
+  pcall(function()
+    if type(room.doBroadcastNotify) == "function" then
+      room:doBroadcastNotify("SetBanner", { GLOBAL_BAN_BANNER .. "_info", banInfoValue })
+      room:doBroadcastNotify("SetBanner", { GLOBAL_BAN_BANNER .. "_flat", banFlat })
+      room:doBroadcastNotify("ShowToast", Fk:translate("hx__3v3_global_ban_toast"))
+    end
+  end)
+  hxlog(("global ban: done, %d generals banned this game, info broadcast"):format(#allBanned))
+  return true
+end
+
+-- 禁配校验：结果里每两名一组（双将）或按候选 A/B 组，同标号则把后者换成
+-- 池中一个不同标号的候选；替换不了就退到池首，避免卡住流程。
+local function enforceNoPair(room, players, params, ret, groupSize)
+  local map = pairLabelMapOf(room)
+  local mapN = 0
+  for _ in pairs(map) do mapN = mapN + 1 end
+  local size = groupSize or (signatureDeputyOn(room) and 2 or 0)
+  hxlog(("no-pair: check map=%d size=%d ret=%s players=%d")
+    :format(mapN, size, type(ret), type(players) == "table" and #players or -1))
+  if mapN == 0 then
+    hxlog("no-pair: map empty -> skip")
+    return ret
+  end
+  if size < 2 or type(ret) ~= "table" then return ret end
+  for _, p in ipairs(players) do
+    local list = ret[p]
+    -- 兼容以 id 为键的返回结果
+    if type(list) ~= "table" and type(p) == "table" then list = ret[p.id] end
+    if type(list) == "table" and #list >= 2 then
+      local base = paramOf(params, p, #players)
+      local pool = type(base) == "table" and base.generals or {}
+      hxlog(("no-pair: pid=%s list=%s pool=%d")
+        :format(tostring(type(p) == "table" and p.id or p), #list, #pool))
+      local start = 1
+      while start + 1 <= #list do
+        local a, b = list[start], list[start + 1]
+        hxlog(("no-pair: pair %d/%d a=%s(%s) b=%s(%s)")
+          :format(start, #list, tostring(a), tostring(map[a]),
+            tostring(b), tostring(map[b])))
+        if map[a] and map[b] and map[a] == map[b] then
+          -- 三级兜底：①不同标号且不在结果里 ②不同标号 ③池里任意非 a 的将
+          local repl = nil
+          for _, g in ipairs(pool) do
+            if g ~= a and not table.contains(list, g)
+                and not (map[g] and map[a] and map[g] == map[a]) then
+              repl = g; break
+            end
+          end
+          if not repl then
+            for _, g in ipairs(pool) do
+              if g ~= a and not (map[g] and map[a] and map[g] == map[a]) then
+                repl = g; break
+              end
+            end
+          end
+          if not repl then
+            for _, g in ipairs(pool) do
+              if g ~= a then repl = g; break end
+            end
+          end
+          if repl then
+            list[start + 1] = repl
+            hxlog(("no-pair: replaced %s with %s (label %s)")
+              :format(b, repl, tostring(map[a])))
+          else
+            hxlog("no-pair: NO REPL found -> pair left unchanged")
+          end
+        end
+        start = start + (size > 0 and size or 2)
+      end
+    else
+      hxlog(("no-pair: list not usable (%s, len=%s)")
+        :format(type(list), type(list) == "table" and #list or -1))
+    end
+  end
+  return ret
+end
+
+-- 最外层包装：禁将 → 内层选将 → 禁配校验。
+local function patchGlobalBanNoPair()
+  local ok, HXFS = pcall(require, "packages.bloodybattle.hxfs")
+  if not ok or type(HXFS) ~= "table" or type(HXFS.askToGeneral) ~= "function" then
+    return false
+  end
+  if rawget(HXFS, "__hx_global_ban_nopair") then return true end
+  rawset(HXFS, "__hx_global_ban_nopair", true)
+  local orig = HXFS.askToGeneral
+  HXFS.askToGeneral = function(players, params)
+    local first = players[1]
+    local room = first and first.room
+    if room then
+      pcall(publishPairInfo, room)
+      if globalBanOn(room) then
+        pcall(runGlobalBanPhase, room, players, params)
+      end
+    end
+    local ret = orig(players, params)
+    if room and noPairOn(room) then
+      local okE, errE = pcall(enforceNoPair, room, players, params, ret)
+      if not okE then hxlog("no-pair: ERROR " .. tostring(errE)) end
+    end
+    return ret
+  end
+  hxlog("global ban / no pair: askToGeneral hooked")
+  return true
+end
+
 -- 服务端的两处补丁：建房时登记收方案的入口，开局建牌堆前把方案并进去。
 -- 牌堆构造时逐个走 Fk:canUseGeneral，并入之后所有取将（含备选池的四组轮次）
 -- 自然都过滤掉了。
@@ -2881,6 +3692,10 @@ end
 -- 包加载时 room 类可能还没 require 到，交给运行期补装兜底
 latePatches[#latePatches + 1] = patchServerRoom
 pcall(patchServerRoom)
+-- 禁将/禁配必须在双池之前包：禁将先剔除候选，双池再基于干净候选分池。
+-- latePatches 按注册顺序执行，先包的是内层，故禁将/禁配先注册。
+latePatches[#latePatches + 1] = patchGlobalBanNoPair
+pcall(patchGlobalBanNoPair)
 latePatches[#latePatches + 1] = patchDualPools
 pcall(patchDualPools)
 latePatches[#latePatches + 1] = patchClientSender
@@ -2982,6 +3797,87 @@ local function patchAdvancedQmlRedirect()
 end
 latePatches[#latePatches + 1] = patchAdvancedQmlRedirect
 pcall(patchAdvancedQmlRedirect)
+
+----------------------------------------------------------------------
+-- 十二、仁彀（rengou）自发动修复
+-- 官方 attached_skill 机制：持有主技 rengou 的角色（威刘备）获得该技时，
+-- 引擎把附赠技 rengou& 发给场上其他蜀势力角色；主技持有者自己本不应持有
+-- rengou&，故按设计不能自己发动仁彀。
+-- 但"令其获得技能"类效果（如管宁遁世）可把主技 rengou 授予旁人：若此人
+-- 先前已因别的持有者在场而拿到 rengou&，便会同时握有主技与附赠技，于是
+-- 在自己回合既能发动仁彀、又能把自己选为目标，弃自己的牌、令自己回血、
+-- 再让自己发动烈骧，自导自演。
+-- 这里在 advancedpackages 就地加固，不改 tenyear/delight 任何官方文件：
+--   ①获得主技时清掉自身的 rengou&；
+--   ②附赠技 canUse 排除主技持有者本人；
+--   ③附赠技 targetFilter 禁止选自己为目标。
+-- 三处均幂等、pcall 保护，tenyear 与 delight 两版一起修；只影响仁彀，
+-- 不碰任何其他技能。
+----------------------------------------------------------------------
+local function patchRengouSelfUse()
+  if type(Fk) ~= "table" then return false end
+  local cfgList = {
+    { main = "rengou",     attach = "rengou&" },
+    { main = "dl__rengou", attach = "dl__rengou&" },
+  }
+  local any = false
+
+  for _, cfg in ipairs(cfgList) do
+    -- ① 获得主技时清除自身附赠技（引擎 onAcquire 先给他人发 attach，再调本回调）
+    pcall(function()
+      local skel = type(Fk.skill_skels) == "table" and Fk.skill_skels[cfg.main]
+      if skel and type(skel.on_acquire) == "function" and not skel.__adv_rengou_fix then
+        local origAcq = skel.on_acquire
+        skel.on_acquire = function(player, is_start, src)
+          local ret = origAcq(player, is_start, src)
+          pcall(function()
+            if player and player.room then
+              player.room:handleAddLoseSkills(player, "-" .. cfg.attach, nil, false, true)
+            end
+          end)
+          return ret
+        end
+        skel.__adv_rengou_fix = true
+        any = true
+      end
+    end)
+
+    local atk = type(Fk.skills) == "table" and Fk.skills[cfg.attach]
+    if type(atk) == "table" then
+      -- ② canUse：主技持有者本人不得发动附赠技
+      pcall(function()
+        if type(atk.canUse) == "function" and not atk.__adv_rengou_canuse_fix then
+          local origCan = atk.canUse
+          atk.canUse = function(self, player, ...)
+            if player and type(player.hasSkill) == "function" and player:hasSkill(cfg.main) then
+              return false
+            end
+            return origCan(self, player, ...)
+          end
+          atk.__adv_rengou_canuse_fix = true
+          any = true
+        end
+      end)
+      -- ③ targetFilter：不得选自己为目标
+      pcall(function()
+        if type(atk.targetFilter) == "function" and not atk.__adv_rengou_tf_fix then
+          local origTf = atk.targetFilter
+          atk.targetFilter = function(self, player, to_select, ...)
+            if to_select == player then return false end
+            return origTf(self, player, to_select, ...)
+          end
+          atk.__adv_rengou_tf_fix = true
+          any = true
+        end
+      end)
+    end
+  end
+
+  if any then hxlog("rengou self-use fix installed") end
+  return any
+end
+latePatches[#latePatches + 1] = patchRengouSelfUse
+pcall(patchRengouSelfUse)
 
 ----------------------------------------------------------------------
 -- 十一、云端默认禁将方案同步
@@ -3172,6 +4068,122 @@ if type(Fk) == "table" and type(Fk.addTaskDef) == "function" then
   hxlog("ban sync taskdef register=" .. tostring(okDef) .. " err=" .. tostring(errDef))
 else
   hxlog("ban sync taskdef SKIPPED: addTaskDef unavailable")
+end
+
+----------------------------------------------------------------------
+-- 十一·五、禁配方案云端同步（结构与禁将云备份平行，存档独立）
+----------------------------------------------------------------------
+-- op=push_pairs：房主把本机禁配方案推到玩家专属槽，供 pairLabelMapOf 读取。
+-- op=sync：管理员把本机方案按名称合并上传覆盖全服存档；所有人拉取云端方案。
+local PAIR_SYNC_TASK = "hx_pair_sync"
+local PAIR_SYNC_RESULT = "hx_pair_sync_result"
+
+local function validPairScheme(s)
+  if type(s) ~= "table" or type(s.name) ~= "string" or s.name == "" then
+    return false
+  end
+  if type(s.pairs) ~= "table" or #s.pairs == 0 then return false end
+  for _, pair in ipairs(s.pairs) do
+    if type(pair) == "table" and #pair == 2
+        and type(pair[1]) == "string" and type(pair[2]) == "string" then
+      return true
+    end
+  end
+  return false
+end
+
+if type(Fk) == "table" and type(Fk.addTaskDef) == "function" then
+  local okDef2, errDef2 = pcall(function()
+    Fk:addTaskDef {
+      type = PAIR_SYNC_TASK,
+      handler = function(task)
+        local tp = task.player
+        if not tp then return end
+        local payload = {}
+        local d = task.data
+        if type(d) == "string" then
+          local ok, dec = pcall(json.decode, d)
+          if ok and type(dec) == "table" then payload = dec end
+        elseif type(d) == "table" then payload = d end
+
+        local isAdmin, nm = false, ""
+        local sp = tp._splayer
+        if sp and type(sp.getScreenName) == "function" then
+          local ok, name = pcall(sp.getScreenName, sp)
+          if ok then nm = tostring(name) end
+          if ok and BAN_ADMINS[nm] then isAdmin = true end
+        end
+
+        -- 房主推送本机方案到玩家专属槽
+        if payload.op == "push_pairs" and type(payload.schemes) == "table"
+            and #payload.schemes > 0 then
+          local pid = tp.id
+          local slot = {
+            schemes = payload.schemes,
+            cur = tonumber(payload.cur) or 1,
+            name = nm,
+          }
+          HX_PLAYER_PAIR_SCHEMES[pid] = slot
+          HX_LAST_PUSHED_PAIRS = slot
+          if nm ~= "" then HX_PLAYER_PAIR_BY_NAME[nm] = slot end
+          hxlog(("pair sync push pid=%s name=%s n=%s")
+            :format(tostring(pid), nm, #payload.schemes))
+          return
+        end
+
+        -- 读全服存档
+        local saved = nil
+        local okR, ret = pcall(function() return task:getGlobalSaveState(PAIR_SYNC_SAVE_KEY) end)
+        if okR and type(ret) == "table" and type(ret.schemes) == "table"
+            and #ret.schemes > 0 then saved = ret end
+
+        local pushed = false
+        if isAdmin and type(payload.schemes) == "table" then
+          local valid = {}
+          for _, s in ipairs(payload.schemes) do
+            if validPairScheme(s) then valid[#valid + 1] = s end
+          end
+          if #valid > 0 then
+            local byName, out = {}, {}
+            for _, s in ipairs((type(saved) == "table" and type(saved.schemes) == "table")
+                and saved.schemes or {}) do
+              if type(s) == "table" and type(s.name) == "string" and s.name ~= "" then
+                byName[s.name] = true
+                out[#out + 1] = s
+              end
+            end
+            for _, s in ipairs(valid) do
+              if byName[s.name] then
+                for k, old in ipairs(out) do
+                  if old.name == s.name then out[k] = s break end
+                end
+              else
+                byName[s.name] = true
+                out[#out + 1] = s
+              end
+            end
+            saved = { schemes = out }
+            local okW = pcall(function() task:saveGlobalState(PAIR_SYNC_SAVE_KEY, saved) end)
+            pushed = okW
+            hxlog(("pair sync admin upload valid=%d ok=%s"):format(#valid, tostring(okW)))
+          end
+        end
+
+        if not saved then
+          saved = { schemes = {} }
+          pcall(function() task:saveGlobalState(PAIR_SYNC_SAVE_KEY, saved) end)
+        end
+        local out = {}
+        for _, s in ipairs(saved.schemes or {}) do
+          if validPairScheme(s) then out[#out + 1] = s end
+        end
+        local reply = { ok = true, admin = isAdmin, pushed = pushed, schemes = out }
+        local okEnc, replyJson = pcall(json.encode, reply)
+        if okEnc then pcall(tp.doNotify, tp, PAIR_SYNC_RESULT, replyJson) end
+      end,
+    }
+  end)
+  hxlog("pair sync taskdef register=" .. tostring(okDef2) .. " err=" .. tostring(errDef2))
 end
 
 ----------------------------------------------------------------------
